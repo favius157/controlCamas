@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*NOMBRE DE LA EMPRESA*/
+define("NOMBRE_EMPRESA", "Favius systems");
 define("NOMBRE_EMPRESA", "Control de camas");
 
 defined('SHOW_DEBUG_BACKTRACE') OR define('SHOW_DEBUG_BACKTRACE', TRUE);
