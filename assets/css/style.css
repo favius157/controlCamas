@@ -12,7 +12,7 @@ html {
 body {
     position: relative;
     padding: 0;
-    background-color: #555;
+    background-color: #F6F6F6;
 
     font-family: 'Open Sans', sans-serif;
     font-size: 12px;
@@ -232,7 +232,7 @@ pre {
     text-align: left;
     width: 206px;
     color: #FFF;
-    background: url(../images/logo.png) no-repeat 0 11px;
+    /*background: url(../images/logo.png) no-repeat 0 11px;*/
     text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
     font-weight: 300;
     font-size: 19px;
@@ -679,10 +679,10 @@ body.modal-open,
 }
 /*BODY*/
 .cl-mcont {
-    background-color: #555;
+    background-color: #F6F6F6;
     color: inherit;
     font-size: 13px;
-    font-weight: 200;
+    font-weight: 500;
     line-height: 21px;
     padding: 15px 30px 30px 30px;
     margin-top: 0;
@@ -720,7 +720,7 @@ body.modal-open,
     border-bottom: 1px solid #2f323a;
 }
 .cl-vnavigation .parent a {
-    background: url("../images/arrow.png") no-repeat scroll right 14px top 18px transparent;
+    /*background: url("../images/arrow.png") no-repeat scroll right 14px top 18px transparent;*/
 }
 .cl-vnavigation li a {
     border-top: 1px solid #32353e;
@@ -929,43 +929,6 @@ body.modal-open,
         
 */
 /*End Collapsed*/
-
-.animacion {
-    /*position: absolute;*/
-
-    animation-name: parpadeo;
-    animation-duration: 1s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-
-    color: red;
-    font-weight: 800;
-
-    -webkit-animation-name:parpadeo;
-    -webkit-animation-duration: 1s;
-    -webkit-animation-timing-function: linear;
-    -webkit-animation-iteration-count: infinite;
-}
-
-@-moz-keyframes parpadeo{  
-    0% { opacity: 1.0; }
-    50% { opacity: 0.0; }
-    100% { opacity: 1.0; }
-}
-
-@-webkit-keyframes parpadeo {  
-    0% { opacity: 1.0; }
-    50% { opacity: 0.0; }
-    100% { opacity: 1.0; }
-}
-
-@keyframes parpadeo {  
-    0% { opacity: 1.0; }
-    50% { opacity: 0.0; }
-    100% { opacity: 1.0; }
-}
-
-
 .cl-vnavigation li a i {
     text-align: center;
     width: 20px;
@@ -1059,12 +1022,12 @@ body {
 .block-wizard {
     margin-bottom: 40px;
     padding: 20px 20px;
-    background: #333;
+    background: #FFF;
     border-radius: 3px;
     -webkit-border-radius: 3px;
-    border-left: 1px solid #999;
-    border-right: 1px solid #999;
-    border-bottom: 1px solid #999;
+    border-left: 1px solid #efefef;
+    border-right: 1px solid #efefef;
+    border-bottom: 1px solid #e2e2e2;
     box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04);
 }
 .block-transparent {
@@ -3213,10 +3176,6 @@ div.dataTables_length label select {
 .fuelux .wizard ul li:first-child {
     border-radius: 0;
     -webkit-border-radius: 0;
-}
-
-.block-flat{
-    margin-bottom: 0;
 }
 .fuelux .wizard ul li {
     font-size: 15px;
@@ -6231,7 +6190,7 @@ input[type=radio]:checked ~ label{
 
 
 .cChart{
-    width: 40%;
+    width: 100%;
     float: left;
     margin: 5% 0 5% 5%;
 }
@@ -6613,14 +6572,14 @@ input[type=radio]:checked ~ label{
     position: fixed;
     margin: 25% 0 0 50%;
     z-index: 99;
-}
-
-@keyframes spin {
+  }
+  
+  @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-}
+  }
 
-.ctrlHorario{
-    margin-right: 20px;
-    margin-left: 20px;
-}
+  .ctrlHorario{
+      margin-right: 20px;
+      margin-left: 20px;
+  }
