@@ -1,11 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+date_default_timezone_set('America/Caracas');
+
+$config['base_url'] = '/controlCamas/';
 
 
-$config['base_url'] = '/controlCamas';
-
-
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 
 $config['uri_protocol']	= 'REQUEST_URI';
