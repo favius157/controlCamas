@@ -1,6 +1,10 @@
 $(document).ready(function () {
     cargarPersonas();
+
+
+
 })
+var idActual=0;
 
 function cargarPersonas() {
     $.ajax({
@@ -15,7 +19,7 @@ function cargarPersonas() {
                 var estado = "";
                 $.each(arr, function (index, contenido) {
                     estado = (contenido.estado == 0) ? "Inactivo" : "Activo";
-                    $("#tablaPersona>tbody").append('<tr><td>' + contenido.nombres + ' ' + contenido.apellidos + '</td><td>' + contenido.ci + '</td><td>' + contenido.matricula + '</td><td>' + contenido.telefono + '</td><td>' + contenido.cargo + '</td><td>' + contenido.establecimiento + '</td><td>' + estado + '</td><td></td></tr>');
+                    $("#tablaPersona>tbody").append('<tr><td>' + contenido.nombres + ' ' + contenido.apellidos + '</td><td>' + contenido.ci + '</td><td>' + contenido.matricula + '</td><td>' + contenido.telefono + '</td><td>' + contenido.cargo + '</td><td>' + contenido.establecimiento + '</td><td>' + estado + '</td><td><a class="btn btn-warning" onclick = "editarPersona('+contenido.id+', false)"><i class="fa fa-pencil"></i></a><a class="btn btn-danger"><i class="fa fa-trash-o"></i></a></td></tr>');
                 });
 
                 function fnFormatDetails(oTable, nTr)
@@ -103,6 +107,47 @@ function cargarPersonas() {
     })
 }
 
+function cargarPersona(id){
+    var datos ={
+        "idpersona":id
+    }
+    $.ajax({
+        
+        data: datos,
+        type: 'POST',
+        url: base_url()+"Persona/getPersona/",
+        beforeSend:function(xhr){
+            $("#btnGuardarPersona").attr("disabled",true);
+            $("#btnEditarPersona").attr("disabled",false);
+
+        },
+        success: function (data,textStatus, jqXHR) {
+                    if(data!="null"){
+                        var arr=JSON.parse(data);
+                        $.each(arr,function(index,contenido){
+                            $("#idpersona").val(contenido.idpersona);
+                            $("#nPersona").val(contenido.nombres);
+                            $("#aPersona").val(contenido.apellidos);
+                            $("#ci").val(contenido.ci);
+                            $("#matricula").val(contenido.matricula);
+                            $("#telefono").val(contenido.telefono);
+                            $("#cmbCargos").val(contenido.idcargo);
+                            $("#cmbEstablecimientos").val(contenido.idestablecimiento);
+                        })
+                        
+                        
+                        
+                    }else{
+                        $("#editarmarca").append("<option value='0'>No existen Marcas</option>");
+                        $("#editarmodelo").append("<option value='0'>No existen Modelos</option>");
+                        $("#editartipoequipo").append("<option value='0'>No existen Tipo de Euipos</option>");
+                    }
+                    $("#idcargo").change();
+                    $("#idestablecimiento").change();
+                }
+    });         
+}
+
 function nuevaPersona(flag) {
     if (!flag) {
         limpiarDatosPersona();
@@ -179,6 +224,90 @@ function nuevaPersona(flag) {
                 }
             })
         }
+
+
+    }
+}
+
+
+function editarPersona(id,flag) {
+    if (!flag) {
+        idActual:id
+        limpiarDatosPersona();
+        cargarPersona(id);
+        $("#modalNuevaPersona").modal("show");
+    } else {
+       /* var bandera = true;
+        if ($("input[name='nPersona']").val() == "") {
+            $("input[name='nPersona']").css("border", "1px solid red");
+            bandera = false;
+        }
+
+        if ($("input[name='aPersona']").val() == "") {
+            $("input[name='aPersona']").css("border", "1px solid red");
+            bandera = false;
+        }
+
+        if ($("input[name='ci']").val() == "") {
+            $("input[name='ci']").css("border", "1px solid red");
+            bandera = false;
+        }
+
+        if ($("input[name='matricula']").val() == "") {
+            $("input[name='matricula']").css("border", "1px solid red");
+            bandera = false;
+        }
+
+        if ($("input[name='telefono']").val() == "") {
+            $("input[name='telefono']").css("border", "1px solid red");
+            bandera = false;
+        }
+
+        if ($("#cmbCargos").val() == 0) {
+            $("#s2id_cmbCargos").css("border", "1px solid red");
+            bandera = false;
+        }
+
+        if ($("#cmbEstablecimientos").val() == 0) {
+            $("#s2id_cmbEstablecimientos").css("border", "1px solid red");
+            bandera = false;
+        }
+
+        if (!bandera) {
+            $("#msgPersonas").css("display", "block");
+        } else {
+            var param = {
+                nombres: $("input[name='nPersona']").val(),
+                apellidos: $("input[name='aPersona']").val(),
+                ci: $("input[name='ci']").val(),
+                matricula: $("input[name='matricula']").val(),
+                telefono: $("input[name='telefono']").val(),
+                cargo: $("#cmbCargos").val(),
+                establecimiento: $("#cmbEstablecimientos").val()
+            }
+
+            $.ajax({
+                data: param,
+                type: 'POST',
+                url: base_url() + "/Persona/nuevaPersona/",
+                beforeSend: function (xhr) {
+                    $("#btnGuardarPersona").prop("disabled", true);
+                    $("#btnGuardarPersona").text("Guardando...");
+                }, success: function (data, textStatus, jqXHR) {
+                    
+                    if (data == 1) {
+                        $("#btnGuardarPersona").prop("disabled", true);
+                        $("#btnGuardarPersona").text("Guardar");
+                        cargarPersonas();
+                        $("#modalNuevaPersona").modal("hide");
+                        alert("Persona registrada exitosamente");
+                        
+                    } else {
+                        alert("Ocurrio un problemas al registrar a la persona");
+                    }
+                }
+            })
+        }*/
 
 
     }

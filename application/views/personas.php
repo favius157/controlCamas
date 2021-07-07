@@ -1,5 +1,5 @@
-<?php ?>
-
+<?php
+ ?>
 <!DOCTYPE html>
 <html lang="en">
     <?php
@@ -101,6 +101,69 @@
 
 
 <div id="modalNuevaPersona" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width: 50%;">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Nueva persona</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row" id="formPersona">
+                    <div class="col-md-6">
+                        <label>Nombre:</label>
+                        <input type="text" name="nPersona" class="form-control" placeholder="Nombre de la persona">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Apellidos:</label>
+                        <input type="text" name="aPersona" class="form-control" placeholder="Apellidos paterno y materno">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Carné de identidad:</label>
+                        <input type="text" name="ci" class="form-control" placeholder="Ej: 123465sc">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Matrícula:</label>
+                        <input type="text" name="matricula" class="form-control" placeholder="Ej: 911007LBF">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Número telefónico:</label>
+                        <input type="number" name="telefono" class="form-control" placeholder="Ej: 78456995">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Cargo:</label>
+                        <select class="select2" id="cmbCargos">
+
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Establecimiento:</label>
+                        <select class="select2" id="cmbEstablecimientos">
+
+                        </select>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+
+                <span id="msgPersonas" class="msgAlertas" style="float: left; color: red; display: none;">Los campos marcados con rojo son obligatorios</span>
+                <button class="btn btn-warning" onclick="editarPersona(0, true)" id="btnEditarPersona">Guardar</button>
+                <button class="btn btn-primary" onclick="nuevaPersona(true)" id="btnGuardarPersona">Guardar</button>
+                <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="modalEditarPersona" class="modal fade" role="dialog">
     <div class="modal-dialog" style="width: 50%;">
 
         <!-- Modal content-->

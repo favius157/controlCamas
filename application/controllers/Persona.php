@@ -52,6 +52,33 @@ class Persona extends CI_Controller {
         }
     }
 
+    function getPersona(){
+        $persona=$this->persona_model->getPersona($_POST['idpersona']);
+        $lista = array();
+
+        if ($personas != null) {
+            foreach ($personas as $personas) {
+                $datos["id"] = $personas["id_persona"];
+                $datos["nombres"] = $personas["nombres"];
+                $datos["apellidos"] = $personas["apellidos"];
+                $datos["ci"] = $personas["ci"];
+                $datos["matricula"] = $personas["matricula"];
+                $datos["telefono"] = $personas["telefono"];
+                $datos["idcargo"] = $this->cargo_model->cargarCargoById($personas["id_cargo"]);
+                $datos["idestablecimiento"] = $this->establecimiento_model->cargarEstablecimientoById($personas["id_establecimiento"]);
+                $datos["fechaRegistro"] = $personas["fecha_registro"];
+                $datos["estado"] = $personas["estado"];
+
+                $lista[] = $datos;
+            }
+
+            echo json_encode($lista);
+        } else {
+            echo "null";
+        }
+
+    }
+
 }
 
 ?>
