@@ -167,7 +167,7 @@ function nuevaPersona(flag) {
                 }, success: function (data, textStatus, jqXHR) {
                     
                     if (data == 1) {
-                        $("#btnGuardarPersona").prop("disabled", true);
+                        $("#btnGuardarPersona").prop("disabled", false);
                         $("#btnGuardarPersona").text("Guardar");
                         cargarPersonas();
                         $("#modalNuevaPersona").modal("hide");
