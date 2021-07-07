@@ -13,7 +13,7 @@
 
     <link href="<?= base_url("assets/js/bootstrap/dist/css/bootstrap.css") ?>" rel="stylesheet" />   <!-- Bootstrap -->
 
-    <link rel="stylesheet" href="<?= base_url("assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css") ?>">
+    <link rel="stylesheet" href="<?= base_url("assets/fonts/font-awesome-4/css/font-awesome.min.css") ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url("assets/js/jquery.gritter/css/jquery.gritter.css") ?>" />
 
     <link rel="stylesheet" type="text/css" href="<?= base_url("assets/js/jquery.nanoscroller/nanoscroller.css") ?>" />
