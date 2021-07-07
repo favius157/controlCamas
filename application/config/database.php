@@ -7,9 +7,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
+	'hostname' => '172.25.3.52',
+	'username' => 'dev',
+	'password' => 'DTIC.dev.2021',
 	'database' => 'camas',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
