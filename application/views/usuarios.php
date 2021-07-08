@@ -67,14 +67,10 @@
                                         <thead class="no-border">
                                             <tr>
                                                 <th>Nombre completo</th>
-                                                <th>Carné de identidad</th>
-                                                <th>Matrícula</th>
-                                                <th>Teléfono</th>
-                                                <th>Cargo</th>
                                                 <th>Establecimiento</th>
-                                                <th>Estado</th>
-
-                                                <th><a onclick="nuevaPersona(false)" data-toggle ="modal" data-target ="#myModal" style="color: #AE212A; cursor: pointer;"><i class="fa fa-plus-square"> Nuevo</i></a></th>
+                                                <th>Rol</th>
+                                                <th>Usuario</th>
+                                                <th><a onclick="nuevoUsuario(false)" data-toggle ="modal" data-target ="#myModal" style="color: #AE212A; cursor: pointer;"><i class="fa fa-plus-square"> Nuevo</i></a></th>
                                             </tr>
                                         </thead>
                                         <tbody class="no-border-y">

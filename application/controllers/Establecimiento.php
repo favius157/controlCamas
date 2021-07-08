@@ -23,7 +23,7 @@ class Establecimiento extends CI_Controller {
             $lista = array();
             foreach ($establecimientos as $establecimientos) {
                 $datos["id"] = $establecimientos["id_establecimiento"];
-                $datos["centro"] = $establecimientos["centro"];
+                $datos["establecimiento"] = $establecimientos["establecimiento"];
                 $datos["ubicacion"] = $establecimientos["ubicacion"];
                 $lista[] = $datos;
             }

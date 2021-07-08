@@ -39,7 +39,7 @@ class Persona extends CI_Controller {
                 $datos["matricula"] = $personas["matricula"];
                 $datos["telefono"] = $personas["telefono"];
                 $datos["cargo"] = $this->cargo_model->cargarCargoById($personas["id_cargo"])[0]["cargo"];
-                $datos["establecimiento"] = $this->establecimiento_model->cargarEstablecimientoById($personas["id_establecimiento"])[0]["centro"];
+                $datos["establecimiento"] = $this->establecimiento_model->cargarEstablecimientoById($personas["id_establecimiento"])[0]["establecimiento"];
                 $datos["fechaRegistro"] = $personas["fecha_registro"];
                 $datos["estado"] = $personas["estado"];
 
@@ -52,22 +52,24 @@ class Persona extends CI_Controller {
         }
     }
 
-    function getPersona(){
-        $persona=$this->persona_model->getPersona($_POST['idpersona']);
-        $lista = array();
 
-        if ($personas != null) {
-            foreach ($personas as $personas) {
+    function editarPersona(){
+        echo $this->persona_model->editarPersona($_POST["id"],$_POST["nombres"],$_POST["apellidos"],$_POST["ci"],$_POST["matricula"],$_POST["telefono"],$_POST["cargo"],$_POST["establecimiento"]);
+    }
+
+    function getPersona(){
+        $persona=$this->persona_model->getPersona($_POST["idpersona"]);
+        $lista = array();
+        if ($persona != null) {
+            foreach ($persona as $personas) {
                 $datos["id"] = $personas["id_persona"];
                 $datos["nombres"] = $personas["nombres"];
                 $datos["apellidos"] = $personas["apellidos"];
                 $datos["ci"] = $personas["ci"];
                 $datos["matricula"] = $personas["matricula"];
                 $datos["telefono"] = $personas["telefono"];
-                $datos["idcargo"] = $this->cargo_model->cargarCargoById($personas["id_cargo"]);
-                $datos["idestablecimiento"] = $this->establecimiento_model->cargarEstablecimientoById($personas["id_establecimiento"]);
-                $datos["fechaRegistro"] = $personas["fecha_registro"];
-                $datos["estado"] = $personas["estado"];
+                $datos["idcargo"] = $personas["id_cargo"];
+                $datos["idestablecimiento"] = $personas["id_establecimiento"];
 
                 $lista[] = $datos;
             }
@@ -79,6 +81,9 @@ class Persona extends CI_Controller {
 
     }
 
+    function eliminarPersona(){
+        echo $this->persona_model->eliminarPersona($_POST["id"]);
+    }
 }
 
 ?>

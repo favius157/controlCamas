@@ -6,6 +6,7 @@ $(document).ready(function () {
 })
 var idActual=0;
 
+
 function cargarPersonas() {
     $.ajax({
         type: 'POST',
@@ -13,13 +14,14 @@ function cargarPersonas() {
         beforeSend: function (xhr) {
             $("#tablaPersona>tbody").empty();
         }, success: function (data, textStatus, jqXHR) {
-            console.log(data);
+            //console.log(data);
             if (data != "null") {
                 var arr = JSON.parse(data);
                 var estado = "";
                 $.each(arr, function (index, contenido) {
                     estado = (contenido.estado == 0) ? "Inactivo" : "Activo";
-                    $("#tablaPersona>tbody").append('<tr><td>' + contenido.nombres + ' ' + contenido.apellidos + '</td><td>' + contenido.ci + '</td><td>' + contenido.matricula + '</td><td>' + contenido.telefono + '</td><td>' + contenido.cargo + '</td><td>' + contenido.establecimiento + '</td><td>' + estado + '</td><td><a class="btn btn-warning" onclick = "editarPersona('+contenido.id+', false)"><i class="fa fa-pencil"></i></a><a class="btn btn-danger"><i class="fa fa-trash-o"></i></a></td></tr>');
+                    //console.log(contenido.id);
+                    $("#tablaPersona>tbody").append('<tr><td>' + contenido.nombres + ' ' + contenido.apellidos + '</td><td>' + contenido.ci + '</td><td>' + contenido.matricula + '</td><td>' + contenido.telefono + '</td><td>' + contenido.cargo + '</td><td>' + contenido.establecimiento + '</td><td>' + estado + '</td><td><a class="btn btn-success" onclick = "usuarioPersona('+contenido.id+', false)"><i class="fa fa-user"></i></a><a class="btn btn-warning" onclick = "editarPersona('+contenido.id+', false)"><i class="fa fa-pencil"></i></a><a class="btn btn-danger" onclick = "eliminarPersona('+contenido.id+', false)"><i class="fa fa-trash-o"></i></a></td></tr>');
                 });
 
                 function fnFormatDetails(oTable, nTr)
@@ -107,46 +109,7 @@ function cargarPersonas() {
     })
 }
 
-function cargarPersona(id){
-    var datos ={
-        "idpersona":id
-    }
-    $.ajax({
-        
-        data: datos,
-        type: 'POST',
-        url: base_url()+"Persona/getPersona/",
-        beforeSend:function(xhr){
-            $("#btnGuardarPersona").attr("disabled",true);
-            $("#btnEditarPersona").attr("disabled",false);
 
-        },
-        success: function (data,textStatus, jqXHR) {
-                    if(data!="null"){
-                        var arr=JSON.parse(data);
-                        $.each(arr,function(index,contenido){
-                            $("#idpersona").val(contenido.idpersona);
-                            $("#nPersona").val(contenido.nombres);
-                            $("#aPersona").val(contenido.apellidos);
-                            $("#ci").val(contenido.ci);
-                            $("#matricula").val(contenido.matricula);
-                            $("#telefono").val(contenido.telefono);
-                            $("#cmbCargos").val(contenido.idcargo);
-                            $("#cmbEstablecimientos").val(contenido.idestablecimiento);
-                        })
-                        
-                        
-                        
-                    }else{
-                        $("#editarmarca").append("<option value='0'>No existen Marcas</option>");
-                        $("#editarmodelo").append("<option value='0'>No existen Modelos</option>");
-                        $("#editartipoequipo").append("<option value='0'>No existen Tipo de Euipos</option>");
-                    }
-                    $("#idcargo").change();
-                    $("#idestablecimiento").change();
-                }
-    });         
-}
 
 function nuevaPersona(flag) {
     if (!flag) {
@@ -229,15 +192,57 @@ function nuevaPersona(flag) {
     }
 }
 
+function cargarPersona(id){
+    var datos ={
+        "idpersona":id
+    }
+    $.ajax({
+        
+        data: datos,
+        type: 'POST',
+        url: base_url()+"Persona/getPersona/",
+        beforeSend:function(xhr){
+            
+            
+        },
+        success: function (data,textStatus, jqXHR) {
+                    
+                    if(data!="null"){
+                        var arr=JSON.parse(data);
+                        $.each(arr,function(index,contenido){
+                            //$("#idpersona").val(contenido.idpersona);
+                            $("input[name='nPersona']").val(contenido.nombres);
+                            $("input[name='aPersona']").val(contenido.apellidos);
+                            $("input[name='ci']").val(contenido.ci);
+                            $("input[name='matricula']").val(contenido.matricula);
+                            $("input[name='telefono']").val(contenido.telefono);
+                            $("#cmbCargos").val(contenido.idcargo);
+                            $("#cmbEstablecimientos").val(contenido.idestablecimiento);
+                        })
+                        
+                        
+                        
+                    }else{
+
+                    }
+                    $("#cmbCargos").change();
+                    $("#cmbEstablecimientos").change();
+                    $('#btnGuardarPersona').hide();
+                    $("#btnEditarPersona").show();
+                }
+    });         
+}
 
 function editarPersona(id,flag) {
     if (!flag) {
-        idActual:id
+        idActual=id;
         limpiarDatosPersona();
         cargarPersona(id);
+
         $("#modalNuevaPersona").modal("show");
+        
     } else {
-       /* var bandera = true;
+        var bandera = true;
         if ($("input[name='nPersona']").val() == "") {
             $("input[name='nPersona']").css("border", "1px solid red");
             bandera = false;
@@ -277,6 +282,7 @@ function editarPersona(id,flag) {
             $("#msgPersonas").css("display", "block");
         } else {
             var param = {
+                id:idActual,
                 nombres: $("input[name='nPersona']").val(),
                 apellidos: $("input[name='aPersona']").val(),
                 ci: $("input[name='ci']").val(),
@@ -285,36 +291,60 @@ function editarPersona(id,flag) {
                 cargo: $("#cmbCargos").val(),
                 establecimiento: $("#cmbEstablecimientos").val()
             }
-
             $.ajax({
                 data: param,
                 type: 'POST',
-                url: base_url() + "/Persona/nuevaPersona/",
+                url: base_url() + "Persona/editarPersona/",
                 beforeSend: function (xhr) {
-                    $("#btnGuardarPersona").prop("disabled", true);
-                    $("#btnGuardarPersona").text("Guardando...");
-                }, success: function (data, textStatus, jqXHR) {
                     
+                }, success: function (data, textStatus, jqXHR) {
+                    //console.log(data);
                     if (data == 1) {
-                        $("#btnGuardarPersona").prop("disabled", true);
-                        $("#btnGuardarPersona").text("Guardar");
                         cargarPersonas();
                         $("#modalNuevaPersona").modal("hide");
-                        alert("Persona registrada exitosamente");
+                        alert("Se modificaron los datos exitosamente");
                         
                     } else {
                         alert("Ocurrio un problemas al registrar a la persona");
                     }
                 }
             })
-        }*/
-
-
+        }
     }
 }
 
 
+function eliminarPersona(id,flag){
+    if(!flag){
+        idActual=id;
+        var bandera = true;
+        $("#myModalConfirmacion").modal("show");
+        
 
+    }else{
+           var param = {
+                id:idActual,
+            }
+            $.ajax({
+                data: param,
+                type: 'POST',
+                url: base_url() + "Persona/eliminarPersona/",
+                beforeSend: function (xhr) {
+                    
+                }, success: function (data, textStatus, jqXHR) {
+                    //console.log(data);
+                    if (data == 1) {
+                        cargarPersonas();
+                        $("#myModalConfirmacion").modal("hide");
+                        alert("Se Elimino el registro!!!!!");
+                        
+                    } else {
+                        alert("Ocurrio un problemas al registrar a la persona");
+                    }
+                }
+            }) 
+    }
+}
 
 /*Seccion cargos*/
 
@@ -351,9 +381,9 @@ function cargarEstablecimientos() {
         }, success: function (data, textStatus, jqXHR) {
             if (data != "null") {
                 var arr = JSON.parse(data);
-                $("#cmbEstablecimientos").append("<option value = 0 selected>Asigne el centro de la persona</option>");
+                $("#cmbEstablecimientos").append("<option value = 0 selected>Asigne el Establecimiento de la persona</option>");
                 $.each(arr, function (index, contenido) {
-                    $("#cmbEstablecimientos").append("<option value = " + contenido.id + ">" + contenido.centro + "</option>");
+                    $("#cmbEstablecimientos").append("<option value = " + contenido.id + ">" + contenido.establecimiento + "</option>");
                 })
             } else {
                 $("#cmbEstablecimientos").append("<option value = 0 selected>No hay datos para mostrar</option>");
@@ -373,4 +403,5 @@ function limpiarDatosPersona() {
     $("#formPersona .select2").css("border", "1px solid #ccc");
     $("#formPersona input").css("border", "1px solid #ccc");
     $(".msgAlertas").css("display", "none");
+
 }

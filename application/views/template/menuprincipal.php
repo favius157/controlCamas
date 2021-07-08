@@ -13,8 +13,7 @@
                                 <ul class="sub-menu">
 
                                     <li><a href="usuario"> Registrar Usuarios</a></li>
-
-                                    ?>
+                                    <li><a href="privilegio"> Registrar Privilegios</a></li>
                                 </ul>
                             </li>
 
