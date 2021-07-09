@@ -304,7 +304,9 @@ function cargarRoles() {
                 var arr = JSON.parse(data);
                 $("#cmbRoles").append("<option value = 0 selected>Elija el rol a configurar</option>");
                 $.each(arr, function (index, contenido) {
-                    $("#cmbRoles").append("<option value = " + contenido.id + ">" + contenido.rol + "</option>");
+                    if (contenido.estado == 1) {
+                        $("#cmbRoles").append("<option value = " + contenido.id + ">" + contenido.rol + "</option>");
+                    }
                 })
                 $("#cmbRoles").change();
             }

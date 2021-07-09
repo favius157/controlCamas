@@ -79,11 +79,14 @@ class Privilegio extends CI_Controller {
     function cargarRoles() {
         $roles = $this->privilegio_model->cargarRoles();
         $lista = array();
+        $privilegios = "";
         if ($roles != null) {
             foreach ($roles as $roles) {
+                $privilegios = $this->privilegio_model->cargarPermisoByRol($roles["id_rol"]);
                 $datos["id"] = $roles["id_rol"];
                 $datos["rol"] = $roles["rol"];
                 $datos["estado"] = $roles["estado"];
+                @$datos["cantidadAcceso"] = count($privilegios);
                 $lista[] = $datos;
             }
 
@@ -125,6 +128,33 @@ class Privilegio extends CI_Controller {
         } else {
             echo "null";
         }
+    }
+
+    function cargarRolById() {
+        $rol = $this->privilegio_model->cargarRolById($_POST["idRol"]);
+        $lista = array();
+        if ($rol != null) {
+
+            $datos["id"] = $rol[0]["id_rol"];
+            $datos["rol"] = $rol[0]["rol"];
+            $datos["estado"] = $rol[0]["estado"];
+
+
+            $lista[] = $datos;
+
+
+            echo json_encode($lista);
+        } else {
+            echo "null";
+        }
+    }
+
+    function editarRol() {
+        echo $this->privilegio_model->editarRol($_POST["idRol"], $_POST["nombreRol"]);
+    }
+    
+    function borrarRol() {
+        echo $this->privilegio_model->borrarRol($_POST["idRol"]);
     }
 
 }

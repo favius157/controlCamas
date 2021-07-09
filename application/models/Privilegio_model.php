@@ -75,7 +75,7 @@ class Privilegio_model extends CI_Model {
     }
 
     function cargarRoles() {
-        $query = $this->db->query("select * from rol where estado = 1");
+        $query = $this->db->query("select * from rol");
 
         if ($query->num_rows() > 0) {
             return $query->result_array();
@@ -96,6 +96,14 @@ class Privilegio_model extends CI_Model {
 
     function borrarAccesoByRol($idRol) {
         return $this->db->query("delete from privilegios where id_rol = $idRol");
+    }
+    
+    function editarRol($idRol, $rol) {
+        return $this->db->query("update rol set rol = '$rol' where id_rol = $idRol");
+    }
+    
+    function borrarRol($idRol) {
+        return $this->db->query("update rol set estado = 0 where id_rol = $idRol");
     }
 
 }
