@@ -33,7 +33,7 @@ class Privilegio_model extends CI_Model {
             return null;
         }
     }
-    
+
     public function cargarRolById($idRol) {
         $query = $this->db->query("select * from rol where id_rol = $idRol");
 
@@ -43,7 +43,7 @@ class Privilegio_model extends CI_Model {
             return null;
         }
     }
-    
+
     public function cargarMenuById($idMenu) {
         $query = $this->db->query("select * from menu where id_menu = $idMenu");
 
@@ -82,6 +82,20 @@ class Privilegio_model extends CI_Model {
         } else {
             return null;
         }
+    }
+
+    function cargarPermisoByRol($idRol) {
+        $query = $this->db->query("select * from privilegios where id_rol = $idRol");
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+
+    function borrarAccesoByRol($idRol) {
+        return $this->db->query("delete from privilegios where id_rol = $idRol");
     }
 
 }

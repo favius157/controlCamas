@@ -71,8 +71,9 @@
                                                 <th>Estado</th>
 
                                                 <th>
-                                                    <a onclick="nuevoRol(false)" style="color: #AE212A; cursor: pointer;"><i class="fa fa-plus-square"> Nuevo Rol</i></a><br/>
+                                                    <a onclick="nuevoRol(false)" style="color: #AE212A; cursor: pointer;"><i class="fa fa-plus-square"> Nuevo Rol</i></a> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
                                                     <a onclick="nuevoPermiso(false)" data-toggle ="modal" style="color: #AE212A; cursor: pointer;"><i class="fa fa-plus-square"> Nuevo Permiso</i></a>
+
                                                 </th>
                                             </tr>
                                         </thead>
@@ -144,19 +145,19 @@
             <div class="modal-body">
 
                 <div class="row" id="formPermiso">
-                    <div class="col-md-12">
+                    <div class="col-md-4" style="padding-bottom: 35px;">
                         <select class="select2" id="cmbRoles">
 
                         </select>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label>Lista de accesos:</label>
                         <ul id="listMenus">
 
                         </ul>
 
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label>Lista seleccionada</label>
                         <ul id="listSeleccionados">
 
@@ -170,6 +171,7 @@
             <div class="modal-footer">
 
                 <span id="msgPermiso" class="msgAlertas" style="float: left; color: red; display: none;">Los campos marcados con rojo son obligatorios</span>
+                <button class="btn btn-facebook" onclick="editarPermiso(0,0,true)" id="btnEditarPermiso" style="display: none;">Guardar</button>
                 <button class="btn btn-primary" onclick="nuevoPermiso(true)" id="btnGuardarPermiso">Guardar</button>
                 <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 

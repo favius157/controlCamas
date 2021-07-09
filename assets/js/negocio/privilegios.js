@@ -8,6 +8,7 @@ $(document).ready(function () {
 })
 
 var itemElegidos = [];
+var idActual = 0;
 
 
 function nuevoRol(flag) {
@@ -100,6 +101,72 @@ function nuevoPermiso(flag) {
     }
 }
 
+function cargarPermisoByRol(idRol) {
+    var param = {
+        idRol: idRol
+    }
+
+    $.ajax({
+        data: param,
+        type: 'POST',
+        url: base_url() + "Privilegio/cargarPermisoByRol",
+        beforeSend: function (xhr) {
+
+        }, success: function (data, textStatus, jqXHR) {
+            console.log(data);
+            if (data != "null") {
+                $("#btnGuardarPermiso").css("display", "none");
+                $("#btnEditarPermiso").css("display", "inline");
+                $("#modalNuevoPermiso").modal("show");
+                var arr = JSON.parse(data);
+                $("#cmbRoles").val(arr[0]["idRol"]);
+                $("#cmbRoles").prop("disabled", true);
+                $("#cmbRoles").change();
+                $.each(arr, function (index, contenido) {
+                    itemElegidos.push("" + contenido.idMenu);
+                    $("#listSeleccionados").append("<li style = 'margin-bottom: 15px; width: 150px;' id = 'liSelect-" + contenido.idMenu + "'>" + contenido.menu + "<a style = 'float : right;' class = 'btn btn-default btn-xs' onclick = 'quitar(" + contenido.idMenu + ")'><i class = 'fa fa-trash-o'></i></li></a>");
+                })
+                console.log("nueva lista " + itemElegidos);
+            } else {
+                alert("No se encontraron resultados");
+                cargarPermisos();
+            }
+        }
+    })
+}
+
+function editarPermiso(id, idRol, flag) {
+    if (!flag) {
+        limpiarDatosPermisos();
+        idActual = id;
+
+        cargarPermisoByRol(idRol);
+
+    } else {
+        var param = {
+            idPermiso: idActual,
+            permisos: JSON.stringify(itemElegidos),
+            idRol: $("#cmbRoles").val()
+        }
+
+        $.ajax({
+            data: param,
+            type: 'POST',
+            url: base_url() + "Privilegio/editarPrivilegio",
+            beforeSend: function (xhr) {
+                $("#btnEditarPermiso").prop("disabled", true);
+                $("#btnEditarPermiso").text("Guardando...");
+            }, success: function (data, textStatus, jqXHR) {
+                $("#btnEditarPermiso").prop("disabled", false);
+                $("#btnEditarPermiso").text("Guardar");
+                $("#modalNuevoPermiso").modal("hide");
+                alert(data);
+                cargarPermisos();
+            }
+        })
+    }
+}
+
 function cargarPermisos() {
     $.ajax({
         type: 'POST',
@@ -113,7 +180,7 @@ function cargarPermisos() {
                 var estado = "";
                 $.each(arr, function (index, contenido) {
                     estado = (contenido.estado == 1) ? "Activo" : "Inactivo";
-                    $("#tablaPermisos>tbody").append('<tr><td>' + contenido.menu + '</td><td>' + contenido.rol + '</td><td>' + estado + '</td><td></td></tr>');
+                    $("#tablaPermisos>tbody").append('<tr><td>' + contenido.menu + '</td><td>' + contenido.rol + '</td><td>' + estado + '</td><td><a class = "btn btn-default btn-xs" onclick = "editarPermiso(' + contenido.id + ', ' + contenido.idRol + ', false);"><i class = "fa fa-pencil"></i></a></td></tr>');
                 })
 
                 function fnFormatDetails(oTable, nTr)
@@ -246,19 +313,18 @@ function cargarRoles() {
 }
 
 function agregar(id) {
-    if ($.inArray(id, itemElegidos) >= 0) {
+    if ($.inArray("" + id, itemElegidos) >= 0) {
         alert("Item ya elegido");
     } else {
-        itemElegidos.push(id);
+        itemElegidos.push("" + id);
 
         var item = $("#li-" + id).text();
-        $("#listSeleccionados").append("<li style = 'margin-bottom: 15px; width: 150px;' id = 'liSelect-" + id + "'>" + item + "<a style = 'float : right;' class = 'btn btn-default btn-xs' onclick = 'quitar(" + id + ")'><i class = 'fa fa-times'></i></li></a>");
+        $("#listSeleccionados").append("<li style = 'margin-bottom: 15px; width: 150px;' id = 'liSelect-" + id + "'>" + item + "<a style = 'float : right;' class = 'btn btn-default btn-xs' onclick = 'quitar(" + id + ")'><i class = 'fa fa-trash-o'></i></li></a>");
     }
 }
 
 function quitar(item) {
-    var i = itemElegidos.indexOf(item);
-
+    var i = itemElegidos.indexOf("" + item);
     if (i !== -1) {
         itemElegidos.splice(i, 1);
         $("#liSelect-" + item).remove();
@@ -272,11 +338,14 @@ function limpiarDatos() {
 }
 
 function limpiarDatosPermisos() {
+    $("#btnGuardarPermiso").css("display", "inline");
+    $("#btnEditarPermiso").css("display", "none");
     $("#formPermiso select").val(0);
     $("#formPermiso select").css("border", "1px solid #ccc");
     $(".msgAlertas").css("display", "none");
     $("#listMenus").empty();
     $("#listSeleccionados").empty();
+    $("#cmbRoles").prop("disabled", false);
     itemElegidos = [];
     cargarRoles();
 }
