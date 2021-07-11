@@ -37,6 +37,41 @@ class Cama extends CI_Controller {
         }
     }
 
+    function nuevaCama() {
+        $resultado = $this->cama_model->nuevaCama($_POST["numeroCama"], $_POST["bloque"], $_POST["piso"], $_POST["sector"]);
+
+        if ($resultado == 1) {
+            echo "Registro exitoso";
+        } else if ($resultado == 0) {
+            echo "Se produjo un error al guardar los datos";
+        } else {
+            echo "La cama a registrar ya existe en el piso seleccionado";
+        }
+
+       
+    }
+    
+    function nuevoBloque() {
+        echo $this->cama_model->nuevoBloque($_POST["nombreBloque"]);
+    }
+
+    function cargarBloques() {
+        $bloques = $this->cama_model->cargarBloques();
+        $lista = array();
+        if ($bloques != null) {
+            foreach ($bloques as $bloques) {
+                $datos["id"] = $bloques["id_bloque"];
+                $datos["nombreBloque"] = $bloques["nombre_bloque"];
+                $datos["estado"] = $bloques["estado"];
+                $lista[] = $datos;
+            }
+
+            echo json_encode($lista);
+        } else {
+            echo "null";
+        }
+    }
+
     function cargarCamasByPiso() {
         $camas = $this->cama_model->cargarCamasByPiso($_POST["idPiso"]);
         $lista = array();

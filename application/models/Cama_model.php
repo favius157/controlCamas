@@ -14,7 +14,7 @@ class Cama_model extends CI_Model {
     }
 
     function cargarPisos() {
-        $query = $this->db->query("SELECT p.id_piso as id_piso, p.numero_piso as numero_piso, COUNT(c.id_cama) as cantidadCamas FROM cama c, piso p WHERE p.id_piso = c.id_piso GROUP by p.id_piso");
+        $query = $this->db->query("SELECT p.id_piso as id_piso, p.numero_piso as numero_piso, COUNT(c.id_cama) as cantidadCamas FROM piso p LEFT JOIN cama c ON p.id_piso = c.id_piso GROUP by p.id_piso");
         if ($query->num_rows() > 0) {
             return $query->result_array();
         } else {
@@ -24,6 +24,33 @@ class Cama_model extends CI_Model {
 
     function cargarPisoById($idPiso) {
         $query = $this->db->query("SELECT * FROM piso WHERE id_piso = $idPiso");
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+
+    function nuevaCama($numeroCama, $bloque, $piso, $sector) {
+        if ($this->validarCamaExistente($numeroCama, $piso) == null) {
+            $fechaActual = date("Y-m-d H:i:s");
+            $ip = $this->input->ip_address();
+            $query = $this->db->query("insert into cama values (null, '$numeroCama', $piso, $bloque, $sector, '$fechaActual', '$ip', 1)");
+            return $query;
+        } else {
+            return "-1";
+        }
+    }
+
+    function nuevoBloque($nombreBloque) {
+        $fechaActual = date("Y-m-d H:i:s");
+        $ip = $this->input->ip_address();
+        $query = $this->db->query("insert into bloque values (null, '$nombreBloque', '$fechaActual', '$ip', 1)");
+        return $query;
+    }
+
+    function validarCamaExistente($numeroCama, $piso) {
+        $query = $this->db->query("SELECT * FROM cama WHERE numero_cama = '$numeroCama' and id_piso = $piso");
         if ($query->num_rows() > 0) {
             return $query->result_array();
         } else {
@@ -51,6 +78,15 @@ class Cama_model extends CI_Model {
 
     function cargarBloqueById($idBloque) {
         $query = $this->db->query("SELECT * FROM bloque WHERE id_bloque = $idBloque");
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+
+    function cargarBloques() {
+        $query = $this->db->query("SELECT * FROM bloque WHERE estado = 1");
         if ($query->num_rows() > 0) {
             return $query->result_array();
         } else {

@@ -91,28 +91,12 @@
                                                     <th scope="col">Sector</th>
                                                     <th scope="col">Estado de la cama</th>
                                                     <th scope="col">
-                                                        <a onclick="nuevaCama(false)" style="color: #AE212A; cursor: pointer;"><i class="fa fa-plus-square"> Nueva cama</i></a> 
+                                                        <a onclick="nuevaCama(false)" style="color: #AE212A; cursor: pointer; border-right: 1px solid; padding-right: 5px;"><i class="fa fa-plus-square"> Nueva cama</i></a> <a onclick="nuevoBloque(false)" style="color: #AE212A; cursor: pointer;"><i class="fa fa-plus-square"> Nuevo bloque</i></a> 
                                                     </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Mark</td>
-                                                    <td>Otto</td>
-                                                    <td>@mdo</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>Jacob</td>
-                                                    <td>Thornton</td>
-                                                    <td>@fat</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td colspan="2">Larry the Bird</td>
-                                                    <td>@twitter</td>
-                                                </tr>
+
                                             </tbody>
                                         </table>
                                     </div>		
@@ -135,21 +119,41 @@
 </html>
 
 
-<div id="modalNuevoRol" class="modal fade" role="dialog">
+<div id="modalCamas" class="modal fade" role="dialog">
     <div class="modal-dialog" style="width: 50%;">
 
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><span id="task"></span> Rol</h4>
+                <h4 class="modal-title"><span class="task"></span> Cama</h4>
             </div>
             <div class="modal-body">
 
-                <div class="row" id="formRol">
+                <div class="row" id="formCama">
                     <div class="col-md-6">
                         <label>Nombre de rol:</label>
-                        <input type="text" name="nRol" class="form-control" placeholder="Nombre del rol">
+                        <input type="number" name="nCama" class="form-control" placeholder="Número de cama">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Piso:</label>
+                        <select class="select2" id="cmbPisos">
+
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Bloque:</label>
+                        <select class="select2" id="cmbBloques">
+
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Sector:</label>
+                        <select class="form-control" id="cmbSector">
+                            <option value="0" selected>Seleccione el sector</option>
+                            <option value="1">Varones</option>
+                            <option value="2">Mujeres</option>
+                        </select>
                     </div>
 
                 </div>
@@ -158,9 +162,43 @@
             </div>
             <div class="modal-footer">
 
-                <span id="msgRol" class="msgAlertas" style="float: left; color: red; display: none;">Los campos marcados con rojo son obligatorios</span>
-                <button class="btn btn-facebook" onclick="editarRol(0, true)" id="btnEditarRol" style="display: none;">Guardar</button>
-                <button class="btn btn-primary" onclick="nuevoRol(true)" id="btnGuardarRol">Guardar</button>
+                <span id="msgCama" class="msgAlertas" style="float: left; color: red; display: none;">Los campos marcados con rojo son obligatorios</span>
+                <button class="btn btn-facebook" onclick="editarCama(0, true)" id="btnEditarCama" style="display: none;">Guardar</button>
+                <button class="btn btn-primary" onclick="nuevaCama(true)" id="btnGuardarCama">Guardar</button>
+                <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="modalBloque" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width: 30%;">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><span class="task"></span> bloque</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row" id="formCama">
+                    <div class="col-md-6">
+                        <label>Nombre de rol:</label>
+                        <input type="text" name="nBloque" class="form-control" placeholder="Nombre del bloque">
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+
+                <span id="msgBloque" class="msgAlertas" style="float: left; color: red; display: none;">Los campos marcados con rojo son obligatorios</span>
+                <button class="btn btn-facebook" onclick="editarBloque(0, true)" id="btnEditarBloque" style="display: none;">Guardar</button>
+                <button class="btn btn-primary" onclick="nuevoBloque(true)" id="btnGuardarBloque">Guardar</button>
                 <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 
             </div>
