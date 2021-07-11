@@ -22,6 +22,7 @@
 
                                     <li><a href="centros">> Registrar Centros</a></li>
                                     <li><a href="unidad">> Registrar Unidad</a></li>
+                                    <li><a href="paciente">> Registrar Paciente</a></li>
 
                                 </ul>
                             </li>
