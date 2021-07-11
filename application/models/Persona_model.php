@@ -30,6 +30,18 @@ class Persona_model extends CI_Model {
         }
     }
 
+
+     public function getlistarPersonas() {
+        $query = $this->db->query("SELECT id_persona, nombres, apellidos  FROM persona p
+                                   WHERE p.id_persona NOT IN (SELECT id_persona FROM usuario)");
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+
     function editarPersona($id,$nombres,$apellidos,$ci,$matricula,$telefono,$cargo,$establecimiento){
          $fechaActual = date("Y-m-d H:i:s");
          $ip =$this->input->ip_address();

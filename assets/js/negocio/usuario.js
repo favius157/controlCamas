@@ -17,9 +17,9 @@ function cargarUsuarios() {
                 var arr = JSON.parse(data);
                 var estado = "";
                 $.each(arr, function (index, contenido) {
-                    estado = (contenido.estado == 0) ? "Inactivo" : "Activo";
+                    estado = (contenido.estado == 0) ? "<a>Inactivo</a>" : "<a >Activo</a>";
                     //console.log(contenido.id);
-                    $("#tablaUsuario>tbody").append('<tr><td>' + contenido.nombres + ' ' + contenido.apellidos + '</td><td>' + contenido.establecimiento + '</td><td>' + contenido.rol + '</td><td>' + contenido.usuario + '</td><td>' + estado + '</td><td><a class="btn btn-warning" onclick = "editarUsuario('+contenido.id+', false)"><i class="fa fa-pencil"></i></a><a class="btn btn-info" onclick = "editarContrasena('+contenido.id+', false)"><i class="fa fa-key"></i></a><a class="btn btn-danger" onclick = "eliminarPersona('+contenido.id+', false)"><i class="fa fa-trash-o"></i></a></td></tr>');
+                    $("#tablaUsuario>tbody").append('<tr><td>' + contenido.nombres + ' ' + contenido.apellidos + '</td><td>' + contenido.establecimiento + '</td><td>' + contenido.rol + '</td><td>' + contenido.usuario + '</td><td>' + estado + '</td><td><a class="btn btn-warning" onclick = "editarRol('+contenido.id+', false)"><i class="fa fa-pencil"></i></a><a class="btn btn-info" onclick = "editarContrasena('+contenido.id+', false)"><i class="fa fa-key"></i></a><a class="btn btn-danger" onclick = "eliminarUsuario('+contenido.id+', false)"><i class="fa fa-trash-o"></i></a></td></tr>');
                 });
 
                 function fnFormatDetails(oTable, nTr)
@@ -112,7 +112,6 @@ function cargarUsuarios() {
 function nuevoUsuario(flag) {
     if (!flag) {
         limpiarDatosUsuario();
-        $("#btnEditarUsuario").show();
         $("#modalNuevoUsuario").modal("show");
     } else {
         var bandera = true;
@@ -196,58 +195,35 @@ function cargarUsuario(id){
             
         },
         success: function (data,textStatus, jqXHR) {
-                    console.log(data);
+                    //console.log(data);
                     if(data!="null"){
                         var arr=JSON.parse(data);
                         $.each(arr,function(index,contenido){
-                            $("input[name='usuario']").val(contenido.usuario);
-                            //$("input[name='contraseña']").val(contenido.contrasena);
-                            $("#cmbRoles").val(contenido.idrol);
+                            $("input[name='editarusuario']").val(contenido.usuario);
+                            $("#cmbEditarRoles").val(contenido.idrol);
                         })     
                     }else{
 
                     }
-                    $("#cmbRoles").change();
+                    $("#cmbEditarRoles").change();
                     $('#btnGuardarUsuario').hide();
                     $("#btnEditarUsuario").show();
-                    $("input[name='rContraseña']").hide();
-                    $("#cmbPersonas").hide();
                 }
     });         
 }
 
-function editarUsuario(id,flag) {
+function editarRol(id,flag) {
     if (!flag) {
         idActual=id;
         limpiarDatosUsuario();
         cargarUsuario(id);
 
-        $("#modalNuevoUsuario").modal("show");
+        $("#modalEditarRol").modal("show");
         
     } else {
         var bandera = true;
-        if ($("input[name='usuario']").val() == "") {
-            $("input[name='usuario']").css("border", "1px solid red");
-            bandera = false;
-        }
-
-        if ($("input[name='contraseña']").val() == "") {
-            $("input[name='contraseña']").css("border", "1px solid red");
-            bandera = false;
-        }
-
-        if ($("input[name='rContraseña']").val() == "") {
-            $("input[name='rContraseña']").css("border", "1px solid red");
-            bandera = false;
-        }
-
-        if ($("#cmbPersonas").val() == 0) {
-            $("#s2id_cmbPersonas").css("border", "1px solid red");
-            bandera = false;
-        }
-
-         if ($("#cmbRoles").val() == 0) {
-            $("#s2id_cmbRoles").css("border", "1px solid red");
+         if ($("#cmbEditarRoles").val() == 0) {
+            $("#s2id_cmbEditarRoles").css("border", "1px solid red");
             bandera = false;
         }
 
@@ -256,29 +232,22 @@ function editarUsuario(id,flag) {
         } else {
             var param = {
                 id:idActual,
-                nombres: $("input[name='nPersona']").val(),
-                apellidos: $("input[name='aPersona']").val(),
-                ci: $("input[name='ci']").val(),
-                matricula: $("input[name='matricula']").val(),
-                telefono: $("input[name='telefono']").val(),
-                cargo: $("#cmbCargos").val(),
-                establecimiento: $("#cmbEstablecimientos").val()
+                rol: $("#cmbEditarRoles").val(),
             }
             $.ajax({
                 data: param,
                 type: 'POST',
-                url: base_url() + "Persona/editarPersona/",
+                url: base_url() + "Usuario/editarRol/",
                 beforeSend: function (xhr) {
-                    
                 }, success: function (data, textStatus, jqXHR) {
-                    //console.log(data);
+                    
                     if (data == 1) {
-                        cargarPersonas();
-                        $("#modalNuevaPersona").modal("hide");
-                        alert("Se modificaron los datos exitosamente");
+                        cargarUsuarios();
+                        $("#modalEditarRol").modal("hide");
+                        alert("Se modifico el rol asignado al usuario");
                         
                     } else {
-                        alert("Ocurrio un problemas al registrar a la persona");
+                        alert("Ocurrio un problemas al modificar el Rol");
                     }
                 }
             })
@@ -286,8 +255,59 @@ function editarUsuario(id,flag) {
     }
 }
 
+function editarContrasena(id,flag) {
+    if (!flag) {
+        idActual=id;
+        limpiarDatosUsuario();
+        cargarUsuario(id);
 
-function eliminarPersona(id,flag){
+        $("#modalEditarContrasena").modal("show");
+        
+    } else {
+        var bandera = true;
+          if ($("input[name='editarcontraseña']").val() == "") {
+            $("input[name='editarcontraseña']").css("border", "1px solid red");
+            bandera = false;
+        }
+
+        if ($("input[name='erContraseña']").val() == "") {
+            $("input[name='erContraseña']").css("border", "1px solid red");
+            bandera = false;
+        }
+
+        if (!bandera) {
+            $("#msgUsuariosc").css("display", "block");
+        } else {
+            if($("input[name='editarcontraseña']").val()==$("input[name='erContraseña']").val()){
+                var param = {
+                    id:idActual,
+                    contrasena: $("input[name='editarcontraseña']").val(),
+                }
+                $.ajax({
+                    data: param,
+                    type: 'POST',
+                    url: base_url() + "Usuario/editarContrasena/",
+                    beforeSend: function (xhr) {
+                    }, success: function (data, textStatus, jqXHR) {
+                        
+                        if (data == 1) {
+                            cargarUsuarios();
+                            $("#modalEditarContrasena").modal("hide");
+                            alert("Se modifico la Contraseña");
+                            
+                        } else {
+                            alert("Ocurrio un problemas al modificar la contraseña");
+                        }
+                    }
+                })
+            }else{
+                alert("La contraseña de verificación no coincide");
+            }
+        }
+    }
+}
+
+function eliminarUsuario(id,flag){
     if(!flag){
         idActual=id;
         var bandera = true;
@@ -301,13 +321,13 @@ function eliminarPersona(id,flag){
             $.ajax({
                 data: param,
                 type: 'POST',
-                url: base_url() + "Persona/eliminarPersona/",
+                url: base_url() + "Usuario/eliminarUsuario/",
                 beforeSend: function (xhr) {
                     
                 }, success: function (data, textStatus, jqXHR) {
                     //console.log(data);
                     if (data == 1) {
-                        cargarPersonas();
+                        cargarUsuarios();
                         $("#myModalConfirmacion").modal("hide");
                         alert("Se Elimino el registro!!!!!");
                         
@@ -325,7 +345,7 @@ function eliminarPersona(id,flag){
 function cargarPersonas() {
     $.ajax({
         type: 'POST',
-        url: base_url() + "Persona/cargarPersonasU",
+        url: base_url() + "Persona/listarPersonas",
         beforeSend: function (xhr) {
             $("#cmbPersonas").empty();
         }, success: function (data, textStatus, jqXHR) {
@@ -352,30 +372,35 @@ function cargarRoles() {
         url: base_url() + "Rol/cargarRoles",
         beforeSend: function (xhr) {
             $("#cmbRoles").empty();
+            $("#cmbEditarRoles").empty();
         }, success: function (data, textStatus, jqXHR) {
             if (data != "null") {
                 var arr = JSON.parse(data);
                 $("#cmbRoles").append("<option value = 0 selected>Asigne el Establecimiento de la persona</option>");
+                $("#cmbEditarRoles").append("<option value = 0 selected>Asigne el Establecimiento de la persona</option>");
                 $.each(arr, function (index, contenido) {
                     $("#cmbRoles").append("<option value = " + contenido.id + ">" + contenido.rol + "</option>");
+                    $("#cmbEditarRoles").append("<option value = " + contenido.id + ">" + contenido.rol + "</option>");
                 })
             } else {
                 $("#cmbRoles").append("<option value = 0 selected>No hay datos para mostrar</option>");
+                $("#cmbEditarRoles").append("<option value = 0 selected>No hay datos para mostrar</option>");
             }
             $("#cmbRoles").change();
+            $("#cmbEditarRoles").change();
         }
     })
 }
 
 
 function limpiarDatosUsuario() {
-    $("#formPersona input").val("");
+    $("#formUsuario input").val("");
     cargarPersonas();
     cargarRoles();
-    $("#btnEditarPersona").css("display", "none");
-    $("#btnGuardarPersona").css("display", "inline");
-    $("#formPersona .select2").css("border", "1px solid #ccc");
-    $("#formPersona input").css("border", "1px solid #ccc");
+    $("#btnEditarUsuario").css("display", "none");
+    $("#btnGuardarUsuario").css("display", "inline");
+    $("#formUsuario .select2").css("border", "1px solid #ccc");
+    $("#formUsuario input").css("border", "1px solid #ccc");
     $(".msgAlertas").css("display", "none");
 
 }

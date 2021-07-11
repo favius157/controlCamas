@@ -58,28 +58,29 @@
                     <div class="col-md-12">
                         <div id="loaderTable"></div>
                         <div class="block-flat">
-                            <div class="header">							
+                            <div class="header">                            
                                 <h3>Lista de personas</h3>
                             </div>
                             <div class="content">
                                 <div class="table-responsive">
-                                    <table class="table no-border hover" id="tablaPersona">
+                                    <table class="table no-border hover" id="tablaUsuario">
                                         <thead class="no-border">
                                             <tr>
                                                 <th>Nombre completo</th>
                                                 <th>Establecimiento</th>
                                                 <th>Rol</th>
                                                 <th>Usuario</th>
+                                                <th>Estado</th>
                                                 <th><a onclick="nuevoUsuario(false)" data-toggle ="modal" data-target ="#myModal" style="color: #AE212A; cursor: pointer;"><i class="fa fa-plus-square"> Nuevo</i></a></th>
                                             </tr>
                                         </thead>
                                         <tbody class="no-border-y">
 
                                         </tbody>
-                                    </table>					
+                                    </table>                    
                                 </div>
                             </div>
-                        </div>				
+                        </div>              
                     </div>
                 </div>
             </div>
@@ -90,55 +91,46 @@
 
     <?php
     include_once (APPPATH . "views/template/scripts.php");
-    ?> 	
-    <script type="text/javascript" src="<?= base_url("assets/js/negocio/persona.js") ?>"></script>
+    ?>  
+    <script type="text/javascript" src="<?= base_url("assets/js/negocio/usuario.js") ?>"></script>
 </body>
 </html>
 
 
-<div id="modalNuevaPersona" class="modal fade" role="dialog">
+<div id="modalNuevoUsuario" class="modal fade" role="dialog">
     <div class="modal-dialog" style="width: 50%;">
 
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Nueva persona</h4>
+                <h4 class="modal-title">Nuevo Usuario</h4>
             </div>
             <div class="modal-body">
+                <div class="row" id="formUsuario">
+                    <div class="col-md-6">
+                            <label>Persona:</label>
+                            <select class="select2" id="cmbPersonas"></select>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Usuario:</label>
+                        <input type="text" name="usuario" class="form-control" placeholder="Usuario de la persona">
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Contraseña:</label>
+                        <input type="password" name="contraseña" class="form-control" placeholder="">
+                    </div>
 
-                <div class="row" id="formPersona">
                     <div class="col-md-6">
-                        <label>Nombre:</label>
-                        <input type="text" name="nPersona" class="form-control" placeholder="Nombre de la persona">
-                    </div>
-                    <div class="col-md-6">
-                        <label>Apellidos:</label>
-                        <input type="text" name="aPersona" class="form-control" placeholder="Apellidos paterno y materno">
-                    </div>
-                    <div class="col-md-6">
-                        <label>Carné de identidad:</label>
-                        <input type="text" name="ci" class="form-control" placeholder="Ej: 123465sc">
-                    </div>
-                    <div class="col-md-6">
-                        <label>Matrícula:</label>
-                        <input type="text" name="matricula" class="form-control" placeholder="Ej: 911007LBF">
-                    </div>
-                    <div class="col-md-6">
-                        <label>Número telefónico:</label>
-                        <input type="number" name="telefono" class="form-control" placeholder="Ej: 78456995">
-                    </div>
-                    <div class="col-md-6">
-                        <label>Cargo:</label>
-                        <select class="select2" id="cmbCargos">
+                        <label>Repetir Contraseña:</label>
+                        <input type="password" name="rContraseña" class="form-control" placeholder="">
+                    </div><br>
 
-                        </select>
-                    </div>
                     <div class="col-md-6">
-                        <label>Establecimiento:</label>
-                        <select class="select2" id="cmbEstablecimientos">
-
-                        </select>
+                        <label>Rol:</label>
+                        <select class="select2" id="cmbRoles"></select>
                     </div>
 
                 </div>
@@ -147,9 +139,88 @@
             </div>
             <div class="modal-footer">
 
-                <span id="msgPersonas" class="msgAlertas" style="float: left; color: red; display: none;">Los campos marcados con rojo son obligatorios</span>
-                <button class="btn btn-warning" onclick="editarPersona(0, true)" id="btnEditarPersona">Guardar</button>
-                <button class="btn btn-primary" onclick="nuevaPersona(true)" id="btnGuardarPersona">Guardar</button>
+                <span id="msgUsuarios" class="msgAlertas" style="float: left; color: red; display: none">Los campos marcados con rojo son obligatorios</span>
+                <button class="btn btn-warning" onclick="editarUsuario(0, true)" id="btnEditarUsuario" >Guardar</button>
+                <button class="btn btn-primary" onclick="nuevoUsuario(true)" id="btnGuardarUsuario">Guardar</button>
+                <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="modalEditarRol" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width: 50%;">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Editar Rol</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="formUsuario">
+                    <div class="col-md-6">
+                        <label>Usuario:</label>
+                        <input type="text" name="editarusuario" class="form-control" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Rol:</label>
+                        <select class="select2" id="cmbEditarRoles"></select>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+
+                <span id="msgUsuarios" class="msgAlertas" style="float: left; color: red; display: none">Los campos marcados con rojo son obligatorios</span>
+                <button class="btn btn-warning" onclick="editarRol(0, true)" id="btnEditarRol" >Guardar</button>
+                <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="modalEditarContrasena" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width: 50%;">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Cambiar Contraseña</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="formUsuario">
+                    <div class="col-md-6">
+                        <label>Usuario:</label>
+                        <input type="text" name="editarusuario" class="form-control" disabled>
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Contraseña:</label>
+                        <input type="password" name="editarcontraseña" class="form-control" placeholder="">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Repetir Contraseña:</label>
+                        <input type="password" name="erContraseña" class="form-control" placeholder="">
+                    </div><br>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+
+                <span id="msgUsuariosc" class="msgAlertas" style="float: left; color: red; display: none">Los campos marcados con rojo son obligatorios</span>
+                <button class="btn btn-warning" onclick="editarContrasena(0, true)" id="btnEditarContrasena" >Guardar</button>
                 <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 
             </div>
@@ -178,7 +249,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger btn-flat md-close" data-dismiss="modal">No</button>
-                <button id="btnGuardar" onclick="eliminarPersona(0, true)" type="button" class="btn btn-primary btn-flat md-close">Confimar</button>
+                <button id="btnGuardar" onclick="eliminarUsuario(0, true)" type="button" class="btn btn-primary btn-flat md-close">Confimar</button>
             </div>
 
         </div>

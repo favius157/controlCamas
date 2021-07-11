@@ -58,5 +58,29 @@ class Usuario_model extends CI_Model {
             return null;
         }
     }
+
+
+    function editarRol($id,$rol){
+         $fechaActual = date("Y-m-d H:i:s");
+         $ip =$this->input->ip_address();
+         $query=$this->db->query("UPDATE usuario SET id_rol=$rol WHERE id_usuario=$id");
+         return $query;
+    }
+
+
+    function editarContrasena($id,$contrasena){
+         $fechaActual = date("Y-m-d H:i:s");
+         $ip =$this->input->ip_address();
+         $query=$this->db->query("UPDATE usuario SET contrasena='$contrasena' WHERE id_usuario=$id");
+         return $query;
+    }
+
+
+    function eliminarUsuario($id){
+         $fechaActual = date("Y-m-d H:i:s");
+         $ip =$this->input->ip_address();
+         $query=$this->db->query("UPDATE usuario SET estado=0 WHERE id_usuario=$id");
+         return $query;
+    }
 }
 ?>

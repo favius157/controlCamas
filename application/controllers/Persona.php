@@ -52,6 +52,25 @@ class Persona extends CI_Controller {
         }
     }
 
+    function listarPersonas() {
+        $personas = $this->persona_model->getlistarPersonas();
+        $lista = array();
+
+        if ($personas != null) {
+            foreach ($personas as $personas) {
+                $datos["id"] = $personas["id_persona"];
+                $datos["nombres"] = $personas["nombres"];
+                $datos["apellidos"] = $personas["apellidos"];
+
+                $lista[] = $datos;
+            }
+
+            echo json_encode($lista);
+        } else {
+            echo "null";
+        }
+    }
+
 
     function editarPersona(){
         echo $this->persona_model->editarPersona($_POST["id"],$_POST["nombres"],$_POST["apellidos"],$_POST["ci"],$_POST["matricula"],$_POST["telefono"],$_POST["cargo"],$_POST["establecimiento"]);

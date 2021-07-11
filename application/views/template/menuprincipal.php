@@ -26,7 +26,7 @@
                                 </ul>
                             </li>
 
-                            <li><a href="#"><i class="nav-icon fa fa-user-plus"></i><span>Personal</span></a>
+                            <li><a href="#"><i class="fa fa-user-plus"></i><span>Personal</span></a>
                                 <ul class="sub-menu">
                                     <li><a href="cargo">> Registrar Cargo</a></li>
                                     <li><a href="persona">> Registrar Personal</a></li>

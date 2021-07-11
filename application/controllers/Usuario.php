@@ -67,6 +67,19 @@ class Usuario extends CI_Controller {
         }
 
     }
+
+
+    function editarRol() {
+        echo $this->usuario_model->editarRol($_POST["id"],$_POST["rol"]);
+    }
+
+    function editarContrasena() {
+        echo $this->usuario_model->editarContrasena($_POST["id"], sha1(md5($_POST["contrasena"])));
+    }
+
+    function eliminarUsuario() {
+        echo $this->usuario_model->eliminarUsuario($_POST["id"]);
+    }
 }
 
 ?>
