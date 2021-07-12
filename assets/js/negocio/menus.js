@@ -3,6 +3,8 @@ $(document).ready(function () {
     cargarGrupos();
 })
 
+var idActual = 0;
+
 function nuevoMenu(flag) {
     if (!flag) {
         limpiarDatosMenu();
@@ -13,12 +15,12 @@ function nuevoMenu(flag) {
             $("input[name = 'nMenu']").css("border", "1px red solid");
             bandera = true;
         }
-        
+
         if ($("input[name = 'url']").val() == "") {
             $("input[name = 'url']").css("border", "1px red solid");
             bandera = true;
         }
-        
+
         if ($("#cmbGrupo").val() == 0) {
             $("#s2id_cmbGrupo").css("border", "1px red solid");
             bandera = true;
@@ -98,6 +100,119 @@ function nuevoGrupo(flag) {
     }
 }
 
+function cargarMenuById(idMenu) {
+    var param = {
+        idMenu: idMenu
+    }
+
+    $.ajax({
+        data: param,
+        type: 'POST',
+        url: base_url() + "Menu/cargarMenuById",
+        beforeSend: function (xhr) {
+
+        }, success: function (data, textStatus, jqXHR) {
+            if (data != "null") {
+                var arr = JSON.parse(data);
+                $("input[name='nMenu']").val(arr[0]["menu"]);
+                $("input[name='url']").val(arr[0]["url"]);
+                $("#cmbGrupo").val(arr[0]["idGrupo"]);
+                $("#cmbGrupo").change();
+                $("#btnGuardarMenu").css("display", "none");
+                $("#btnEditarMenu").css("display", "inline");
+                $(".task").text("Modificar");
+                $("#modalMenu").modal("show");
+            } else {
+            }
+
+        }
+    })
+}
+
+function borrarItem(idMenu, flag) {
+    if (!flag) {
+        idActual = idMenu;
+        $("#modalConfirmacion").modal("show");
+    } else {
+        var param = {
+            idMenu: idActual
+        }
+
+        $.ajax({
+            data: param,
+            type: 'POST',
+            url: base_url() + "Menu/borrarItem",
+            beforeSend: function (xhr) {
+
+            }, success: function (data, textStatus, jqXHR) {
+                if (data == 1) {
+                    alert("Cambio realizado con éxito");
+                    $("#modalConfirmacion").modal("hide");
+                    cargarMenus();
+                } else {
+                    alert("No se pudo realizar los cambios");
+                }
+            }
+        })
+    }
+}
+
+function editarItem(idMenu, flag) {
+    if (!flag) {
+        idActual = idMenu;
+        limpiarDatosMenu();
+        cargarMenuById(idMenu);
+    } else {
+        var bandera = false;
+        if ($("input[name = 'nMenu']").val() == "") {
+            $("input[name = 'nMenu']").css("border", "1px red solid");
+            bandera = true;
+        }
+
+        if ($("input[name = 'url']").val() == "") {
+            $("input[name = 'url']").css("border", "1px red solid");
+            bandera = true;
+        }
+
+        if ($("#cmbGrupo").val() == 0) {
+            $("#s2id_cmbGrupo").css("border", "1px red solid");
+            bandera = true;
+        }
+
+        if (bandera) {
+            $("#msgMenu").css("display", "block");
+        } else {
+            var param = {
+                idMenu: idActual,
+                nombreMenu: $("input[name = 'nMenu']").val(),
+                ruta: $("input[name = 'url']").val(),
+                idGrupo: $("#cmbGrupo").val()
+            }
+
+            $.ajax({
+                data: param,
+                type: 'POST',
+                url: base_url() + "Menu/editarItem",
+                bewforeSend: function (xhr) {
+                    $("#btnEditarMenu").prop("disabled", true);
+                    $("#btnEditarMenu").text("Guardando...");
+                }, success: function (data, textStatus, jqXHR) {
+                    $("#btnEditarMenu").prop("disabled", false);
+                    $("#btnEditarMenu").text("Guardar");
+                    if (data == 1) {
+                        alert("Datos guardados con exito");
+                        cargarMenus();
+                        cargarGrupos();
+                    } else {
+                        alert("No se pudo guardar los datos");
+                    }
+                    $("#modalMenu").modal("hide");
+                }
+            })
+        }
+    }
+}
+
 function cargarMenus() {
     $.ajax({
         type: 'POST',
@@ -110,7 +225,7 @@ function cargarMenus() {
                 var estado = "";
                 $.each(arr, function (index, contenido) {
                     estado = (contenido.estado == 0) ? "Inactivo" : "Activo";
-                    $("#tablaMenu>tbody").append("<tr><td>" + contenido.menu + "</td><td>" + contenido.url + "</td><td>" + contenido.grupo + "</td><td>" + estado + "</td><td style = 'text-align:center;'><a class = 'btn btn-default btn-xs' onclick = 'editar(" + contenido.id + ", false);'><i class = 'fa fa-pencil'></i></a></td></tr>");
+                    $("#tablaMenu>tbody").append("<tr><td>" + contenido.menu + "</td><td>/" + contenido.url + "</td><td>" + contenido.grupo + "</td><td>" + estado + "</td><td style = 'text-align:center;'><a class = 'btn btn-default btn-xs' onclick = 'editarItem(" + contenido.id + ", false);'><i class = 'fa fa-pencil'></i></a><a class = 'btn btn-default btn-xs' onclick = 'borrarItem(" + contenido.id + ", false);'><i class = 'fa fa-trash-o'></i></a></td></tr>");
                 })
             } else {
                 $("#tablaMenu>tbody").append("<tr><td colspan = 5 style = 'text-align: center;'>No hay datos para mostrar</td></tr>");

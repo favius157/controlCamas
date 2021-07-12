@@ -18,7 +18,26 @@ class Menu_model extends CI_Model {
     }
     
     function nuevoItem($nombreItem, $idGrupo, $url) {
-        return $this->db->query("insert into menu values (null, '$nombreItem', '/$url', $idGrupo, 1)");
+        return $this->db->query("insert into menu values (null, '$nombreItem', '$url', $idGrupo, 1)");
+    }
+    
+    function cargarMenu() {
+        $query = $this->db->query("SELECT * from menu");
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+    
+    
+    function editarItem($idMenu, $nombreItem, $idGrupo, $url) {
+        return $this->db->query("update menu set menu = '$nombreItem', url = '$url', id_grupo = $idGrupo where id_menu = $idMenu");
+    }
+    
+    function borrarItem($idMenu) {
+        return $this->db->query("update menu set estado = 0 where id_menu = $idMenu");
     }
 
     function cargarGrupoById($idGrupo) {
@@ -42,6 +61,16 @@ class Menu_model extends CI_Model {
 
     function cargarMenuByGrupo($idGrupo) {
         $query = $this->db->query("SELECT * from menu where id_grupo = $idGrupo");
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+    
+    function cargarMenuById($idMenu) {
+        $query = $this->db->query("SELECT * from menu where id_menu = $idMenu");
 
         if ($query->num_rows() > 0) {
             return $query->result_array();

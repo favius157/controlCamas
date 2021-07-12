@@ -152,7 +152,7 @@
             <div class="modal-footer">
 
                 <span id="msgMenu" class="msgAlertas" style="float: left; color: red; display: none;">Los campos marcados con rojo son obligatorios</span>
-                <button class="btn btn-facebook" onclick="editarMenu(0, true)" id="btnEditarMenu" style="display: none;">Guardar</button>
+                <button class="btn btn-facebook" onclick="editarItem(0, true)" id="btnEditarMenu" style="display: none;">Guardar</button>
                 <button class="btn btn-primary" onclick="nuevoMenu(true)" id="btnGuardarMenu">Guardar</button>
                 <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 
@@ -196,39 +196,6 @@
     </div>
 </div>
 
-<div id="modalSala" class="modal fade" role="dialog">
-    <div class="modal-dialog" style="width: 30%;">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><span class="task"></span> sala</h4>
-            </div>
-            <div class="modal-body">
-
-                <div class="row" id="formSala">
-                    <div class="col-md-6">
-                        <label>Nombre de la sala:</label>
-                        <input type="text" name="nSala" class="form-control" placeholder="Nombre de la sala">
-                    </div>
-
-                </div>
-
-
-            </div>
-            <div class="modal-footer">
-
-                <span id="msgSala" class="msgAlertas" style="float: left; color: red; display: none;">Los campos marcados con rojo son obligatorios</span>
-                <button class="btn btn-facebook" onclick="editarSala(0, true)" id="btnEditarSala" style="display: none;">Guardar</button>
-                <button class="btn btn-primary" onclick="nuevaSala(true)" id="btnGuardarSala">Guardar</button>
-                <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-
-            </div>
-        </div>
-
-    </div>
-</div>
 
 <div id="modalConfirmacion" class="modal fade bd-example-modal-sm" role="dialog">
     <div class="modal-dialog" style="width: 30%;">
@@ -237,12 +204,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" style="text-align: center;">Seguro que quieres <span class="task"></span> este registro?</h4>
+                <h4 class="modal-title" style="text-align: center;">Seguro que quieres borrar este registro?</h4>
             </div>
 
             <div class="modal-footer" style="text-align: center;">
 
-                <button class="btn btn-primary" onclick="cambiarEstadoCama(0, 0, true)" style="width: 76.6px;">SI</button>
+                <button class="btn btn-primary" onclick="borrarItem(0, true)" style="width: 76.6px;">SI</button>
                 <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 
             </div>
