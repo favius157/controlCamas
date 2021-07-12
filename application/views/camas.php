@@ -87,11 +87,12 @@
                                                 <tr>
                                                     <th scope="col">Bloque</th>
                                                     <th scope="col">Piso</th>
+                                                    <th scope="col">Sala</th>
                                                     <th scope="col">Número de cama</th>
                                                     <th scope="col">Sector</th>
                                                     <th scope="col">Estado de la cama</th>
-                                                    <th scope="col">
-                                                        <a onclick="nuevaCama(false)" style="color: #AE212A; cursor: pointer; border-right: 1px solid; padding-right: 5px;"><i class="fa fa-plus-square"> Nueva cama</i></a> <a onclick="nuevoBloque(false)" style="color: #AE212A; cursor: pointer;"><i class="fa fa-plus-square"> Nuevo bloque</i></a> 
+                                                    <th scope="col" style="text-align: center;">
+                                                        <a onclick="nuevaCama(false)" style="color: #AE212A; cursor: pointer; border-right: 1px solid; padding-right: 5px;"><i class="fa fa-plus-square"> Nueva cama</i></a> <a onclick="nuevoBloque(false)" style="color: #AE212A; cursor: pointer; border-right: 1px solid; padding-left: 15px; padding-right: 5px;"><i class="fa fa-plus-square"> Nuevo bloque</i></a> <a onclick="nuevaSala(false)" style="color: #AE212A; cursor: pointer; padding-left: 15px;"><i class="fa fa-plus-square"> Nueva sala</i></a>
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -155,6 +156,13 @@
                             <option value="2">Mujeres</option>
                         </select>
                     </div>
+                    
+                    <div class="col-md-6">
+                        <label>Sala:</label>
+                        <select class="select2" id="cmbSala">
+                            
+                        </select>
+                    </div>
 
                 </div>
 
@@ -207,6 +215,40 @@
     </div>
 </div>
 
+<div id="modalSala" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width: 30%;">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><span class="task"></span> sala</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row" id="formSala">
+                    <div class="col-md-6">
+                        <label>Nombre de la sala:</label>
+                        <input type="text" name="nSala" class="form-control" placeholder="Nombre de la sala">
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+
+                <span id="msgSala" class="msgAlertas" style="float: left; color: red; display: none;">Los campos marcados con rojo son obligatorios</span>
+                <button class="btn btn-facebook" onclick="editarSala(0, true)" id="btnEditarSala" style="display: none;">Guardar</button>
+                <button class="btn btn-primary" onclick="nuevaSala(true)" id="btnGuardarSala">Guardar</button>
+                <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <div id="modalConfirmacion" class="modal fade bd-example-modal-sm" role="dialog">
     <div class="modal-dialog" style="width: 30%;">
 
@@ -214,12 +256,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" style="text-align: center;">Seguro que quieres borrar este registro?</h4>
+                <h4 class="modal-title" style="text-align: center;">Seguro que quieres <span class="task"></span> este registro?</h4>
             </div>
 
             <div class="modal-footer" style="text-align: center;">
 
-                <button class="btn btn-primary" onclick="borrar(0, true)" style="width: 76.6px;">SI</button>
+                <button class="btn btn-primary" onclick="cambiarEstadoCama(0, 0, true)" style="width: 76.6px;">SI</button>
                 <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 
             </div>

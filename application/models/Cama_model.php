@@ -30,12 +30,21 @@ class Cama_model extends CI_Model {
             return null;
         }
     }
+    
+    function cargarSalas() {
+        $query = $this->db->query("SELECT * FROM sala WHERE estado = 1");
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
 
-    function nuevaCama($numeroCama, $bloque, $piso, $sector) {
+    function nuevaCama($numeroCama, $bloque, $piso, $sector, $sala) {
         if ($this->validarCamaExistente($numeroCama, $piso) == null) {
             $fechaActual = date("Y-m-d H:i:s");
             $ip = $this->input->ip_address();
-            $query = $this->db->query("insert into cama values (null, '$numeroCama', $piso, $bloque, $sector, '$fechaActual', '$ip', 1)");
+            $query = $this->db->query("insert into cama values (null, '$numeroCama', $piso, $bloque, $sala, $sector, '$fechaActual', '$ip', 1)");
             return $query;
         } else {
             return "-1";
@@ -46,6 +55,13 @@ class Cama_model extends CI_Model {
         $fechaActual = date("Y-m-d H:i:s");
         $ip = $this->input->ip_address();
         $query = $this->db->query("insert into bloque values (null, '$nombreBloque', '$fechaActual', '$ip', 1)");
+        return $query;
+    }
+    
+    function nuevaSala($nombreSala) {
+//        $fechaActual = date("Y-m-d H:i:s");
+//        $ip = $this->input->ip_address();
+        $query = $this->db->query("insert into sala values (null, '$nombreSala', 1)");
         return $query;
     }
 
@@ -84,6 +100,15 @@ class Cama_model extends CI_Model {
             return null;
         }
     }
+    
+    function cargarSalaById($idSala) {
+        $query = $this->db->query("SELECT * FROM sala WHERE id_sala = $idSala");
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
 
     function cargarBloques() {
         $query = $this->db->query("SELECT * FROM bloque WHERE estado = 1");
@@ -92,6 +117,10 @@ class Cama_model extends CI_Model {
         } else {
             return null;
         }
+    }
+    
+    function cambiarEstadoCama($idCama, $estado) {
+        return $this->db->query("update cama set estado = $estado where id_cama = $idCama");
     }
 
 }

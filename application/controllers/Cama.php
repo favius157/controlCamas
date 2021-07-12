@@ -37,8 +37,25 @@ class Cama extends CI_Controller {
         }
     }
 
+    function cargarSalas() {
+        $salas = $this->cama_model->cargarSalas();
+        $lista = array();
+        if ($salas != null) {
+            foreach ($salas as $salas) {
+                $datos["id"] = $salas["id_sala"];
+                $datos["sala"] = $salas["sala"];
+                $datos["estado"] = $salas["estado"];
+                $lista[] = $datos;
+            }
+
+            echo json_encode($lista);
+        } else {
+            echo "null";
+        }
+    }
+
     function nuevaCama() {
-        $resultado = $this->cama_model->nuevaCama($_POST["numeroCama"], $_POST["bloque"], $_POST["piso"], $_POST["sector"]);
+        $resultado = $this->cama_model->nuevaCama($_POST["numeroCama"], $_POST["bloque"], $_POST["piso"], $_POST["sector"], $_POST["sala"]);
 
         if ($resultado == 1) {
             echo "Registro exitoso";
@@ -47,12 +64,14 @@ class Cama extends CI_Controller {
         } else {
             echo "La cama a registrar ya existe en el piso seleccionado";
         }
-
-       
     }
-    
+
     function nuevoBloque() {
         echo $this->cama_model->nuevoBloque($_POST["nombreBloque"]);
+    }
+
+    function nuevaSala() {
+        echo $this->cama_model->nuevaSala($_POST["nombreSala"]);
     }
 
     function cargarBloques() {
@@ -106,6 +125,8 @@ class Cama extends CI_Controller {
                 $datos["piso"] = $this->cama_model->cargarPisoById($camas["id_piso"])[0]["numero_piso"];
                 $datos["idBloque"] = $camas["id_bloque"];
                 $datos["bloque"] = $this->cama_model->cargarBloqueById($camas["id_bloque"])[0]["nombre_bloque"];
+                $datos["idSala"] = $camas["id_sala"];
+                $datos["sala"] = $this->cama_model->cargarSalaById($camas["id_sala"])[0]["sala"];
                 $datos["sector"] = $camas["sector"];
                 $datos["estado"] = $camas["estado"];
 
@@ -116,6 +137,10 @@ class Cama extends CI_Controller {
         } else {
             echo "null";
         }
+    }
+
+    function cambiarEstadoCama() {
+        echo $this->cama_model->cambiarEstadoCama($_POST["idCama"], $_POST["estado"]);
     }
 
 }
