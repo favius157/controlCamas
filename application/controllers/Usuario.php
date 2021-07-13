@@ -1,7 +1,7 @@
 <?php
 
 defined('BASEPATH') or exit('No direct script access allowed');
-
+session_start();
 /**
  * Description of Persona
  *
@@ -14,6 +14,9 @@ class Usuario extends CI_Controller {
         $this->load->helper('url');
         $this->load->model('usuario_model');
         $this->load->model('rol_model');
+        if(!isset($_SESSION["usuario"])){
+            redirect("login", "refresh");
+        }
     }
 
     public function index() {
