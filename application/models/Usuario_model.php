@@ -13,24 +13,40 @@ class Usuario_model extends CI_Model {
         parent::__construct();
     }
 
+    public function login($usuario, $password) {
+        $query = $this->db->where("estado", 1);
+        $query = $this->db->where("contrasena", $password);
+        $query = $this->db->where("usuario", $usuario);
+        $query = $this->db->get("usuario");
+        /* foreach ($query->result_array() as $row) {
+          echo $row['Usuario'];
+          } */
 
-    function validarUsuario($usuario){
-        $query=$this->db->query("SELECT * FROM usuario WHERE usuario='$usuario'");
+        // return $row;
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
 
-            if($query->num_rows()>0){
-                return $query->result_array();
-            }else{
-                return null;
-            }
+    function validarUsuario($usuario) {
+        $query = $this->db->query("SELECT * FROM usuario WHERE usuario='$usuario'");
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
     }
 
     function nuevoUsuario($usuario, $contrasena, $persona, $rol) {
         $fechaActual = date("Y-m-d H:i:s");
-        $ip =$this->input->ip_address();
-        if($this->validarUsuario($usuario)==null){
+        $ip = $this->input->ip_address();
+        if ($this->validarUsuario($usuario) == null) {
             $query = $this->db->query("INSERT usuario (usuario,contrasena,id_persona,id_rol,fecha_registro,ip_registro) VALUES ('$usuario', '$contrasena', $persona, $rol, '$fechaActual', '$ip')");
             return $query;
-         }else{
+        } else {
             return "El funcionario ya tiene un usuario registrado.";
         }
     }
@@ -48,7 +64,6 @@ class Usuario_model extends CI_Model {
         }
     }
 
-
     public function getUsuario($idusuario) {
         $query = $this->db->query("SELECT * FROM usuario WHERE id_usuario=$idusuario");
 
@@ -59,28 +74,27 @@ class Usuario_model extends CI_Model {
         }
     }
 
-
-    function editarRol($id,$rol){
-         $fechaActual = date("Y-m-d H:i:s");
-         $ip =$this->input->ip_address();
-         $query=$this->db->query("UPDATE usuario SET id_rol=$rol WHERE id_usuario=$id");
-         return $query;
+    function editarRol($id, $rol) {
+        $fechaActual = date("Y-m-d H:i:s");
+        $ip = $this->input->ip_address();
+        $query = $this->db->query("UPDATE usuario SET id_rol=$rol WHERE id_usuario=$id");
+        return $query;
     }
 
-
-    function editarContrasena($id,$contrasena){
-         $fechaActual = date("Y-m-d H:i:s");
-         $ip =$this->input->ip_address();
-         $query=$this->db->query("UPDATE usuario SET contrasena='$contrasena' WHERE id_usuario=$id");
-         return $query;
+    function editarContrasena($id, $contrasena) {
+        $fechaActual = date("Y-m-d H:i:s");
+        $ip = $this->input->ip_address();
+        $query = $this->db->query("UPDATE usuario SET contrasena='$contrasena' WHERE id_usuario=$id");
+        return $query;
     }
 
-
-    function eliminarUsuario($id){
-         $fechaActual = date("Y-m-d H:i:s");
-         $ip =$this->input->ip_address();
-         $query=$this->db->query("UPDATE usuario SET estado=0 WHERE id_usuario=$id");
-         return $query;
+    function eliminarUsuario($id) {
+        $fechaActual = date("Y-m-d H:i:s");
+        $ip = $this->input->ip_address();
+        $query = $this->db->query("UPDATE usuario SET estado=0 WHERE id_usuario=$id");
+        return $query;
     }
+
 }
+
 ?>

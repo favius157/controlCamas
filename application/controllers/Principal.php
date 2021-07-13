@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-//session_start();
+session_start();
 
 class Principal extends CI_Controller {
 
@@ -10,6 +10,9 @@ class Principal extends CI_Controller {
         parent::__construct();
         $this->load->helper('url');
         $this->load->model("persona_model");
+        if(!isset($_SESSION["usuario"])){
+            redirect("login", "refresh");
+        }
     }
 
     public function index() {

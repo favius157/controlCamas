@@ -1,7 +1,7 @@
 <?php
 
 defined('BASEPATH') or exit('No direct script access allowed');
-
+session_start();
 /**
  * Description of Privilegio
  *
@@ -13,6 +13,9 @@ class Privilegio extends CI_Controller {
         parent::__construct();
         $this->load->helper('url');
         $this->load->model('privilegio_model');
+        if(!isset($_SESSION["usuario"])){
+            redirect("login", "refresh");
+        }
     }
 
     public function index() {
