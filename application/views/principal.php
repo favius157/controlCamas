@@ -42,9 +42,9 @@
                 <div class="cl-navblock">
                     <div class="menu-space">
                         <div class="content">
-                            <ul class="cl-vnavigation">
+                            <ul class="cl-vnavigation" id="menuPrincipal">
                                 <?php
-                                    include_once (APPPATH . "views/template/menuprincipal.php"); 
+                                    //include_once (APPPATH . "views/template/menuprincipal.php"); 
                                 ?>
                             </ul>
                         </div>

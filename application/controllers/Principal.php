@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-//session_start();
+session_start();
 
 class Principal extends CI_Controller {
 

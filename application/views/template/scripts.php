@@ -32,6 +32,7 @@
             App.init();
             App.dashBoard();
             $('.md-trigger').modalEffects();
+            cargarMenu();
              function fnFormatDetails(oTable, nTr) /*Da estilo a la tabla, añade paginacion, imput search */
                                                             {
                                                                 var aData = oTable.fnGetData(nTr);

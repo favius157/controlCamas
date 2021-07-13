@@ -93,6 +93,16 @@ class Privilegio_model extends CI_Model {
             return null;
         }
     }
+    
+    function cargarPermisoByRol2($idRol) {
+        $query = $this->db->query("SELECT g.grupo as grupo, m.menu as menu, m.url as url FROM menu m, rol r, privilegios p, grupo g WHERE m.id_grupo = g.id_grupo and p.id_menu = m.id_menu and p.id_rol = r.id_rol and r.id_rol = $idRol ORDER by g.grupo");
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
 
     function borrarAccesoByRol($idRol) {
         return $this->db->query("delete from privilegios where id_rol = $idRol");
