@@ -59,20 +59,20 @@
                         <div id="loaderTable"></div>
                         <div class="block-flat">
                             <div class="header">							
-                                <h3>Gestion de camas</h3>
+                                <h3>Gestión de menús</h3>
                             </div>
                             <div class="content">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <ul class="list-group">
                                             <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: green; color: white; font-weight: 600;">
-                                                Lista de pisos
+                                                Lista de grupos
                                                 <!--<span class="badge badge-primary badge-pill" style="cursor: pointer; background-color: white !important; color: green;"><i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Agregar un nuevo piso"></i></span>-->
                                             </li>
-                                            <div id="listaPisos">
+                                            <div id="listaGrupos">
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                                     Dapibus ac facilisis in
-                                                    <span class="badge badge-primary badge-pill">2</span>
+                                                    <span class="badge badge-primary badge-pill" style="background-color: green;">2</span>
                                                 </li>
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                                     Morbi leo risus
@@ -82,17 +82,15 @@
                                         </ul>
                                     </div>		
                                     <div class="col-md-8">
-                                        <table class="table table-bordered" id="tablaCamas">
+                                        <table class="table table-bordered" id="tablaMenu">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Bloque</th>
-                                                    <th scope="col">Piso</th>
-                                                    <th scope="col">Sala</th>
-                                                    <th scope="col">Número de cama</th>
-                                                    <th scope="col">Sector</th>
-                                                    <th scope="col">Estado de la cama</th>
+                                                    <th scope="col">Menu</th>
+                                                    <th scope="col">Url</th>
+                                                    <th scope="col">Grupo</th>
+                                                    <th scope="col">Estado</th>
                                                     <th scope="col" style="text-align: center;">
-                                                        <a onclick="nuevaCama(false)" style="color: #AE212A; cursor: pointer; border-right: 1px solid; padding-right: 5px;"><i class="fa fa-plus-square"> Nueva cama</i></a> <a onclick="nuevoBloque(false)" style="color: #AE212A; cursor: pointer; border-right: 1px solid; padding-left: 15px; padding-right: 5px;"><i class="fa fa-plus-square"> Nuevo bloque</i></a> <a onclick="nuevaSala(false)" style="color: #AE212A; cursor: pointer; padding-left: 15px;"><i class="fa fa-plus-square"> Nueva sala</i></a>
+                                                        <a onclick="nuevoGrupo(false)" style="color: #AE212A; cursor: pointer; border-right: 1px solid; padding-right: 15px;"><i class="fa fa-plus-square"> Nuevo Grupo</i></a> <a onclick="nuevoMenu(false)" style="color: #AE212A; cursor: pointer; padding-left: 15px; padding-right: 5px;"><i class="fa fa-plus-square"> Nuevo ítem</i></a> 
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -115,52 +113,35 @@
     <?php
     include_once (APPPATH . "views/template/scripts.php");
     ?> 	
-    <script type="text/javascript" src="<?= base_url("assets/js/negocio/camas.js") ?>"></script>
+    <script type="text/javascript" src="<?= base_url("assets/js/negocio/menus.js") ?>"></script>
 </body>
 </html>
 
 
-<div id="modalCamas" class="modal fade" role="dialog">
+<div id="modalMenu" class="modal fade" role="dialog">
     <div class="modal-dialog" style="width: 50%;">
 
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><span class="task"></span> Cama</h4>
+                <h4 class="modal-title"><span class="task"></span> Menú</h4>
             </div>
             <div class="modal-body">
 
-                <div class="row" id="formCama">
+                <div class="row" id="formMenu">
                     <div class="col-md-6">
-                        <label>Nombre de rol:</label>
-                        <input type="number" name="nCama" class="form-control" placeholder="Número de cama">
+                        <label>Nombre de item:</label>
+                        <input type="text" name="nMenu" class="form-control" placeholder="Nombre del ítem">
                     </div>
                     <div class="col-md-6">
-                        <label>Piso:</label>
-                        <select class="select2" id="cmbPisos">
+                        <label>Ruta de acceso:</label>
+                        <input type="text" name="url" class="form-control" placeholder="Ruta url">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Grupo:</label>
+                        <select class="select2" id="cmbGrupo">
 
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label>Bloque:</label>
-                        <select class="select2" id="cmbBloques">
-
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label>Sector:</label>
-                        <select class="form-control" id="cmbSector">
-                            <option value="0" selected>Seleccione el sector</option>
-                            <option value="1">Varones</option>
-                            <option value="2">Mujeres</option>
-                        </select>
-                    </div>
-                    
-                    <div class="col-md-6">
-                        <label>Sala:</label>
-                        <select class="select2" id="cmbSala">
-                            
                         </select>
                     </div>
 
@@ -170,9 +151,9 @@
             </div>
             <div class="modal-footer">
 
-                <span id="msgCama" class="msgAlertas" style="float: left; color: red; display: none;">Los campos marcados con rojo son obligatorios</span>
-                <button class="btn btn-facebook" onclick="editarCama(0, true)" id="btnEditarCama" style="display: none;">Guardar</button>
-                <button class="btn btn-primary" onclick="nuevaCama(true)" id="btnGuardarCama">Guardar</button>
+                <span id="msgMenu" class="msgAlertas" style="float: left; color: red; display: none;">Los campos marcados con rojo son obligatorios</span>
+                <button class="btn btn-facebook" onclick="editarItem(0, true)" id="btnEditarMenu" style="display: none;">Guardar</button>
+                <button class="btn btn-primary" onclick="nuevoMenu(true)" id="btnGuardarMenu">Guardar</button>
                 <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 
             </div>
@@ -181,21 +162,21 @@
     </div>
 </div>
 
-<div id="modalBloque" class="modal fade" role="dialog">
+<div id="modalGrupo" class="modal fade" role="dialog">
     <div class="modal-dialog" style="width: 30%;">
 
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><span class="task"></span> bloque</h4>
+                <h4 class="modal-title"><span class="task"></span> grupo</h4>
             </div>
             <div class="modal-body">
 
-                <div class="row" id="formCama">
+                <div class="row" id="formGrupo">
                     <div class="col-md-6">
-                        <label>Nombre de rol:</label>
-                        <input type="text" name="nBloque" class="form-control" placeholder="Nombre del bloque">
+                        <label>Nombre del grupo:</label>
+                        <input type="text" name="nGrupo" class="form-control" placeholder="Nombre del grupo">
                     </div>
 
                 </div>
@@ -204,9 +185,9 @@
             </div>
             <div class="modal-footer">
 
-                <span id="msgBloque" class="msgAlertas" style="float: left; color: red; display: none;">Los campos marcados con rojo son obligatorios</span>
-                <button class="btn btn-facebook" onclick="editarBloque(0, true)" id="btnEditarBloque" style="display: none;">Guardar</button>
-                <button class="btn btn-primary" onclick="nuevoBloque(true)" id="btnGuardarBloque">Guardar</button>
+                <span id="msgGrupo" class="msgAlertas" style="float: left; color: red; display: none;">Los campos marcados con rojo son obligatorios</span>
+                <button class="btn btn-facebook" onclick="editarGrupo(0, true)" id="btnEditarGrupo" style="display: none;">Guardar</button>
+                <button class="btn btn-primary" onclick="nuevoGrupo(true)" id="btnGuardarGrupo">Guardar</button>
                 <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 
             </div>
@@ -215,39 +196,6 @@
     </div>
 </div>
 
-<div id="modalSala" class="modal fade" role="dialog">
-    <div class="modal-dialog" style="width: 30%;">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><span class="task"></span> sala</h4>
-            </div>
-            <div class="modal-body">
-
-                <div class="row" id="formSala">
-                    <div class="col-md-6">
-                        <label>Nombre de la sala:</label>
-                        <input type="text" name="nSala" class="form-control" placeholder="Nombre de la sala">
-                    </div>
-
-                </div>
-
-
-            </div>
-            <div class="modal-footer">
-
-                <span id="msgSala" class="msgAlertas" style="float: left; color: red; display: none;">Los campos marcados con rojo son obligatorios</span>
-                <button class="btn btn-facebook" onclick="editarSala(0, true)" id="btnEditarSala" style="display: none;">Guardar</button>
-                <button class="btn btn-primary" onclick="nuevaSala(true)" id="btnGuardarSala">Guardar</button>
-                <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-
-            </div>
-        </div>
-
-    </div>
-</div>
 
 <div id="modalConfirmacion" class="modal fade bd-example-modal-sm" role="dialog">
     <div class="modal-dialog" style="width: 30%;">
@@ -256,12 +204,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" style="text-align: center;">Seguro que quieres <span class="task"></span> este registro?</h4>
+                <h4 class="modal-title" style="text-align: center;">Seguro que quieres borrar este registro?</h4>
             </div>
 
             <div class="modal-footer" style="text-align: center;">
 
-                <button class="btn btn-primary" onclick="cambiarEstadoCama(0, 0, true)" style="width: 76.6px;">SI</button>
+                <button class="btn btn-primary" onclick="borrarItem(0, true)" style="width: 76.6px;">SI</button>
                 <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 
             </div>
