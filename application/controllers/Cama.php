@@ -105,6 +105,8 @@ class Cama extends CI_Controller {
                 $datos["piso"] = $this->cama_model->cargarPisoById($camas["id_piso"])[0]["numero_piso"];
                 $datos["idBloque"] = $camas["id_bloque"];
                 $datos["bloque"] = $this->cama_model->cargarBloqueById($camas["id_bloque"])[0]["nombre_bloque"];
+                $datos["idSala"] = $camas["id_sala"];
+                $datos["sala"] = $this->cama_model->cargarSalaById($camas["id_sala"])[0]["sala"];
                 $datos["sector"] = $camas["sector"];
                 $datos["estado"] = $camas["estado"];
 
