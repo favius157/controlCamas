@@ -243,7 +243,7 @@ function cargarCamasByPiso(idPiso) {
                     sector = (contenido.sector == 1) ? "Varones" : "Mujeres";
                     estado = (contenido.estado == 1) ? "Habilitada" : "Deshabilitada";
 
-                    $("#tablaCamas>tbody").append('<tr><th scope="row">' + contenido.bloque + '</th><th scope="row">' + contenido.piso + '</th><td>' + contenido.numeroCama + '</td><td>' + sector + '</td><td>' + estado + '</td><td><a class = "btn btn-default btn-xs" onclick = "editar(' + contenido.id + ', false);"><i class = "fa fa-pencil"></i></a><a class = "btn btn-default btn-xs" onclick = "borrar(' + contenido.id + ', false);"><i class = "fa fa-trash-o"></i></a></td></tr>');
+                    $("#tablaCamas>tbody").append('<tr><th scope="row">' + contenido.bloque + '</th><th scope="row">' + contenido.piso + '</th><th scope="row">' + contenido.sala + '</th><td>' + contenido.numeroCama + '</td><td>' + sector + '</td><td>' + estado + '</td><td><a class = "btn btn-default btn-xs" onclick = "editar(' + contenido.id + ', false);"><i class = "fa fa-pencil"></i></a><a class = "btn btn-default btn-xs" onclick = "borrar(' + contenido.id + ', false);"><i class = "fa fa-trash-o"></i></a></td></tr>');
                 })
             } else {
                 $("#tablaCamas>tbody").append('<tr><td colspan = "6" style = "text-align: center;">No hay datos para mostrar</td></tr>');
