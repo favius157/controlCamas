@@ -3,9 +3,31 @@
 <!DOCTYPE html>
 <html lang="en">
     <style>
+        .salas .card{
+            height: 150px;
+            text-align: center;
+            border: 1px solid;
+            border-radius: 5px;
+            /*margin: 20px 20px;*/
+        }
+
         .salas{
-            border: 1px solid gray;            
-            height: 50px;
+            margin-bottom: 10px;
+        }
+
+        .card-body{
+            cursor: pointer;
+
+        }
+        
+        .detalleCama{
+            border: 1px solid black;
+            width: 10px;
+            height: 10px;
+        }
+        .list-inline span{
+            margin-right: 5px;
+            margin-left: 5px;
         }
     </style>
     <?php
@@ -59,261 +81,49 @@
             </div>
         </div>   
         <div class="container-fluid" id="pcont">
-            <div class="cl-mcont">
-                <div class="row bloques">
+            <div class="cl-mcont" style="height: 900px;">
+                <div class="row bloques" style="height: 33%;">
                     <div class="col-md-2">
                         <div class="card block-flat">
-                            <div class="card-body" id="bloque-1">
-                                <div class="row salas" id="sala-1" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
+                            <div class="card-body" id="bloquea">
+                                <h1>Bloque A</h1>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2" style="padding-right: 0px">
                         <div class="card block-flat">
-                            <div class="card-body">
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
+                            <div class="card-body" id="bloquec">
+                                <h1>Bloque C</h1>
+                                
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4" style="padding: 0 0 0 0;">
                         <div class="card block-flat">
-                            <div class="card-body">
+                            <div class="">
                                 <h1 style="text-align: center;">Ascensor</h1>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2" style="padding-left: 0px">
                         <div class="card block-flat">
-                            <div class="card-body">
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
+                            <div class="card-body" id="bloqueh">
+                                <h1>Bloque H</h1>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="card block-flat">
-                            <div class="card-body">
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
+                            <div class="card-body" id="bloquef">
+                                <h1>Bloque F</h1>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row" style="height: 150px;">
+                <div class="row" style="height: 33%;">
                     <div class="col-md-2" style="">
                         <div class="card block-flat">
-                            <div class="card-body">
+                            <div class="">
                                 <h1 style="">
                                     Enfermeria
                                 </h1>
@@ -325,7 +135,7 @@
                     </div>
                     <div class="col-md-2" style="">
                         <div class="card block-flat">
-                            <div class="card-body">
+                            <div class="">
                                 <h1 style="">
                                     Enfermeria
                                 </h1>
@@ -333,253 +143,39 @@
                         </div>
                     </div>
                 </div>
-                <div class="row bloques">
+                <div class="row bloques" style="height: 33%;">
                     <div class="col-md-2">
                         <div class="card block-flat">
-                            <div class="card-body">
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4" style="background-color: red; color: white; height: 100%;">
-                                        cama
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
+                            <div class="card-body" id="bloqueb">
+                                <h1>Bloque B</h1>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2" style="padding-right: 0px">
                         <div class="card block-flat">
-                            <div class="card-body">
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
+                            <div class="card-body" id="bloqued">
+                                <h1>Bloque D</h1>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4" style="padding: 0 0 0 0;">
                         <div class="card block-flat">
-                            <div class="card-body">
+                            <div class="">
                                 <h1 style="text-align: center;">Ascensor</h1>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2" style="padding-left: 0px">
                         <div class="card block-flat">
-                            <div class="card-body">
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
+                            <div class="card-body" id="bloqueg">
+                                <h1>Bloque G</h1>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="card block-flat">
-                            <div class="card-body">
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
-                                <div class="row salas" style="margin-top: 0px;">
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                    <div class="col-md-4">
-                                        cama
-                                    </div>
-                                </div>
+                            <div class="card-body" id="bloquee">
+                                <h1>Bloque E</h1>
                             </div>
                         </div>
                     </div>
@@ -593,88 +189,26 @@
     <?php
     include_once (APPPATH . "views/template/scripts.php");
     ?> 	
-    <script>
-        $(document).ready(function () {
-            var param = {
-                idPiso: 3
-            }
-            $.ajax({
-                data: param,
-                type: 'POST',
-                url: base_url() + "Cama/cargarCamasByPiso",
-                beforeSend: function (xhr) {
-                    $(".card-body").empty();
-                }, success: function (data, textStatus, jqXHR) {
-                    var arr = JSON.parse(data);
-                    var sala = 0;
-                    console.log(arr);
-                    $.each(arr, function (index, contenido) {
-                        if (contenido.idSala != sala) {
-                            sala = contenido.idSala;
-                            $("#bloque-" + contenido.idBloque).append('<div class="row salas" id="sala-' + contenido.idSala + '" style="margin-top: 0px;"></div>');
-                            $("#sala-" + contenido.idSala).append('<div class="col-md-4">'+contenido.numeroCama+'</div>');
-                        } else {
-                            $("#sala-" + sala).append('<div class="col-md-4">'+contenido.numeroCama+'</div>');
-                        }
-                    })
-                }
-            })
-        })
-    </script>
+    <script type="text/javascript" src="<?= base_url("assets/js/negocio/pisos.js") ?>"></script>
 </body>
 </html>
 
 
-<div id="modalNuevoRol" class="modal fade" role="dialog">
-    <div class="modal-dialog" style="width: 50%;">
+
+
+<div id="modalCamas" class="modal fade bd-example-modal-sm" role="dialog">
+    <div class="modal-dialog" style="width: 60%; height: 500px;">
 
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><span id="task"></span> Rol</h4>
+                <h1 class="modal-title" style="text-align: center;">Estado de camas en el bloque <span id="nombreBloque" style="font-weight: 700"></span><span id="nombrePiso"></span></h1>
             </div>
             <div class="modal-body">
-
-                <div class="row" id="formRol">
-                    <div class="col-md-6">
-                        <label>Nombre de rol:</label>
-                        <input type="text" name="nRol" class="form-control" placeholder="Nombre del rol">
-                    </div>
-
-                </div>
-
-
-            </div>
-            <div class="modal-footer">
-
-                <span id="msgRol" class="msgAlertas" style="float: left; color: red; display: none;">Los campos marcados con rojo son obligatorios</span>
-                <button class="btn btn-facebook" onclick="editarRol(0, true)" id="btnEditarRol" style="display: none;">Guardar</button>
-                <button class="btn btn-primary" onclick="nuevoRol(true)" id="btnGuardarRol">Guardar</button>
-                <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<div id="modalConfirmacion" class="modal fade bd-example-modal-sm" role="dialog">
-    <div class="modal-dialog" style="width: 30%;">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" style="text-align: center;">Seguro que quieres borrar este registro?</h4>
+                <div id="theBloque"></div>
             </div>
 
-            <div class="modal-footer" style="text-align: center;">
-
-                <button class="btn btn-primary" onclick="borrar(0, true)" style="width: 76.6px;">SI</button>
-                <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-
-            </div>
         </div>
 
     </div>

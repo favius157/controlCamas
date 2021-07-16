@@ -30,7 +30,16 @@ class Cama_model extends CI_Model {
             return null;
         }
     }
-    
+
+    function cargarDetalleByBloque($piso, $bloque) {
+        $query = $this->db->query("SELECT c.estado as estado, c.numero_cama as numeroCama, COUNT(c.estado) as cantidad FROM cama c, bloque b WHERE b.id_bloque = c.id_bloque AND b.nombre_bloque = '$bloque' and c.id_piso = $piso GROUP BY c.estado");
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+
     function cargarSalas() {
         $query = $this->db->query("SELECT * FROM sala WHERE estado = 1");
         if ($query->num_rows() > 0) {
@@ -57,7 +66,7 @@ class Cama_model extends CI_Model {
         $query = $this->db->query("insert into bloque values (null, '$nombreBloque', '$fechaActual', '$ip', 1)");
         return $query;
     }
-    
+
     function nuevaSala($nombreSala) {
 //        $fechaActual = date("Y-m-d H:i:s");
 //        $ip = $this->input->ip_address();
@@ -100,7 +109,7 @@ class Cama_model extends CI_Model {
             return null;
         }
     }
-    
+
     function cargarSalaById($idSala) {
         $query = $this->db->query("SELECT * FROM sala WHERE id_sala = $idSala");
         if ($query->num_rows() > 0) {
@@ -118,7 +127,7 @@ class Cama_model extends CI_Model {
             return null;
         }
     }
-    
+
     function cambiarEstadoCama($idCama, $estado) {
         return $this->db->query("update cama set estado = $estado where id_cama = $idCama");
     }
