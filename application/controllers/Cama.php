@@ -2,6 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 session_start();
+
 /**
  * Description of Cama
  *
@@ -13,7 +14,7 @@ class Cama extends CI_Controller {
         parent::__construct();
         $this->load->helper('url');
         $this->load->model('cama_model');
-        if(!isset($_SESSION["usuario"])){
+        if (!isset($_SESSION["usuario"])) {
             redirect("login", "refresh");
         }
     }
@@ -109,6 +110,24 @@ class Cama extends CI_Controller {
                 $datos["sala"] = $this->cama_model->cargarSalaById($camas["id_sala"])[0]["sala"];
                 $datos["sector"] = $camas["sector"];
                 $datos["estado"] = $camas["estado"];
+
+                $lista[] = $datos;
+            }
+
+            echo json_encode($lista);
+        } else {
+            echo "null";
+        }
+    }
+
+    function cargarDetalleByBloque() {
+        $detalleCamas = $this->cama_model->cargarDetalleByBloque($_POST["idPiso"], $_POST["bloque"]);
+        $lista = array();
+        if ($detalleCamas != null) {
+            foreach ($detalleCamas as $camas) {
+                $datos["numeroCama"] = $camas["numeroCama"];
+                $datos["estado"] = $camas["estado"];
+                $datos["cantidad"] = $camas["cantidad"];
 
                 $lista[] = $datos;
             }
