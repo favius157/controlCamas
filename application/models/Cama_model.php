@@ -132,4 +132,26 @@ class Cama_model extends CI_Model {
         return $this->db->query("update cama set estado = $estado where id_cama = $idCama");
     }
 
+    function asignarCama($matricula,$nombres,$edad,$sexo,$diagnostico,$cie10,$medico,$especialidad,$idhistorial,$idcama){
+        $usuarioActual = json_decode($_SESSION["usuario"]);
+            $usuarioActual = $usuarioActual[0]->id_usuario;
+            $ip=$this->input->ip_address();
+            $hoy=date("Y-m-d H:i:s");
+        $query2=$this->cambiarEstadoCama($idcama,2);
+        $query=$this->db->query("INSERT INTO asignacion_cama (matricula,nombres,edad,sexo,diagnostico,cie10,medico,especialidad,fecha_asignacion,id_historial,id_cama,id_usuario,fecha_registro,ip_registro) VALUES('$matricula','$nombres','$edad',$sexo,'$diagnostico','$cie10','$medico','$especialidad','$hoy','$idhistorial',$idcama,$usuarioActual,'$hoy','$ip')");
+        return $query;
+    }
+
+    function verPacienteByCama($idcama){
+        $query = $this->db->query("SELECT ac.matricula as matricula,ac.nombres as nombres,edad,sexo,diagnostico,cie10,medico,especialidad,fecha_asignacion,concat(p.nombres,' ',p.apellidos) as usuario FROM asignacion_cama ac
+                                   JOIN usuario u ON ac.id_usuario=u.id_usuario
+                                   JOIN persona p ON u.id_persona=p.id_persona
+                                   WHERE id_cama=$idcama");
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+
 }

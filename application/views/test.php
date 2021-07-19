@@ -213,3 +213,179 @@
 
     </div>
 </div>
+
+<div id="modalAsignarPaciente" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width: 50%;">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" id="formAsignar">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3>Buscar Paciente</h3>
+                <H5>La busqueda se realiza por la matricula o el numero de carné del asegurado...</H5>
+                    <input type="text" name="MatriculaoCi" id="MatriculaoCi" placeholder="Ej: 820505ABC ó 123456789 " style="text-transform:uppercase" required>
+                    <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                    <button onclick="buscarPaciente();">Buscar</button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row" id="formAsignar">
+                    <div class="col-md-6">
+                        <label>Nombre Completo:</label>
+                        <input type="text" name="nombres" class="form-control" placeholder="Nombre de la persona" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Matricula:</label>
+                        <input type="text" name="matricula" class="form-control" placeholder="" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label>CIE 10:</label>
+                        <input type="text" name="cie10" class="form-control" placeholder="" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Diagnóstico:</label>
+                        <input type="text" name="diagnostico" class="form-control" placeholder="" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Medico</label>
+                        <input type="text" name="medico" class="form-control" placeholder="" disabled>
+                    </div>
+                     <div class="col-md-6">
+                        <label>Especialidad</label>
+                        <input type="text" name="especialidad" class="form-control" placeholder="" disabled>
+                    </div>
+                    <input type="hidden" name="id_historial" class="form-control">
+                    <input type="hidden" name="edad" class="form-control">
+                    <input type="hidden" name="sexo" class="form-control">
+                    
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+
+                <span id="msgAsignar" class="msgAlertas" style="float: left; color: red; display: none;font-weight: bold;">Por favor ingrese una matrícula o carné para realizar la búsqueda, gracias!....</span>
+                <button class="btn btn-success" onclick="asignarPaciente(0,true)" id="btnGuardarPersona">Asignar</button>
+                <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+ <!-- r -->
+ <div id="modalPacienteByCama" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width: 50%;">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header modal-notify modal-info" id="formVerPaciente">
+                
+                <h3 style="font-size: 20px; font-weight: bold; color: white;">INFORMACION DEL PACIENTE</h3>
+            </div>
+            <div class="modal-body">
+
+                <div class="row" id="formVerPaciente">
+                    <div class="col-md-6">
+                        <label>Nombre Completo:</label>
+                        <input type="text" name="nombres" class="form-control" placeholder="Nombre de la persona" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Matricula:</label>
+                        <input type="text" name="matricula" class="form-control" placeholder="" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <br>
+                        <label>CIE 10:</label>
+                        <input type="text" name="cie10" class="form-control" placeholder="" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <br>
+                        <label>Diagnóstico:</label>
+                        <input type="text" name="diagnostico" class="form-control" placeholder="" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <br>
+                        <label>Medico:</label>
+                        
+                            <input type="text" name="medico" class="form-control" placeholder="" disabled>
+                        
+                    </div>
+                    <div class="col-md-6">
+                        <br>
+                        <label>Especialidad:</label>
+                        <input type="text" name="especialidad" class="form-control" placeholder="" disabled>
+                    </div>
+                    <div class="col-md-5">
+                        <br>
+                        <label>Fecha Internación:</label>
+                        <input type="datetime-local" id="fecha" class="form-control" value="" style="float: left; color: red;font-size: 20px; font-weight: bold;" disabled>
+                    </div>
+                    <div class="col-md-4">
+                        <br>
+                        <label>Sexo:</label>
+                        <input type="text" id="sexo" class="form-control" value=""  disabled>
+                    </div>
+                    <div class="col-md-3">
+                        <br>
+                        <label>Edad:</label>
+                        <input type="number" id="edad" class="form-control" value=""  disabled>
+                    </div><br>
+                    <div class="col-md-6">
+                        <br>
+                        <label>Registrado Por:</label>
+                        <div class="input-group margin-bottom-sm">
+                          <span class="input-group-addon" style="background-color:lightblue;"><i class="fa fa-user fa-fw" aria-hidden="true"></i></span>
+                          <input class="form-control" id="usuario" type="text" disabled>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+
+                <span id="msgAsignar" class="msgAlertas" style="float: left; color: red; display: none;font-weight: bold;">Por favor ingrese una matrícula o carné para realizar la búsqueda, gracias!....</span>
+                <button class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="modalAltaPaciente" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width: 30%;">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header modal-notify modal-info">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title fa fa-medkit" aria-hidden="true" style="font-size: 20px; font-weight: bold; color: white;">  ATENCION!</h4>
+            </div>   
+            <div class="modal-body">
+                 <div class="text-center">
+                    <div class="i-circle success"><i class="fa fa-check fa-4x mb-3 animated rotateIn"></i></div>
+                    <h4>Oh god!</h4>
+                    <p style="font-size:15pt;">Confirmas el Alta?</p><br>
+                    
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-flat md-close" data-dismiss="modal">No</button>
+                <button id="btnGuardar" onclick="liberarCama(0, true)" type="button" class="btn btn-success btn-flat md-close">Confimar</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
