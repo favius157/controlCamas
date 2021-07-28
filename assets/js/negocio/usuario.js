@@ -395,6 +395,8 @@ function cargarRoles() {
 
 function limpiarDatosUsuario() {
     $("#formUsuario input").val("");
+    $("input[name='contraseña']").val("");
+    $("input[name='rcontraseña']").val("");
     cargarPersonas();
     cargarRoles();
     $("#btnEditarUsuario").css("display", "none");

@@ -30,6 +30,10 @@
     <link href="<?= base_url("assets/css/style.css") ?>"rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/js/jquery.niftymodals/css/component.css" />
 
+    <!-- SWEETALERT 2 
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/js/sweetalert2/sweetalert2.min.css">-->
+    
+
 
     
 

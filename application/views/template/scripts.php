@@ -21,6 +21,10 @@
     <script type="text/javascript" src="<?= base_url() ?>assets/js/jquery.datatables/jquery.datatables.min.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>assets/js/jquery.datatables/bootstrap-adapter/js/datatables.js"></script>
     <script type="text/javascript" src="<?= base_url("assets/js/jquery.niftymodals/js/jquery.modalEffects.js") ?>"></script>
+    <!--<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>-->
+
+    <!-- SWEETALERT 2 -->
+    <script src="<?= base_url() ?>assets/js/sweetalert2/sweetalert.min.js"></script>
 
     <script type="text/javascript" src="<?= base_url("assets/js/gral.js") ?>"></script>
     <!-- Bootstrap core JavaScript

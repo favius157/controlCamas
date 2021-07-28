@@ -103,11 +103,11 @@ class Cama extends CI_Controller {
                 $datos["id"] = $camas["id_cama"];
                 $datos["numeroCama"] = $camas["numero_cama"];
                 $datos["idPiso"] = $camas["id_piso"];
-                $datos["piso"] = $this->cama_model->cargarPisoById($camas["id_piso"])[0]["numero_piso"];
+                $datos["piso"] = $camas["numero_piso"];
                 $datos["idBloque"] = $camas["id_bloque"];
-                $datos["bloque"] = $this->cama_model->cargarBloqueById($camas["id_bloque"])[0]["nombre_bloque"];
+                $datos["bloque"] = $camas["nombre_bloque"];
                 $datos["idSala"] = $camas["id_sala"];
-                $datos["sala"] = $this->cama_model->cargarSalaById($camas["id_sala"])[0]["sala"];
+                $datos["sala"] = $camas["sala"];
                 $datos["sector"] = $camas["sector"];
                 $datos["estado"] = $camas["estado"];
 
@@ -168,7 +168,14 @@ class Cama extends CI_Controller {
     }
 
     function asignarCama(){
-        echo $this->cama_model->asignarCama($_POST['matricula'],$_POST['nombres'],$_POST['edad'],$_POST['sexo'],$_POST['diagnostico'],$_POST['cie10'],$_POST['medico'],$_POST['especialidad'],$_POST['idhistorial'],$_POST['idcama']);
+        $respuesta=$this->cama_model->validarAlta($_POST['idhistorial']);
+        if($respuesta==null){
+            echo $this->cama_model->asignarCama($_POST['matricula'],$_POST['nombres'],$_POST['codcns'],$_POST['fecnacimiento'],$_POST['edad'],$_POST['sexo'],$_POST['diagnostico'],$_POST['cie10'],$_POST['empresa'],$_POST['patronal'],$_POST['medico'],$_POST['especialidad'],$_POST['diagnosticoenfermeria'],$_POST['tipoingreso'],$_POST['idhistorial'],$_POST['idCama']);
+
+        }else{
+            echo json_encode($respuesta);
+        }
+        
     }
 
     function verPacienteByCama(){
@@ -191,8 +198,12 @@ class Cama extends CI_Controller {
             }
             echo json_encode($lista);
         }else{
-                echo null;
+                echo null;          
         }
-    }   
+    } 
+
+    function liberarCama() {
+        echo $this->cama_model->liberarCama($_POST["idCama"]);
+    }  
 
 }
