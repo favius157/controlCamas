@@ -140,7 +140,7 @@ class Cama_model extends CI_Model {
         return $this->db->query("UPDATE cama set estado = $estado where id_cama = $idCama");
     }
 
-    function validarAlta($idhistorial){
+    function validarAlta($idhistorial) {
         $query = $this->db->query("SELECT nombres,matricula,edad,diagnostico_enfermeria,numero_piso,numero_cama FROM asignacion_cama ac
                                     JOIN cama c ON ac.id_cama=c.id_cama
                                     JOIN sala s ON c.id_sala=c.id_sala
@@ -153,18 +153,18 @@ class Cama_model extends CI_Model {
         }
     }
 
-    function asignarCama($matricula,$nombres,$codcns,$fecnacimiento,$edad,$sexo,$diagnostico,$cie10,$empresa,$patronal,$medico,$especialidad,$diagnosticoenfermeria,$tipoingreso,$idhistorial,$idCama){
+    function asignarCama($matricula, $nombres, $codcns, $fecnacimiento, $edad, $sexo, $diagnostico, $cie10, $empresa, $patronal, $medico, $especialidad, $diagnosticoenfermeria, $tipoingreso, $idhistorial, $idCama) {
         echo $idCama;
         $usuarioActual = json_decode($_SESSION["usuario"]);
-            $usuarioActual = $usuarioActual[0]->id_usuario;
-            $ip=$this->input->ip_address();
-            $hoy=date("Y-m-d H:i:s");
-        $this->cambiarEstadoCama($idCama,$tipoingreso);
-        $query=$this->db->query("INSERT INTO asignacion_cama (matricula,nombres,codcns,fec_nacimiento,edad,sexo,diagnostico,cie10,empresa,patronal,medico,especialidad,diagnostico_enfermeria,tipoingreso,fecha_asignacion,id_historial,id_cama,id_usuario,fecha_registro,ip_registro) VALUES('$matricula','$nombres','$codcns','$fecnacimiento','$edad',$sexo,'$diagnostico','$cie10','$empresa','$patronal','$medico','$especialidad','$diagnosticoenfermeria',$tipoingreso,'$hoy','$idhistorial',$idCama,$usuarioActual,'$hoy','$ip')");
+        $usuarioActual = $usuarioActual[0]->id_usuario;
+        $ip = $this->input->ip_address();
+        $hoy = date("Y-m-d H:i:s");
+        $this->cambiarEstadoCama($idCama, $tipoingreso);
+        $query = $this->db->query("INSERT INTO asignacion_cama (matricula,nombres,codcns,fec_nacimiento,edad,sexo,diagnostico,cie10,empresa,patronal,medico,especialidad,diagnostico_enfermeria,tipoingreso,fecha_asignacion,id_historial,id_cama,id_usuario,fecha_registro,ip_registro) VALUES('$matricula','$nombres','$codcns','$fecnacimiento','$edad',$sexo,'$diagnostico','$cie10','$empresa','$patronal','$medico','$especialidad','$diagnosticoenfermeria',$tipoingreso,'$hoy','$idhistorial',$idCama,$usuarioActual,'$hoy','$ip')");
         return $query;
     }
 
-    function verPacienteByCama($idcama){
+    function verPacienteByCama($idcama) {
         $query = $this->db->query("SELECT ac.matricula as matricula,ac.nombres as nombres,edad,sexo,diagnostico,cie10,medico,especialidad,fecha_asignacion,concat(p.nombres,' ',p.apellidos) as usuario FROM asignacion_cama ac
                                    JOIN usuario u ON ac.id_usuario=u.id_usuario
                                    JOIN persona p ON u.id_persona=p.id_persona
@@ -175,10 +175,21 @@ class Cama_model extends CI_Model {
             return null;
         }
     }
+
     function liberarCama($idCama) {
-        $hoy=date("Y-m-d H:i:s");
-        $this->cambiarEstadoCama($idCama,1);
+        $hoy = date("Y-m-d H:i:s");
+        $this->cambiarEstadoCama($idCama, 1);
         return $this->db->query("update asignacion_cama set fecha_alta = '$hoy',estado=2 where id_cama = $idCama ");
+    }
+
+    function cargarAsignacionByCama($idCama) {
+//        echo "SELECT *, MAX(fecha_asignacion) fAsignacion FROM asignacion_cama WHERE id_cama = $idCama";
+        $query = $this->db->query("SELECT * FROM asignacion_cama WHERE id_cama = $idCama ORDER by id_asignacioncama DESC");
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
     }
 
 }

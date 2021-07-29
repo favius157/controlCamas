@@ -110,6 +110,14 @@ class Cama extends CI_Controller {
                 $datos["sala"] = $camas["sala"];
                 $datos["sector"] = $camas["sector"];
                 $datos["estado"] = $camas["estado"];
+                /* Datos de asignacion */
+                $asignacionByCama = $this->cama_model->cargarAsignacionByCama($camas["id_cama"]);
+                $datos["asignacion"] = ($asignacionByCama != null) ? $asignacionByCama : "null";
+                if ($asignacionByCama != null && $asignacionByCama[0]["estado"] == 1) {
+                    $datos["diasInternacion"] = $this->getDiferenciaDias($asignacionByCama[0]["fecha_asignacion"], date("Y-m-d H:i:s"));
+                } else {
+                    $datos["diasInternacion"] = -1;
+                }
 
                 $lista[] = $datos;
             }
@@ -118,6 +126,13 @@ class Cama extends CI_Controller {
         } else {
             echo "null";
         }
+    }
+
+    function getDiferenciaDias($fecha1, $fecha2) {
+        $datetime1 = new DateTime($fecha1);
+        $datetime2 = new DateTime($fecha2);
+        $interval = $datetime1->diff($datetime2);
+        return $interval->format('%R%a');
     }
 
     function cargarDetalleByBloque() {
@@ -167,43 +182,41 @@ class Cama extends CI_Controller {
         echo $this->cama_model->cambiarEstadoCama($_POST["idCama"], $_POST["estado"]);
     }
 
-    function asignarCama(){
-        $respuesta=$this->cama_model->validarAlta($_POST['idhistorial']);
-        if($respuesta==null){
-            echo $this->cama_model->asignarCama($_POST['matricula'],$_POST['nombres'],$_POST['codcns'],$_POST['fecnacimiento'],$_POST['edad'],$_POST['sexo'],$_POST['diagnostico'],$_POST['cie10'],$_POST['empresa'],$_POST['patronal'],$_POST['medico'],$_POST['especialidad'],$_POST['diagnosticoenfermeria'],$_POST['tipoingreso'],$_POST['idhistorial'],$_POST['idCama']);
-
-        }else{
+    function asignarCama() {
+        $respuesta = $this->cama_model->validarAlta($_POST['idhistorial']);
+        if ($respuesta == null) {
+            echo $this->cama_model->asignarCama($_POST['matricula'], $_POST['nombres'], $_POST['codcns'], $_POST['fecnacimiento'], $_POST['edad'], $_POST['sexo'], $_POST['diagnostico'], $_POST['cie10'], $_POST['empresa'], $_POST['patronal'], $_POST['medico'], $_POST['especialidad'], $_POST['diagnosticoenfermeria'], $_POST['tipoingreso'], $_POST['idhistorial'], $_POST['idCama']);
+        } else {
             echo json_encode($respuesta);
         }
-        
     }
 
-    function verPacienteByCama(){
-        
-        $verPaciente= $this->cama_model->verPacienteByCama($_POST['idcama']);
-        $lista=array();
-        if($verPaciente!=null){
+    function verPacienteByCama() {
+
+        $verPaciente = $this->cama_model->verPacienteByCama($_POST['idcama']);
+        $lista = array();
+        if ($verPaciente != null) {
             foreach ($verPaciente as $listaPaciente) {
-                $datos['nombres']=$listaPaciente['nombres'];
-                $datos['matricula']=$listaPaciente['matricula'];
-                $datos['cie10']=$listaPaciente['cie10'];
-                $datos['edad']=$listaPaciente['edad'];
-                $datos['sexo']=$listaPaciente['sexo'];
-                $datos['diagnostico']=$listaPaciente['diagnostico'];
-                $datos['medico']=$listaPaciente['medico'];
-                $datos['especialidad']=$listaPaciente['especialidad'];
-                $datos['fecha']=$listaPaciente['fecha_asignacion'];
-                $datos['usuario']=$listaPaciente['usuario'];
-                $lista[]=$datos;
+                $datos['nombres'] = $listaPaciente['nombres'];
+                $datos['matricula'] = $listaPaciente['matricula'];
+                $datos['cie10'] = $listaPaciente['cie10'];
+                $datos['edad'] = $listaPaciente['edad'];
+                $datos['sexo'] = $listaPaciente['sexo'];
+                $datos['diagnostico'] = $listaPaciente['diagnostico'];
+                $datos['medico'] = $listaPaciente['medico'];
+                $datos['especialidad'] = $listaPaciente['especialidad'];
+                $datos['fecha'] = $listaPaciente['fecha_asignacion'];
+                $datos['usuario'] = $listaPaciente['usuario'];
+                $lista[] = $datos;
             }
             echo json_encode($lista);
-        }else{
-                echo null;          
+        } else {
+            echo null;
         }
-    } 
+    }
 
     function liberarCama() {
         echo $this->cama_model->liberarCama($_POST["idCama"]);
-    }  
+    }
 
 }
