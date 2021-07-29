@@ -15,7 +15,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="fa fa-gear"></span>
                 </button>
-                <a class="navbar-brand" href="#"><span>SOPORTE</span></a>
+                <a class="navbar-brand" href="#"><span><?= NOMBRE_EMPRESA ?></span></a>
             </div>
             <div class="navbar-collapse collapse">
 

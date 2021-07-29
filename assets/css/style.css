@@ -60,6 +60,91 @@ blockquote p {
 ul {
     padding-left: 30px;
 }
+
+/*INCIO ASCENSOR*/
+
+#ascensornaranja{
+    background:  #d35400 ;
+}
+
+#ascensorazul{
+    background:  blue ;
+}
+
+#naranja{
+    font-size: 80px;
+    color: white;
+}
+
+#azul{
+    font-size: 80px;
+    color: white;
+}/**FIN ASCENSOR*/
+
+
+.swal-button {
+  padding: 7px 19px;
+  border-radius: 2px;
+  background-color: #4962B3;
+  font-size: 12px;
+  border: 1px solid #3e549a;
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+}
+
+#modalPacienteByCama .modal-header
+ {
+     padding:9px 15px;
+     border-bottom:1px solid #eee;
+     background-color: red;
+
+ }
+ .modal-header .close{margin-top:2px}
+ .modal-header h3{margin:0;line-height:30px;}
+
+#modalAltaPaciente .modal-header
+ {
+     padding:9px 15px;
+     border-bottom:1px solid #eee;
+     background-color: green;
+
+ }
+
+/*SALAS*/
+ .salas .card{
+            height: 150px;
+            text-align: center;
+            border: 1px solid;
+            border-radius: 5px;
+            /*margin: 20px 20px;*/
+        }
+
+        .salas{
+            margin-bottom: 10px;
+        }
+
+        .card-body{
+            cursor: pointer;
+
+        }
+        
+        .detalleCama{
+            border: 1px solid black;
+            width: 10px;
+            height: 10px;
+        }
+        .list-inline span{
+            margin-right: 5px;
+            margin-left: 5px;
+        }
+
+        .block-flat{
+            text-align: center;
+            padding: 30% 0 0 0;
+            min-height: 150px;
+            border: 4px solid black;
+            border-radius: 200px;
+        }
+/**/
 .overflow-hidden {
     overflow: hidden;
 }
@@ -97,7 +182,7 @@ ul {
 }
 #pcont {
     margin-left: 216px;
-    position: relative;
+    position: auto  ;
     padding: 0;
 }
 .back-to-top {
