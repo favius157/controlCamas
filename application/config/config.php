@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 date_default_timezone_set('America/La_Paz');
 
-$config['base_url'] = '/controlCamas/';
+$config['base_url'] = '/controlCama/';
 
 
 $config['index_page'] = '';

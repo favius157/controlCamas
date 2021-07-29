@@ -3,7 +3,7 @@ $(document).ready(function () {
 })
 
 function base_url() {
-    return "/controlCama2/index.php/";
+    return "/controlCama/index.php/";
 }
 
 function cargarMenu() {
