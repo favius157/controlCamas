@@ -112,7 +112,7 @@ class Cama extends CI_Controller {
                 $datos["estado"] = $camas["estado"];
                 /* Datos de asignacion */
                 $asignacionByCama = $this->cama_model->cargarAsignacionByCama($camas["id_cama"]);
-                $datos["asignacion"] = ($asignacionByCama != null) ? $asignacionByCama : "null";
+                $datos["asignacion"] = ($asignacionByCama != null) ? json_encode($asignacionByCama) : "null";
                 if ($asignacionByCama != null && $asignacionByCama[0]["estado"] == 1) {
                     $datos["diasInternacion"] = $this->getDiferenciaDias($asignacionByCama[0]["fecha_asignacion"], date("Y-m-d H:i:s"));
                 } else {
@@ -216,7 +216,24 @@ class Cama extends CI_Controller {
     }
 
     function liberarCama() {
-        echo $this->cama_model->liberarCama($_POST["idCama"]);
+        $idUsuario = json_decode($_SESSION["usuario"])[0]->id_usuario;
+        echo $this->cama_model->liberarCama($_POST["idCama"], $_POST["tipoAlta"], $idUsuario);
+    }
+
+    function cargarTipoAltas() {
+        $tipos = $this->cama_model->cargarTiposAlta();
+        $lista = array();
+        if ($tipos != null) {
+            foreach ($tipos as $tipos) {
+                $datos["id"] = $tipos["id_tipoalta"];
+                $datos["tipoAlta"] = $tipos["tipoalta"];
+                $datos["estado"] = $tipos["estado"];
+                $lista[] = $datos;
+            }
+            echo json_encode($lista);
+        } else {
+            echo "null";
+        }
     }
 
 }

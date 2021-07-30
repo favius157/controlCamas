@@ -392,9 +392,12 @@
             </div>   
             <div class="modal-body">
                  <div class="text-center">
-                    <div class="i-circle success"><i class="fa fa-check fa-4x mb-3 animated rotateIn"></i></div>
-                    <h4>Oh god!</h4>
-                    <p style="font-size:15pt;">Confirmas el Alta?</p><br>
+<!--                    <div class="i-circle success"><i class="fa fa-check fa-4x mb-3 animated rotateIn"></i></div>-->
+                    <h4>Seguro de dar de alta?</h4>
+                    <p style="font-size:15pt;">Selecciona el motivo del alta</p><br>
+                    <select class="select2" id="cmbAlta">
+                        
+                    </select>
                     
                 </div>
             </div>

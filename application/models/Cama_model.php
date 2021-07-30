@@ -176,15 +176,24 @@ class Cama_model extends CI_Model {
         }
     }
 
-    function liberarCama($idCama) {
+    function liberarCama($idCama, $tipo, $usuario) {
         $hoy = date("Y-m-d H:i:s");
         $this->cambiarEstadoCama($idCama, 1);
-        return $this->db->query("update asignacion_cama set fecha_alta = '$hoy',estado=2 where id_cama = $idCama ");
+        return $this->db->query("update asignacion_cama set fecha_alta = '$hoy',estado=2, id_tipoalta = $tipo, idusuario_alta = $usuario where id_cama = $idCama");
     }
 
     function cargarAsignacionByCama($idCama) {
 //        echo "SELECT *, MAX(fecha_asignacion) fAsignacion FROM asignacion_cama WHERE id_cama = $idCama";
         $query = $this->db->query("SELECT * FROM asignacion_cama WHERE id_cama = $idCama ORDER by id_asignacioncama DESC");
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+
+    function cargarTiposAlta() {
+        $query = $this->db->query("SELECT * FROM tipo_alta");
         if ($query->num_rows() > 0) {
             return $query->result_array();
         } else {
