@@ -31,7 +31,7 @@ class Cama extends CI_Controller {
             foreach ($camas as $camas) {
                 $datos["id"] = $camas["id_piso"];
                 $datos["numeroPiso"] = $camas["numero_piso"];
-                $datos["cantidad"] = $camas["cantidadCamas"];
+                //$datos["cantidad"] = $camas["cantidadCamas"];
                 $lista[] = $datos;
             }
 
@@ -234,6 +234,21 @@ class Cama extends CI_Controller {
         } else {
             echo "null";
         }
+    }
+
+    function listarCamas(){ 
+        $camaid=$this->cama_model->listarCamas($_POST['idpiso']);
+            if($camaid!=null){
+                $lista=array();
+                    foreach ($camaid as $listacama) {
+                        $datos["idcama"]=$listacama["id_cama"];
+                        $datos["numerocama"]=$listacama["numero_cama"];
+                        $lista[]=$datos;
+                    }
+                    echo json_encode($lista);
+            }else{
+                    echo "null";
+            }
     }
 
 }

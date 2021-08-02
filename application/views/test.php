@@ -268,11 +268,11 @@
                         <label>Tipo de Ingreso: </label>
                         <br>
                         <input class="form-check-input" type="radio" value="1" name="tipoingreso" id="normal" checked>
-                            <label class="form-check-label" for="flexRadioDefault1" style="margin-right:  30px">
+                            <label class="form-check-label" for="flexRadioDefault1" style="margin-right:  30px;font-size:20px;">
                                 Normal
                             </label>
                         <input class="form-check-input" type="radio" value="2" name="tipoingreso" id="aislado" >
-                            <label class="form-check-label" for="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault2" style="font-size:20px;">
                                 Aislado
                             </label> 
                     </div>  
@@ -300,8 +300,6 @@
  <!-- r -->
  <div id="modalPacienteByCama" class="modal fade" role="dialog">
     <div class="modal-dialog" style="width: 50%;">
-
-        <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header modal-notify modal-info" id="formVerPaciente">
                 
@@ -383,7 +381,6 @@
 
 <div id="modalAltaPaciente" class="modal fade" role="dialog">
     <div class="modal-dialog" style="width: 30%;">
-
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header modal-notify modal-info">
@@ -392,7 +389,6 @@
             </div>   
             <div class="modal-body">
                  <div class="text-center">
-<!--                    <div class="i-circle success"><i class="fa fa-check fa-4x mb-3 animated rotateIn"></i></div>-->
                     <h4>Seguro de dar de alta?</h4>
                     <p style="font-size:15pt;">Selecciona el motivo del alta</p><br>
                     <select class="select2" id="cmbAlta">
@@ -406,6 +402,99 @@
                 <button id="btnGuardar" onclick="liberarCama(0, true)" type="button" class="btn btn-success btn-flat md-close">Confimar</button>
             </div>
 
+        </div>
+
+    </div>
+</div>
+
+<div id="modalTransferirPaciente" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width: 50%;">
+        <div class="modal-content">
+            <div class="modal-header modal-notify modal-info" id="formVerPaciente">
+                
+                <h3 style="font-size: 30px; font-weight: bold; color: white;">TRANSFERENCIA DE PACIENTE</h3>
+            </div>
+            <div class="modal-body">
+
+                <div class="row" id="formVerPaciente">
+                    <div class="col-md-6">
+                        <label>Nombre Completo:</label>
+                        <input type="text" name="nombres" class="form-control" placeholder="Nombre de la persona" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Diagnóstico:</label>
+                        <input type="text" name="diagnostico" class="form-control" placeholder="" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <br>
+                        <label>Medico:</label>
+                            <input type="text" name="medico" class="form-control" placeholder="">
+                    </div>
+                    <div class="col-md-6">
+                        <br>
+                        <label>Especialidad:</label>
+                        <input type="text" name="especialidad" class="form-control" placeholder="">
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <br>
+                        <label>Diagnóstico de Transferencia:</label>
+                        <input type="text" name="diagnosticoEnfermeria" class="form-control" placeholder="">
+                    </div>
+                    <div class="col-md-2">
+                        <br>
+                        <label>Edad:</label>
+                        <input type="text" id="edad" class="form-control" value=""  disabled>
+                    </div>
+                    <div class="col-md-4">
+                        <br>
+                        <label>Ingreso a Sala: </label>
+                        <br>
+                        <input class="form-check-input" type="radio" value="1" name="tipoingreso" id="normal" checked>
+                            <label class="form-check-label" for="flexRadioDefault1" style="margin-right:  30px;font-size:20px;">
+                                Normal
+                            </label>
+                        <input class="form-check-input" type="radio" value="2" name="tipoingreso" id="aislado" >
+                            <label class="form-check-label" for="flexRadioDefault2" style="font-size:20px;">
+                                Aislado
+                            </label> 
+                    </div>
+                    <div class="col-md-5">
+                        <br>
+                        <label>PISO: </label>
+                        <select class="select2" id="pisos">
+                            <option value="0">Seleccione.....</option>
+                         </select>
+                    </div>
+                    <div class="col-md-5">
+                        <br>
+                        <label>CAMA: </label>
+                        <select class="select2" id="camas">
+                            <option value="0">Seleccione.....</option>
+                         </select>
+                    </div>
+                    <input type="hidden" name="id_historial" class="form-control">
+                    <input type="hidden" name="sexo" class="form-control">
+                    <input type="hidden" name="codcns" class="form-control">
+                    <input type="hidden" name="edad" class="form-control">
+
+                    <input type="hidden" name="matricula" class="form-control" placeholder="" disabled>
+                    <input type="hidden" name="codcns" class="form-control">
+                    <input type="hidden" name="fec_nacimiento" class="form-control">
+                    <input type="hidden" name="sexo" class="form-control">
+                    <input type="hidden" name="cie10" class="form-control" placeholder="" disabled>
+                    <input type="hidden" name="empresa" class="form-control">
+                    <input type="hidden" name="patronal" class="form-control">
+                    <input type="hidden" name="id_historial" class="form-control">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+
+                <span id="msgAsignar" class="msgAlertas" style="float: left; color: red; display: none;font-weight: bold;">Por favor ingrese una matrícula o carné para realizar la búsqueda, gracias!....</span>
+                <button class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+
+            </div>
         </div>
 
     </div>

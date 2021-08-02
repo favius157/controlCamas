@@ -98,6 +98,8 @@ ul {
      background-color: red;
 
  }
+
+
  .modal-header .close{margin-top:2px}
  .modal-header h3{margin:0;line-height:30px;}
 
@@ -106,6 +108,15 @@ ul {
      padding:9px 15px;
      border-bottom:1px solid #eee;
      background-color: green;
+
+ }
+
+
+ #modalTransferirPaciente .modal-header
+ {
+     padding:9px 15px;
+     border-bottom:1px solid #eee;
+     background-color: orange;
 
  }
 

@@ -14,7 +14,8 @@ class Cama_model extends CI_Model {
     }
 
     function cargarPisos() {
-        $query = $this->db->query("SELECT p.id_piso as id_piso, p.numero_piso as numero_piso, COUNT(c.id_cama) as cantidadCamas FROM piso p LEFT JOIN cama c ON p.id_piso = c.id_piso GROUP by p.id_piso");
+        $query = $this->db->query("SELECT id_piso,numero_piso FROM piso WHERE estado=1");
+        /*$query = $this->db->query("SELECT p.id_piso as id_piso, p.numero_piso as numero_piso, COUNT(c.id_cama) as cantidadCamas FROM piso p LEFT JOIN cama c ON p.id_piso = c.id_piso GROUP by p.id_piso");*/
         if ($query->num_rows() > 0) {
             return $query->result_array();
         } else {
@@ -168,7 +169,8 @@ class Cama_model extends CI_Model {
         $query = $this->db->query("SELECT ac.matricula as matricula,ac.nombres as nombres,edad,sexo,diagnostico,cie10,medico,especialidad,fecha_asignacion,concat(p.nombres,' ',p.apellidos) as usuario FROM asignacion_cama ac
                                    JOIN usuario u ON ac.id_usuario=u.id_usuario
                                    JOIN persona p ON u.id_persona=p.id_persona
-                                   WHERE id_cama=$idcama ORDER BY fecha_asignacion desc");
+                                   WHERE id_cama=$idcama AND ac.estado=1");
+                                //WHERE id_cama=$idcama ORDER BY fecha_asignacion desc LIMIT 1");
         if ($query->num_rows() > 0) {
             return $query->result_array();
         } else {
@@ -194,6 +196,18 @@ class Cama_model extends CI_Model {
 
     function cargarTiposAlta() {
         $query = $this->db->query("SELECT * FROM tipo_alta");
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+
+    function listarCamas($idpiso){
+        $query = $this->db->query("SELECT c.id_cama as id_cama, numero_cama,c.estado FROM cama c
+                                    JOIN sala s ON c.id_sala=s.id_sala
+                                    JOIN piso p ON s.id_piso=p.id_piso
+                                    Where p.id_piso=$idpiso AND c.estado = 1 order by c.id_cama asc");
         if ($query->num_rows() > 0) {
             return $query->result_array();
         } else {

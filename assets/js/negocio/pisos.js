@@ -16,6 +16,11 @@ $(document).ready(function () {
         $(this).append('<ul class="list-inline" ><span class="detalleCama badge badge-primary" style="text-align: left;font-size: 20px; font-weight:bold;height: 28px;width: 30px; color:white;"id="totalCamas-' + id + '" title="Total de camas" ></span><li class="detalleCama" style="background-color: green;height: 15px;width: 15px;" title="Camas libres"></li><span id="camasLibres-' + id + '"></span><li class="detalleCama" style="background-color: red;height: 15px;width: 15px;" title="Camas Ocupadas"></li><span id="camasOcupadas-' + id + '"></span><span class="detalleCama badge badge-warning" style="text-align: left;font-size: 20px; font-weight:bold;height: 28px;width: 30px; color:white;" title="Camas Aisladas" id="camasAisladas-' + id + '"  ></span></ul>');
         cargarDetalleByBloque($(this).find("h1").text());
     })
+
+    cargarPisos();
+    $("#pisos").change(function () {
+        listarCamas($(this).val());
+    });
 })
 var idActual = 0;
 
@@ -115,7 +120,8 @@ function opcion2(dato) {
                         }
 
                     }
-
+                    estadocama = contenido.estado;
+                    //console.log(estadocama);
                     if (contenido.bloque == dato) {
                         //console.log("numero de cama: " + contenido.numeroCama + " dias de internacion: " + contenido.diasInternacion + " idAsignacion: " + contenido.asignacion);
                         if (contenido.idSala != sala) {
@@ -125,24 +131,24 @@ function opcion2(dato) {
                             bloque = contenido.bloque.replace(" ", "");
                             bloque = bloque.toLowerCase();
                             aux = 1;
-                            estado = (contenido.estado == 1) ? "<p style = 'font-weight: 500;font-weight: bold;color : green;font-size:20px;'>CAMA LIBRE</p>" : ((contenido.estado == 2) ? "<p style = 'font-size:20px;font-weight: 800; color : red;'>CAMA OCUPADA</p>" : "<p style = 'font-size:20px;font-weight: 800; color : #ffd700;'>PACIENTE AISLADO</p>");
-                            control = (contenido.estado == 1) ? '<div class="btn-group" role="group" aria-label="Basic example"><button type="button" class="btn btn-success" title = "Asignar cama"  onclick = "asignarPaciente(' + contenido.id + ', false)">Asignar paciente</button></div>' : '<div class="btn-group" role="group" aria-label="Basic example"><button type="button" class="btn btn-danger" title = "Liberar cama" onclick = "liberarCama(' + contenido.id + ', false)"><i class = "fa fa-trash-o"></i></button><button type="button" class="btn btn-info" title  = "Ver detalles de paciente"onclick = "verPacienteByCama(' + contenido.id + ')"><i class = "fa fa-eye"></i></button></div>';
+                            estadopaciente = (estadocama == 2) ? '<p style = "font-size:15px;font-weight: 800; color : black;-webkit-text-stroke: 1px black;">INTERNADO POR:<a style="color:red; font-size:18px;">' + diasInternado + ' días</a></p>' :((estadocama == 3) ? '<p style = "font-size:15px;font-weight: 800; color : yellow;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">AISLADO POR:<a style="color:red; font-size:18px;">' + diasInternado + ' días</a> </p>':'<p></p>');
+                            control = (contenido.estado == 1) ? '<div class="btn-group" role="group" aria-label="Basic example"><button type="button" class="btn btn-success" title = "Asignar cama"  onclick = "asignarPaciente(' + contenido.id + ', false)">Asignar paciente</button></div>' : '<div class="btn-group" role="group" aria-label="Basic example"><button type="button" class="btn btn-danger" title = "Liberar cama" onclick = "liberarCama(' + contenido.id + ', false)"><i class = "fa fa-trash-o"></i></button><button type="button" class="btn btn-info" title  = "Ver detalles de paciente"onclick = "verPacienteByCama(' + contenido.id + ')"><i class = "fa fa-eye"></i></button><button type="button" class="btn btn-warning" title  = "Transferir Paciente"onclick = "transferirPaciente(' + contenido.id + ')"><i class = "fa fa-exchange"></i></button></div>';
                             $("#theBloque").append('<div class="row salas" id="sala-' + contenido.idSala + '" style="margin-top: 0px;"></div>');
                             if (contenido.estado == 1) {
-                                $("#sala-" + contenido.idSala).append('<div><div class="alert alert-success alert-white rounded" style="font-weight: bold;font-size:13px; margin-right: 15px; padding-right: 2px;"><p>Número de cama: ' + contenido.numeroCama + ' ' + contenido.sala + '</p><br/><br/><br/>' + control + '<div class="icon" style = "background-color : ' + colorCama(contenido.diasInternacion) + '"></div></div></div>');
+                                $("#sala-" + contenido.idSala).append('<div><div class="alert alert-success alert-white rounded" style="font-weight: bold;font-size:13px; margin-right: 15px; padding-right: 2px;background-color : ' + colorPaciente(estadocama) + '"><p>Número de cama: ' + contenido.numeroCama + ' ' + contenido.sala + '</p><br/><br/><br/>' + control + '<div class="icon" style = "background-color : ' + colorCama(contenido.diasInternacion) + '"></div></div></div>');
                             } else {
-                                $("#sala-" + contenido.idSala).append('<div><div class="alert alert-success alert-white rounded" style="font-weight: bold;font-size:13px; margin-right: 15px; padding-right: 2px;"><p>Número de cama: ' + contenido.numeroCama + ' ' + contenido.sala + '</p><p>Estado del paciente: Internado ' + diasInternado + ' dias</p><p>Nombre del paciente: ' + nombrePaciente + '</p><br/><br/>' + control + '<div class="icon" style = "background-color : ' + colorCama(contenido.diasInternacion) + '"></div></div></div>');
-                            }
-
+                                $("#sala-" + contenido.idSala).append('<div><div class="alert alert-success alert-white rounded" style="font-weight: bold;font-size:13px; margin-right: 15px; padding-right: 2px;background-color : ' + colorPaciente(estadocama) + '"><p>Número de cama: ' + contenido.numeroCama + ' ' + contenido.sala + '</p><p style = "font-size:15px;font-weight: 800; color : black;">INTERNADO POR:<a style="color:red; font-size:18px;">' + diasInternado + ' días</a></p><p>Nombre del paciente: ' + nombrePaciente + '</p><br/><br/>' + control + '<div class="icon" style = "background-color : ' + colorCama(contenido.diasInternacion) + '"></div></div></div>');
+                            }   
+                            //$("#sala-" + contenido.idSala).append('<div><div class="alert alert-success alert-white rounded" style="font-weight: bold;font-size:13px; margin-right: 15px; padding-right: 2px;background-color : ' + colorPaciente(estadocama) + '"><p>Número de cama: ' + contenido.numeroCama + ' ' + contenido.sala + '</p><p>'+estadopaciente+'<a style="color:red; font-size:13px;">' + diasInternado + ' días</a> </p><p>Nombre del paciente: ' + nombrePaciente + '</p><br/><br/>' + control + '<div class="icon" style = "background-color : ' + colorCama(contenido.diasInternacion) + '"></div></div></div>');
                             //$("#sala-" + contenido.idSala).append('<div class="card" style="font-weight: bold;font-size:13px;"><label>Número de cama: </label>' + contenido.numeroCama + ' ' + contenido.sala + '<br/><label>Estado: </label>' + estado + '<br/><br/>' + control + '</div>');
                         } else {
                             aux++;
-                            estado = (contenido.estado == 1) ? "<p style = 'font-weight: 500;font-weight: bold;color : green;font-size:20px;'>CAMA LIBRE</p>" : ((contenido.estado == 2) ? "<p style = 'font-size:20px;font-weight: 800; color : red;'>CAMA OCUPADA</p>" : "<p style = 'font-size:20px;font-weight: 800; color : #ffd700;'>PACIENTE AISLADO</p>");
-                            control = (contenido.estado == 1) ? '<div class="btn-group" role="group" aria-label="Basic example"><button type="button" class="btn btn-success" title = "Asignar cama"  onclick = "asignarPaciente(' + contenido.id + ', false)">Asignar paciente</button></div>' : '<div class="btn-group" role="group" aria-label="Basic example"><button type="button" class="btn btn-danger" title = "Liberar cama" onclick = "liberarCama(' + contenido.id + ', false)"><i class = "fa fa-trash-o"></i></button><button type="button" class="btn btn-info" title  = "Ver detalles de paciente" onclick = "verPacienteByCama(' + contenido.id + ')"><i class = "fa fa-eye"></i></button></div>';
+                            //estado = (contenido.estado == 1) ? "<p style = 'font-weight: 500;font-weight: bold;color : green;font-size:20px;'>CAMA LIBRE</p>" : ((contenido.estado == 2) ? "<p style = 'font-size:20px;font-weight: 800; color : red;'>CAMA OCUPADA</p>" : "<p style = 'font-size:20px;font-weight: 800; color : #ffd700;'>PACIENTE AISLADO</p>");
+                            control = (contenido.estado == 1) ? '<div class="btn-group" role="group" aria-label="Basic example"><button type="button" class="btn btn-success" title = "Asignar cama"  onclick = "asignarPaciente(' + contenido.id + ', false)">Asignar paciente</button></div>' : '<div class="btn-group" role="group" aria-label="Basic example"><button type="button" class="btn btn-danger" title = "Liberar cama" onclick = "liberarCama(' + contenido.id + ', false)"><i class = "fa fa-trash-o"></i></button><button type="button" class="btn btn-info" title  = "Ver detalles de paciente" onclick = "verPacienteByCama(' + contenido.id + ')"><i class = "fa fa-eye"></i></button><button type="button" class="btn btn-warning" title  = "Transferir Paciente"onclick = "transferirPaciente(' + contenido.id + ')"><i class = "fa fa-exchange"></i></button></div>';
                             if (contenido.estado == 1) {
-                                $("#sala-" + contenido.idSala).append('<div><div class="alert alert-success alert-white rounded" style="font-weight: bold;font-size:13px; margin-right: 15px; padding-right: 2px;"><p>Número de cama: ' + contenido.numeroCama + ' ' + contenido.sala + '</p><br/><br/><br/>' + control + '<div class="icon" style = "background-color : ' + colorCama(contenido.diasInternacion) + '"></div></div></div>');
+                                $("#sala-" + contenido.idSala).append('<div><div class="alert alert-success alert-white rounded" style="font-weight: bold;font-size:13px; margin-right: 15px; padding-right: 2px;background-color : ' + colorPaciente(estadocama) + '"><p>Número de cama: ' + contenido.numeroCama + ' ' + contenido.sala + '</p><br/><br/><br/>' + control + '<div class="icon" style = "background-color : ' + colorCama(contenido.diasInternacion) + '"></div></div></div>');
                             } else {
-                                $("#sala-" + contenido.idSala).append('<div><div class="alert alert-success alert-white rounded" style="font-weight: bold;font-size:13px; margin-right: 15px; padding-right: 2px;"><p>Número de cama: ' + contenido.numeroCama + ' ' + contenido.sala + '</p><p>Estado del paciente: Internado ' + diasInternado + ' dias</p><p>Nombre del paciente: ' + nombrePaciente + '</p><br/><br/>' + control + '<div class="icon" style = "background-color : ' + colorCama(contenido.diasInternacion) + '"></div></div></div>');
+                                $("#sala-" + contenido.idSala).append('<div><div class="alert alert-success alert-white rounded" style="font-weight: bold;font-size:13px; margin-right: 15px; padding-right: 2px;background-color : ' + colorPaciente(estadocama) + '"><p>Número de cama: ' + contenido.numeroCama + ' ' + contenido.sala + '</p><p style = "font-size:15px;font-weight: 800; color : black;">INTERNADO POR:<a style="color:red; font-size:18px;">' + diasInternado + ' días</a></p><p>Nombre del paciente: ' + nombrePaciente + '</p><br/><br/>' + control + '<div class="icon" style = "background-color : ' + colorCama(contenido.diasInternacion) + '"></div></div></div>');
                             }
 
                             //$("#sala-" + contenido.idSala).append('<div class="card" style="font-weight: bold;font-size:13px;"><label2>Número de cama: </label>' + contenido.numeroCama + ' ' + contenido.sala + '<br/><label>Estado: </label>' + estado + '<br/><br/>' + control + '</div>');
@@ -179,6 +185,18 @@ function colorCama(diasInternacion) {
 
     if (diasInternacion <= 0) {
         return "#fff";
+    }
+}
+
+function colorPaciente(estadocama){
+    if(estadocama==1){
+        return "#fff";
+    }
+    if(estadocama==2){
+        return "#ffdaca";
+    }
+    if(estadocama==3){
+        return"#ffffbf";
     }
 }
 
@@ -272,11 +290,6 @@ function buscarPaciente() {
 }
 
 function cargarPaciente(idpaciente) {
-    /*idActual=idpaciente;
-     bandera=true;
-     validarInternacion(idpaciente);
-     if
-     redirect("http://172.25.0.10:8080/siis/index.php/welcome/obtenerAsegurado/".$_POST['idcama'])*/
     var datos = idpaciente;
     $.ajax({
         type: 'GET',
@@ -300,55 +313,6 @@ function cargarPaciente(idpaciente) {
                     $("input[name='patronal']").val(arr[0].codigoempresa);
                     $("input[name='codcns']").val(arr[0].codcns);
                     $("input[name='edad']").val(arr[0].edad);
-
-                }
-            } else {
-                swal({
-                    //className: "red-bg",
-                    title: "IMPORTANTE",
-                    text: "El paciente no tiene registro de atención en el hospital Obrero #3, debe informar a Vigencia para regularizar el acceso al establecimiento y posterior atención!!!.",
-                    icon: "warning",
-                    //buttons: true,
-                    dangerMode: true
-                })
-
-                //alert("El paciente no tiene registro de atención en el hospital Obrero #3, debe informar a Vigencia para regularizar el acceso al establecimiento y posterior atención.");
-            }
-        }
-    });
-    $("#listAsegurados").empty();
-    //limpiarAsignarPaciente();
-
-}
-
-function cargarPaciente12(idpaciente) {
-    /*idActual=idpaciente;
-     bandera=true;
-     validarInternacion(idpaciente);
-     if
-     redirect("http://172.25.0.10:8080/siis/index.php/welcome/obtenerAsegurado/".$_POST['idcama'])*/
-    var datos = idpaciente;
-    $.ajax({
-        data: datos,
-        type: 'POST',
-        url: base_url() + "Cama/validarPaciente/",
-        //url: "http://172.25.0.10:8080/siis/index.php/welcome/obtenerPacientes/"+datos+"/"+datos,
-        success: function (data, textStatus, jqXHR) {
-            //console.log(data);
-            if (data != "null") {
-                var arr = JSON.parse(data);
-                if (arr.length > 0) {
-                    $("input[name='nombres']").val(arr[0].nombres);
-                    $("input[name='matricula']").val(arr[0].nro_registro);
-                    $("input[name='cie10']").val(arr[0].cie10);
-                    $("input[name='diagnostico']").val(arr[0].diagnostico);
-                    $("input[name='medico']").val(arr[0].medico);
-                    $("input[name='especialidad']").val(arr[0].especialidad);
-                    $("input[name='id_historial']").val(arr[0].id_historial);
-                    $("input[name='edad']").val(arr[0].edad);
-                    $("input[name='sexo']").val(arr[0].id_tipo_sexo);
-                    $("input[name='empresa']").val(arr[0].nempresa);
-                    $("input[name='patronal']").val(arr[0].codigoempresa);
 
                 }
             } else {
@@ -417,7 +381,7 @@ function asignarPaciente(id, flag) {
                 diagnosticoenfermeria: $("input[name='diagnosticoEnfermeria']").val(),
                 tipoingreso: radio
             }
-            console.log(param);
+            //console.log(param);
             $.ajax({
                 data: param,
                 type: 'POST',
@@ -476,7 +440,7 @@ function verPacienteByCama(id) {
 
                 var arr = JSON.parse(data);
                 var sexo = "";
-                console.log(arr);
+                //console.log(arr);
                 $.each(arr, function (index, contenido) {
                     sexo = (contenido.sexo == 1) ? "Mujer" : "Hombre";
                     //console.log(sexo);
@@ -543,6 +507,72 @@ function liberarCama(id, flag) {
     }
 
 }
+function transferirPaciente(id){
+
+    
+    $("#modalTransferirPaciente").modal("show");
+
+    limpiarAsignarPaciente();
+}
+
+function cargarPisos(){
+    $.ajax({
+            type: 'POST',
+            url: base_url() + "Cama/cargarPisos/",
+           beforeSend:function(){
+            $("#pisos").empty();
+           },
+           success:function(response){
+            console.log(response);
+            if(response!=null && response !=""){
+
+                var arr= JSON.parse(response);
+                    if (arr.length>0) {
+                        $("#pisos").append("<option value='0' selected >Seleccione el Piso</option>");
+                        $.each(arr,function(index,contenido){
+                            $("#pisos").append("<option value='"+ contenido.id+"'>"+contenido.numeroPiso+"</option>");
+                        })
+                    }else{
+                        alert("No se pudieron cargar los funcionarios de la CNS");
+                    }
+            }else{
+                alert("No se pudieron cargar los funcionarios de la CNS");
+            }
+            $("#pisos").change();
+           }
+        })
+}
+function listarCamas(pisos){
+
+      var datos={
+            idpiso:pisos
+        }
+        console.log(datos);
+        $.ajax({
+                data: datos,
+                type: 'POST',
+                url: base_url()+"Cama/listarCamas",
+                 beforeSend:function(){
+                $("#camas").empty();
+                },
+                success:function(response){
+                    console.log(response);
+                    try {
+                    var arr = JSON.parse(response);
+                    $("#camas").append("<option value = '0' selected>Seleccione la Cama</option>");
+                    //$("#equipotransferido").empty();
+                    $.each(arr, function (index, contenido) {
+                        $("#camas").append("<option value = '" + contenido.idcama + "'>" + contenido.numerocama + "</option>");
+                    })
+
+                    $("#camas").change();
+                    } catch (e) {
+
+                    }
+
+                }
+        });
+}
 
 function limpiarAsignarPaciente() {
     $("#formAsignar input").val("");
@@ -552,6 +582,8 @@ function limpiarAsignarPaciente() {
     $("#formVerPaciente input").val("");
     ;
     $("#formVerPaciente input").css("border", "1px solid #ccc");
+    $(".modal .select2").change();
+    $(".modal .select2").val(0);
     //$("#listAsegurados").empty();
 
 }
