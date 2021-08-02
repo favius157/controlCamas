@@ -19,10 +19,10 @@ function cargarMenu() {
                 $.each(arr, function (index, contenido) {
                     if (aux != contenido.grupo) {
                         $("#menuPrincipal").append('<li class = "parent"><a href="#"><i class="fa fa-home"></i><span>' + contenido.grupo + '</span></a><ul class="sub-menu" id = "grupo-' + contenido.grupo + '"></ul></li>');
-                        $("#grupo-" + contenido.grupo).append('<li><a href="' + contenido.url + '"> ' + contenido.menu + '</a></li>');
+                        $("#grupo-" + contenido.grupo).append('<li><a href="'+base_url() + contenido.url + '"> ' + contenido.menu + '</a></li>');
                         aux = contenido.grupo;
                     } else {
-                        $("#grupo-" + contenido.grupo).append('<li><a href="' + contenido.url + '"> ' + contenido.menu + '</a></li>');
+                        $("#grupo-" + contenido.grupo).append('<li><a href="'+base_url() + contenido.url + '"> ' + contenido.menu + '</a></li>');
                     }
                 })
             } else {

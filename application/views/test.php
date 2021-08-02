@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <style>
-       
+
     </style>
     <?php
     include_once (APPPATH . "views/template/header.php");
@@ -24,7 +24,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img alt="Avatar" src="" /><span></span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="Perfil" class="dropdown-toggle" data-toggle="dropdown">Ver Perfil</a></li>
-                            <li><a href="Login/logOut">Cerrar Session</a></li>
+                            <li><a href="<?= base_url("Login/logOut")?>">Cerrar Session</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -56,106 +56,9 @@
             </div>
         </div>   
         <div class="container-fluid" id="pcont">
-            <div class="cl-mcont" style="height: 900px;background-color:gray;">
-                <div class="row bloques" style="height: 33%;">
-                    <div class="col-md-2">
-                        <div class="card block-flat">
-                            <div class="card-body" id="bloquea">
-                                <h1>Bloque A</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2" style="padding-right: 0px">
-                        <div class="card block-flat">
-                            <div class="card-body" id="bloquec">
-                                <h1>Bloque C</h1>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4" style="padding: 0 0 0 0;">
-                        <div class="card block-flat" id="ascensornaranja">
-                            <div class="">
-                                <h1 id="naranja">Ascensor</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2" style="padding-left: 0px">
-                        <div class="card block-flat">
-                            <div class="card-body" id="bloqueh">
-                                <h1>Bloque H</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="card block-flat">
-                            <div class="card-body" id="bloquef">
-                                <h1>Bloque F</h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="height: 33%;">
-                    <div class="col-md-2" style="">
-                        <div class="card block-flat">
-                            <div class="">
-                                <h1 style="">
-                                    Enfermeria
-                                </h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-
-                    </div>
-                    <div class="col-md-2" style="">
-                        <div class="card block-flat">
-                            <div class="">
-                                <h1 style="">
-                                    Enfermeria
-                                </h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row bloques" style="height: 33%;">
-                    <div class="col-md-2">
-                        <div class="card block-flat">
-                            <div class="card-body" id="bloqueb">
-                                <h1>Bloque B</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2" style="padding-right: 0px">
-                        <div class="card block-flat">
-                            <div class="card-body" id="bloqued">
-                                <h1>Bloque D</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4" style="padding: 0 0 0 0;">
-                        <div class="card block-flat" id="ascensorazul">
-                            <div class="">
-                                <h1 id="azul">Ascensor</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2" style="padding-left: 0px">
-                        <div class="card block-flat">
-                            <div class="card-body" id="bloqueg">
-                                <h1>Bloque G</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="card block-flat">
-                            <div class="card-body" id="bloquee">
-                                <h1>Bloque E</h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php
+            include_once (APPPATH . "views/template/pisos/$idPiso.php");
+            ?>
         </div> 
 
 
@@ -198,97 +101,97 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h3>Buscar Paciente</h3>
                 <H5>La busqueda se realiza por la matricula o el numero de carné del asegurado...</H5>
-                    <input type="text" name="MatriculaoCi" id="MatriculaoCi" placeholder="Ej: 820505ABC ó 123456789 " style="text-transform:uppercase" required>
-                    <span class="focus-input100"></span>
-                        <span class="symbol-input100">
+                <input type="text" name="MatriculaoCi" id="MatriculaoCi" placeholder="Ej: 820505ABC ó 123456789 " style="text-transform:uppercase" required>
+                <span class="focus-input100"></span>
+                <span class="symbol-input100">
                     <button onclick="buscarPaciente();">Buscar</button><br>
 
                     <div class="row" id="formAsignar">
-                    <div class="col-md-12">
-                        <ul id="listAsegurados">    
+                        <div class="col-md-12">
+                            <ul id="listAsegurados">    
                                 <left  ><a>Asegurados:</a></left><a style="padding: 0px 250px;">Tipo Asegurado</a>
-                        </ul>
-                    </div>
-                   
-            </div>
-            <div class="modal-body">
+                            </ul>
+                        </div>
 
-                
-                    <div class="col-md-6">
-                        <label>Nombre Completo:</label>
-                        <input type="text" name="nombres" class="form-control" placeholder="Nombre de la persona" disabled>
                     </div>
-                    <div class="col-md-3">
-                        <label>Matricula:</label>
-                        <input type="text" name="matricula" class="form-control" placeholder="" disabled>
-                    </div>
-                    <div class="col-md-3">
-                        <label>Fecha Nacimiento:</label>
-                        <input style="text-align: center;font-size: 16px;" type="date" name="fec_nacimiento" class="form-control" placeholder="" disabled>
-                    </div>
-                   
-                    <div class="col-md-6">
-                        <br>
-                        <label>Empresa:</label>
-                        <input type="text" name="empresa" class="form-control" placeholder="" disabled>
-                    </div>
-                    <div class="col-md-6">
-                        <br>
-                        <label>Patronal:</label>
-                        <input type="text" name="patronal" class="form-control" placeholder="" disabled>
-                    </div>
-                    
-                    <div class="col-md-6">
-                        <br>
-                        <label>Medico:</label>
-                        <input type="text" name="medico" class="form-control" placeholder="" disabled>
-                    </div>
-                     <div class="col-md-6">
-                        <br>
-                        <label>Especialidad:</label>
-                        <input type="text" name="especialidad" class="form-control" placeholder="" disabled>
-                    </div>
-                     <div class="col-md-6">
-                        <br>
-                        <label>CIE 10:</label>
-                        <input type="text" name="cie10" class="form-control" placeholder="" disabled>
-                    </div>
-                    <div class="col-md-6">
-                        <br>
-                        <label>Diagnóstico ultima atención:</label>
-                        <input type="text" name="diagnostico" class="form-control" placeholder="" disabled>
-                    </div>
-                     <div class="col-md-6">
-                        <br>
-                        <label>Diagnóstico de Internación:</label>
-                        <input type="text" name="diagnosticoEnfermeria" class="form-control" placeholder="" >
-                    </div>
-                    <div class="col-md-6">
-                        <br>
-                        <label>Tipo de Ingreso: </label>
-                        <br>
-                        <input class="form-check-input" type="radio" value="1" name="tipoingreso" id="normal" checked>
+                    <div class="modal-body">
+
+
+                        <div class="col-md-6">
+                            <label>Nombre Completo:</label>
+                            <input type="text" name="nombres" class="form-control" placeholder="Nombre de la persona" disabled>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Matricula:</label>
+                            <input type="text" name="matricula" class="form-control" placeholder="" disabled>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Fecha Nacimiento:</label>
+                            <input style="text-align: center;font-size: 16px;" type="date" name="fec_nacimiento" class="form-control" placeholder="" disabled>
+                        </div>
+
+                        <div class="col-md-6">
+                            <br>
+                            <label>Empresa:</label>
+                            <input type="text" name="empresa" class="form-control" placeholder="" disabled>
+                        </div>
+                        <div class="col-md-6">
+                            <br>
+                            <label>Patronal:</label>
+                            <input type="text" name="patronal" class="form-control" placeholder="" disabled>
+                        </div>
+
+                        <div class="col-md-6">
+                            <br>
+                            <label>Medico:</label>
+                            <input type="text" name="medico" class="form-control" placeholder="" disabled>
+                        </div>
+                        <div class="col-md-6">
+                            <br>
+                            <label>Especialidad:</label>
+                            <input type="text" name="especialidad" class="form-control" placeholder="" disabled>
+                        </div>
+                        <div class="col-md-6">
+                            <br>
+                            <label>CIE 10:</label>
+                            <input type="text" name="cie10" class="form-control" placeholder="" disabled>
+                        </div>
+                        <div class="col-md-6">
+                            <br>
+                            <label>Diagnóstico ultima atención:</label>
+                            <input type="text" name="diagnostico" class="form-control" placeholder="" disabled>
+                        </div>
+                        <div class="col-md-6">
+                            <br>
+                            <label>Diagnóstico de Internación:</label>
+                            <input type="text" name="diagnosticoEnfermeria" class="form-control" placeholder="" >
+                        </div>
+                        <div class="col-md-6">
+                            <br>
+                            <label>Tipo de Ingreso: </label>
+                            <br>
+                            <input class="form-check-input" type="radio" value="1" name="tipoingreso" id="normal" checked>
                             <label class="form-check-label" for="flexRadioDefault1" style="margin-right:  30px;font-size:20px;">
                                 Normal
                             </label>
-                        <input class="form-check-input" type="radio" value="2" name="tipoingreso" id="aislado" >
+                            <input class="form-check-input" type="radio" value="2" name="tipoingreso" id="aislado" >
                             <label class="form-check-label" for="flexRadioDefault2" style="font-size:20px;">
                                 Aislado
                             </label> 
-                    </div>  
-                    <input type="hidden" name="id_historial" class="form-control">
-                    <input type="hidden" name="sexo" class="form-control">
-                    <input type="hidden" name="codcns" class="form-control">
-                    <input type="hidden" name="edad" class="form-control">
+                        </div>  
+                        <input type="hidden" name="id_historial" class="form-control">
+                        <input type="hidden" name="sexo" class="form-control">
+                        <input type="hidden" name="codcns" class="form-control">
+                        <input type="hidden" name="edad" class="form-control">
 
-                </div>
+                    </div>
 
 
             </div>
             <div class="modal-footer">
 
                 <span id="msgAsignar" class="msgAlertas" style="float: left; color: red; display: none;font-weight: bold;">Por favor ingrese una matrícula o carné para realizar la búsqueda, gracias!....</span>
-                <button class="btn btn-success" onclick="asignarPaciente(0,true)" id="btnGuardarPersona">Asignar</button>
+                <button class="btn btn-success" onclick="asignarPaciente(0, true)" id="btnGuardarPersona">Asignar</button>
                 <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 
             </div>
@@ -297,12 +200,12 @@
     </div>
 </div>
 
- <!-- r -->
- <div id="modalPacienteByCama" class="modal fade" role="dialog">
+<!-- r -->
+<div id="modalPacienteByCama" class="modal fade" role="dialog">
     <div class="modal-dialog" style="width: 50%;">
         <div class="modal-content">
             <div class="modal-header modal-notify modal-info" id="formVerPaciente">
-                
+
                 <h3 style="font-size: 20px; font-weight: bold; color: white;">INFORMACION DEL PACIENTE</h3>
             </div>
             <div class="modal-body">
@@ -329,9 +232,9 @@
                     <div class="col-md-6">
                         <br>
                         <label>Medico:</label>
-                        
-                            <input type="text" name="medico" class="form-control" placeholder="" disabled>
-                        
+
+                        <input type="text" name="medico" class="form-control" placeholder="" disabled>
+
                     </div>
                     <div class="col-md-6">
                         <br>
@@ -357,8 +260,8 @@
                         <br>
                         <label>Registrado Por:</label>
                         <div class="input-group margin-bottom-sm">
-                          <span class="input-group-addon" style="background-color:lightblue;"><i class="fa fa-user fa-fw" aria-hidden="true"></i></span>
-                          <input class="form-control" id="usuario" type="text" disabled>
+                            <span class="input-group-addon" style="background-color:lightblue;"><i class="fa fa-user fa-fw" aria-hidden="true"></i></span>
+                            <input class="form-control" id="usuario" type="text" disabled>
                         </div>
                     </div>
 
@@ -388,13 +291,13 @@
                 <h4 class="modal-title fa fa-medkit" aria-hidden="true" style="font-size: 20px; font-weight: bold; color: white;">  ATENCION!</h4>
             </div>   
             <div class="modal-body">
-                 <div class="text-center">
+                <div class="text-center">
                     <h4>Seguro de dar de alta?</h4>
                     <p style="font-size:15pt;">Selecciona el motivo del alta</p><br>
                     <select class="select2" id="cmbAlta">
-                        
+
                     </select>
-                    
+
                 </div>
             </div>
             <div class="modal-footer">
@@ -411,7 +314,7 @@
     <div class="modal-dialog" style="width: 50%;">
         <div class="modal-content">
             <div class="modal-header modal-notify modal-info" id="formVerPaciente">
-                
+
                 <h3 style="font-size: 30px; font-weight: bold; color: white;">TRANSFERENCIA DE PACIENTE</h3>
             </div>
             <div class="modal-body">
@@ -428,14 +331,14 @@
                     <div class="col-md-6">
                         <br>
                         <label>Medico:</label>
-                            <input type="text" name="medico" class="form-control" placeholder="">
+                        <input type="text" name="medico" class="form-control" placeholder="">
                     </div>
                     <div class="col-md-6">
                         <br>
                         <label>Especialidad:</label>
                         <input type="text" name="especialidad" class="form-control" placeholder="">
                     </div>
-                    
+
                     <div class="col-md-6">
                         <br>
                         <label>Diagnóstico de Transferencia:</label>
@@ -451,27 +354,27 @@
                         <label>Ingreso a Sala: </label>
                         <br>
                         <input class="form-check-input" type="radio" value="1" name="tipoingreso" id="normal" checked>
-                            <label class="form-check-label" for="flexRadioDefault1" style="margin-right:  30px;font-size:20px;">
-                                Normal
-                            </label>
+                        <label class="form-check-label" for="flexRadioDefault1" style="margin-right:  30px;font-size:20px;">
+                            Normal
+                        </label>
                         <input class="form-check-input" type="radio" value="2" name="tipoingreso" id="aislado" >
-                            <label class="form-check-label" for="flexRadioDefault2" style="font-size:20px;">
-                                Aislado
-                            </label> 
+                        <label class="form-check-label" for="flexRadioDefault2" style="font-size:20px;">
+                            Aislado
+                        </label> 
                     </div>
                     <div class="col-md-5">
                         <br>
                         <label>PISO: </label>
                         <select class="select2" id="pisos">
                             <option value="0">Seleccione.....</option>
-                         </select>
+                        </select>
                     </div>
                     <div class="col-md-5">
                         <br>
                         <label>CAMA: </label>
                         <select class="select2" id="camas">
                             <option value="0">Seleccione.....</option>
-                         </select>
+                        </select>
                     </div>
                     <input type="hidden" name="id_historial" class="form-control">
                     <input type="hidden" name="sexo" class="form-control">

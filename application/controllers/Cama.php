@@ -132,7 +132,7 @@ class Cama extends CI_Controller {
         $datetime1 = new DateTime($fecha1);
         $datetime2 = new DateTime($fecha2);
         $interval = $datetime1->diff($datetime2);
-        return $interval->format('%R%a');
+        return $interval->format('%d');
     }
 
     function cargarDetalleByBloque() {

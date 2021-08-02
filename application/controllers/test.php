@@ -23,4 +23,11 @@ class test extends CI_Controller {
         $this->load->view('test');
     }
 
+    function cargarPiso($idPiso) {
+        $data = array(
+            'idPiso' => $idPiso
+        );
+        $this->load->view('test', $data);
+    }
+
 }
