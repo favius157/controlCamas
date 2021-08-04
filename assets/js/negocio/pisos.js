@@ -494,7 +494,7 @@ function liberarCama(id, flag) {
                 }, success: function (data, textStatus, jqXHR) {
                     console.log(data);
                     if (data == 1) {
-                        location.href = base_url() + "test";
+                        location.href = window.location.href;
                         $("#modalAltaPaciente").modal("hide");
                     } else {
                         alert("Ocurrio un problemas al Liberar la cama");
