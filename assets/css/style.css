@@ -81,7 +81,14 @@ ul {
     color: white;
 }/**FIN ASCENSOR*/
 
+/*list group*/
 
+.list-group-item.active {
+background-color: grey;
+border-color: grey; }
+
+
+/*end*/
 .swal-button {
   padding: 7px 19px;
   border-radius: 2px;

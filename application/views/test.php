@@ -161,24 +161,95 @@
                             <label>Diagnóstico ultima atención:</label>
                             <input type="text" name="diagnostico" class="form-control" placeholder="" disabled>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <br>
                             <label>Diagnóstico de Internación:</label>
                             <input type="text" name="diagnosticoEnfermeria" class="form-control" placeholder="" >
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <br>
-                            <label>Tipo de Ingreso: </label>
+                            <label>Ingreso a: </label>
                             <br>
                             <input class="form-check-input" type="radio" value="1" name="tipoingreso" id="normal" checked>
-                            <label class="form-check-label" for="flexRadioDefault1" style="margin-right:  30px;font-size:20px;">
-                                Normal
+                            <label class="form-check-label" for="flexRadioDefault1" style="margin-right:  20px;font-size:20px;">
+                                Sala Común
                             </label>
                             <input class="form-check-input" type="radio" value="2" name="tipoingreso" id="aislado" >
                             <label class="form-check-label" for="flexRadioDefault2" style="font-size:20px;">
-                                Aislado
+                                Sala Aislado
                             </label> 
-                        </div>  
+                        </div> 
+                        <div class="col-md-3">
+                            <br>
+                            <label>Paciente de: </label>
+                            <br>
+                            <input  type="checkbox" value="4" name="riesgo" id="riesgo" onchange="javascript:mostrarEquipamiento()">
+                            <label  style="font-size:20px;">  Riesgo</label>
+                        </div> 
+                        <div class="row" id="formRiesgo">
+                        <div class="col-md-12" id="listEquipamiento" style="display: none;">
+                            <br>
+                                <!--<left  ><a>Asegurados:</a></left><a style="padding: 0px 250px;">Tipo Asegurado</a>-->
+                            <div class="col-md-6">
+                                <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div>
+                                      <input class="form-check-input" type="checkbox" value="tuboOxigeno" name="check">
+                                    <label class="form-check-label" for="inlineCheckbox1"style="margin-right:  20px;">Tubo de Oxigeno</label> 
+                                    <label style="display:inline; ">Libras:</label>
+                                    <input style="width :100px; height : 30px;display:inline;" type="number" name="librasTubo" class="form-control" placeholder="" >  
+                                    </div>
+                                    
+                                </li>
+                                <li class="list-group-item">
+                                    <div>
+                                      <input class="form-check-input" type="checkbox" value="ventilador" name="check">
+                                    <label class="form-check-label" for="inlineCheckbox1"style="margin-right:  20px;">Ventilador</label>  
+                                    </div>
+                                    
+                                </li>
+                                    
+                                <li class="list-group-item">
+                                    <div>
+                                     <input class="form-check-input" type="checkbox" value="monitor" name="check">
+                                    <label class="form-check-label" for="inlineCheckbox1"style="margin-right:  20px;">Monitor</label>
+                                    </div>
+                                    
+                                </li>   
+                            </ul>
+                            </div> 
+                            <div class="col-md-6">
+                                <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div>
+                                     <input class="form-check-input" type="checkbox" value="flujometro" name="check">
+                                    <label class="form-check-label" for="inlineCheckbox1"style="margin-right:  30px;">Flujometro</label>
+                                    <label style="display:inline; ">Libras:</label>
+                                    <input style="width :100px; height : 30px;display:inline;" type="number" name="librasFlujometro" class="form-control" placeholder="" > 
+                                    </div>
+                                    
+                                </li>
+                                <li class="list-group-item">
+                                    <div>
+                                    <input class="form-check-input" type="checkbox" value="aspirador" name="check">
+                                    <label class="form-check-label" for="inlineCheckbox1"style="margin-right:  20px;">Aspirador</label>  
+                                    </div>
+                                    
+                                </li>
+                                    
+                                <li class="list-group-item">
+                                    <div>
+                                     <input class="form-check-input" type="checkbox" value="ambu" name="check">
+                                    <label class="form-check-label" for="inlineCheckbox1"style="margin-right:  20px;">Ambu</label>
+                                    </div>
+                                    
+                                </li>   
+                            </ul>
+                            </div>    
+                            
+                        </div>
+
+                    </div>
                         <input type="hidden" name="id_historial" class="form-control">
                         <input type="hidden" name="sexo" class="form-control">
                         <input type="hidden" name="codcns" class="form-control">
@@ -344,58 +415,50 @@
                         <label>Diagnóstico de Transferencia:</label>
                         <input type="text" name="diagnosticoEnfermeria" class="form-control" placeholder="">
                     </div>
+                                       
                     <div class="col-md-2">
-                        <br>
-                        <label>Edad:</label>
-                        <input type="text" id="edad" class="form-control" value=""  disabled>
-                    </div>
-                    <div class="col-md-4">
-                        <br>
-                        <label>Ingreso a Sala: </label>
-                        <br>
-                        <input class="form-check-input" type="radio" value="1" name="tipoingreso" id="normal" checked>
-                        <label class="form-check-label" for="flexRadioDefault1" style="margin-right:  30px;font-size:20px;">
-                            Normal
-                        </label>
-                        <input class="form-check-input" type="radio" value="2" name="tipoingreso" id="aislado" >
-                        <label class="form-check-label" for="flexRadioDefault2" style="font-size:20px;">
-                            Aislado
-                        </label> 
-                    </div>
-                    <div class="col-md-5">
                         <br>
                         <label>PISO: </label>
                         <select class="select2" id="pisos">
                             <option value="0">Seleccione.....</option>
                         </select>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-3">
                         <br>
                         <label>CAMA: </label>
                         <select class="select2" id="camas">
                             <option value="0">Seleccione.....</option>
                         </select>
                     </div>
-                    <input type="hidden" name="id_historial" class="form-control">
-                    <input type="hidden" name="sexo" class="form-control">
+                     <div class="col-md-4">
+                        <br>
+                        <label>Ingreso a Sala: </label>
+                        <br>
+                        <input class="form-check-input" type="radio" value="1" name="tipoingreso" id="normal" checked>
+                        <label class="form-check-label" for="flexRadioDefault1" style="margin-right:  30px;font-size:20px;">
+                            Común
+                        </label>
+                        <input class="form-check-input" type="radio" value="2" name="tipoingreso" id="aislado" >
+                        <label class="form-check-label" for="flexRadioDefault2" style="font-size:20px;">
+                            Aislada
+                        </label> 
+                    </div>
+                    <input type="hidden" name="matricula" class="form-control">
                     <input type="hidden" name="codcns" class="form-control">
-                    <input type="hidden" name="edad" class="form-control">
-
-                    <input type="hidden" name="matricula" class="form-control" placeholder="" disabled>
-                    <input type="hidden" name="codcns" class="form-control">
-                    <input type="hidden" name="fec_nacimiento" class="form-control">
-                    <input type="hidden" name="sexo" class="form-control">
-                    <input type="hidden" name="cie10" class="form-control" placeholder="" disabled>
+                    <input type="hidden" name="fecnacimiento" class="form-control">
+                    <input type="hidden" name="cie10" class="form-control">
                     <input type="hidden" name="empresa" class="form-control">
                     <input type="hidden" name="patronal" class="form-control">
-                    <input type="hidden" name="id_historial" class="form-control">
+                    <input type="hidden" name="idhistorial" class="form-control">
+                    <input type="hidden" name="sexo" class="form-control">
+                    <input type="hidden" name="edad" class="form-control">
                 </div>
             </div>
 
             <div class="modal-footer">
 
                 <span id="msgAsignar" class="msgAlertas" style="float: left; color: red; display: none;font-weight: bold;">Por favor ingrese una matrícula o carné para realizar la búsqueda, gracias!....</span>
-                <button class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                <button class="btn btn-warning" onclick="transferirPaciente(0, true)" id="btnGuardarPersona">Transferir</button>
 
             </div>
         </div>

@@ -185,7 +185,7 @@ class Cama extends CI_Controller {
     function asignarCama() {
         $respuesta = $this->cama_model->validarAlta($_POST['idhistorial']);
         if ($respuesta == null) {
-            echo $this->cama_model->asignarCama($_POST['matricula'], $_POST['nombres'], $_POST['codcns'], $_POST['fecnacimiento'], $_POST['edad'], $_POST['sexo'], $_POST['diagnostico'], $_POST['cie10'], $_POST['empresa'], $_POST['patronal'], $_POST['medico'], $_POST['especialidad'], $_POST['diagnosticoenfermeria'], $_POST['tipoingreso'], $_POST['idhistorial'], $_POST['idCama']);
+            echo $this->cama_model->asignarCama($_POST['matricula'], $_POST['nombres'], $_POST['codcns'], $_POST['fecnacimiento'], $_POST['edad'], $_POST['sexo'], $_POST['diagnostico'], $_POST['cie10'], $_POST['equipamiento'],$_POST['empresa'], $_POST['patronal'], $_POST['medico'], $_POST['especialidad'], $_POST['diagnosticoenfermeria'], $_POST['tipoingreso'], $_POST['idhistorial'], $_POST['idCama']);
         } else {
             echo json_encode($respuesta);
         }
@@ -197,15 +197,21 @@ class Cama extends CI_Controller {
         $lista = array();
         if ($verPaciente != null) {
             foreach ($verPaciente as $listaPaciente) {
+                $datos['idhistorial'] = $listaPaciente['id_historial'];
                 $datos['nombres'] = $listaPaciente['nombres'];
                 $datos['matricula'] = $listaPaciente['matricula'];
-                $datos['cie10'] = $listaPaciente['cie10'];
+                $datos['codcns'] = $listaPaciente['codcns'];
+                $datos['fecnacimiento'] = $listaPaciente['fec_nacimiento'];
                 $datos['edad'] = $listaPaciente['edad'];
                 $datos['sexo'] = $listaPaciente['sexo'];
+                $datos['patronal'] = $listaPaciente['patronal'];
+                $datos['empresa'] = $listaPaciente['empresa'];
                 $datos['diagnostico'] = $listaPaciente['diagnostico'];
+                $datos['cie10'] = $listaPaciente['cie10'];
                 $datos['medico'] = $listaPaciente['medico'];
                 $datos['especialidad'] = $listaPaciente['especialidad'];
                 $datos['fecha'] = $listaPaciente['fecha_asignacion'];
+                $datos['idpiso'] = $listaPaciente['id_piso'];
                 $datos['usuario'] = $listaPaciente['usuario'];
                 $lista[] = $datos;
             }

@@ -154,22 +154,25 @@ class Cama_model extends CI_Model {
         }
     }
 
-    function asignarCama($matricula, $nombres, $codcns, $fecnacimiento, $edad, $sexo, $diagnostico, $cie10, $empresa, $patronal, $medico, $especialidad, $diagnosticoenfermeria, $tipoingreso, $idhistorial, $idCama) {
-        echo $idCama;
+    function asignarCama($matricula, $nombres, $codcns, $fecnacimiento, $edad, $sexo, $diagnostico, $cie10,$equipamiento, $empresa, $patronal, $medico, $especialidad, $diagnosticoenfermeria, $tipoingreso, $idhistorial, $idCama) {
+
         $usuarioActual = json_decode($_SESSION["usuario"]);
         $usuarioActual = $usuarioActual[0]->id_usuario;
         $ip = $this->input->ip_address();
         $hoy = date("Y-m-d H:i:s");
         $this->cambiarEstadoCama($idCama, $tipoingreso);
-        $query = $this->db->query("INSERT INTO asignacion_cama (matricula,nombres,codcns,fec_nacimiento,edad,sexo,diagnostico,cie10,empresa,patronal,medico,especialidad,diagnostico_enfermeria,tipoingreso,fecha_asignacion,id_historial,id_cama,id_usuario,fecha_registro,ip_registro) VALUES('$matricula','$nombres','$codcns','$fecnacimiento','$edad',$sexo,'$diagnostico','$cie10','$empresa','$patronal','$medico','$especialidad','$diagnosticoenfermeria',$tipoingreso,'$hoy','$idhistorial',$idCama,$usuarioActual,'$hoy','$ip')");
+        $query = $this->db->query("INSERT INTO asignacion_cama (matricula,nombres,codcns,fec_nacimiento,edad,sexo,diagnostico,cie10,equipamiento,empresa,patronal,medico,especialidad,diagnostico_enfermeria,tipoingreso,fecha_asignacion,id_historial,id_cama,id_usuario,fecha_registro,ip_registro) VALUES('$matricula','$nombres','$codcns','$fecnacimiento','$edad',$sexo,'$diagnostico','$cie10','$equipamiento','$empresa','$patronal','$medico','$especialidad','$diagnosticoenfermeria',$tipoingreso,'$hoy','$idhistorial',$idCama,$usuarioActual,'$hoy','$ip')");
         return $query;
     }
 
     function verPacienteByCama($idcama) {
-        $query = $this->db->query("SELECT ac.matricula as matricula,ac.nombres as nombres,edad,sexo,diagnostico,cie10,medico,especialidad,fecha_asignacion,concat(p.nombres,' ',p.apellidos) as usuario FROM asignacion_cama ac
+        $query = $this->db->query("SELECT id_historial,ac.nombres as nombres,ac.matricula as matricula,codcns,fec_nacimiento,TIMESTAMPDIFF(YEAR,fec_nacimiento,CURDATE()) AS edad,sexo,patronal,empresa,diagnostico,cie10,medico,especialidad,fecha_asignacion,pi.id_piso as id_piso,concat(p.nombres,' ',p.apellidos) as usuario FROM asignacion_cama ac
+                                   JOIN cama c ON ac.id_cama=c.id_cama
+                                   JOIN sala s ON c.id_sala=s.id_sala
+                                   JOIN piso pi ON s.id_piso=pi.id_piso
                                    JOIN usuario u ON ac.id_usuario=u.id_usuario
                                    JOIN persona p ON u.id_persona=p.id_persona
-                                   WHERE id_cama=$idcama AND ac.estado=1");
+                                   WHERE ac.id_cama=$idcama AND ac.estado=1");
                                 //WHERE id_cama=$idcama ORDER BY fecha_asignacion desc LIMIT 1");
         if ($query->num_rows() > 0) {
             return $query->result_array();
