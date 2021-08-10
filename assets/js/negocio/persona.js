@@ -21,7 +21,7 @@ function cargarPersonas() {
                 $.each(arr, function (index, contenido) {
                     estado = (contenido.estado == 0) ? "Inactivo" : "Activo";
                     //console.log(contenido.id);
-                    $("#tablaPersona>tbody").append('<tr><td>' + contenido.nombres + ' ' + contenido.apellidos + '</td><td>' + contenido.ci + '</td><td>' + contenido.matricula + '</td><td>' + contenido.telefono + '</td><td>' + contenido.cargo + '</td><td>' + contenido.establecimiento + '</td><td>' + estado + '</td><td><a class="btn btn-success" onclick = "usuarioPersona('+contenido.id+', false)"><i class="fa fa-user"></i></a><a class="btn btn-warning" onclick = "editarPersona('+contenido.id+', false)"><i class="fa fa-pencil"></i></a><a class="btn btn-danger" onclick = "eliminarPersona('+contenido.id+', false)"><i class="fa fa-trash-o"></i></a></td></tr>');
+                    $("#tablaPersona>tbody").append('<tr><td>' + contenido.nombres + ' ' + contenido.apellidos + '</td><td>' + contenido.ci + '</td><td>' + contenido.matricula + '</td><td>' + contenido.telefono + '</td><td>' + contenido.cargo + '</td><td>' + contenido.establecimiento + '</td><td>' + estado + '</td><td><a class="btn btn-success" onclick = "usuarioPersona('+contenido.id+', false)"><i class="fa fa-user"></i></a><a class="btn btn-warning modificar" onclick = "editarPersona('+contenido.id+', false)"><i class="fa fa-pencil"></i></a><a class="btn btn-danger" onclick = "eliminarPersona('+contenido.id+', false)"><i class="fa fa-trash-o"></i></a></td></tr>');
                 });
 
                 function fnFormatDetails(oTable, nTr)

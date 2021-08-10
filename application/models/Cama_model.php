@@ -15,7 +15,7 @@ class Cama_model extends CI_Model {
 
     function cargarPisos() {
         $query = $this->db->query("SELECT id_piso,numero_piso FROM piso WHERE estado=1");
-        /*$query = $this->db->query("SELECT p.id_piso as id_piso, p.numero_piso as numero_piso, COUNT(c.id_cama) as cantidadCamas FROM piso p LEFT JOIN cama c ON p.id_piso = c.id_piso GROUP by p.id_piso");*/
+        /* $query = $this->db->query("SELECT p.id_piso as id_piso, p.numero_piso as numero_piso, COUNT(c.id_cama) as cantidadCamas FROM piso p LEFT JOIN cama c ON p.id_piso = c.id_piso GROUP by p.id_piso"); */
         if ($query->num_rows() > 0) {
             return $query->result_array();
         } else {
@@ -154,7 +154,7 @@ class Cama_model extends CI_Model {
         }
     }
 
-    function asignarCama($matricula, $nombres, $codcns, $fecnacimiento, $edad, $sexo, $diagnostico, $cie10,$equipamiento, $empresa, $patronal, $medico, $especialidad, $diagnosticoenfermeria, $tipoingreso, $idhistorial, $idCama) {
+    function asignarCama($matricula, $nombres, $codcns, $fecnacimiento, $edad, $sexo, $diagnostico, $cie10, $equipamiento, $empresa, $patronal, $medico, $especialidad, $diagnosticoenfermeria, $tipoingreso, $idhistorial, $idCama) {
 
         $usuarioActual = json_decode($_SESSION["usuario"]);
         $usuarioActual = $usuarioActual[0]->id_usuario;
@@ -173,7 +173,7 @@ class Cama_model extends CI_Model {
                                    JOIN usuario u ON ac.id_usuario=u.id_usuario
                                    JOIN persona p ON u.id_persona=p.id_persona
                                    WHERE ac.id_cama=$idcama AND ac.estado=1");
-                                //WHERE id_cama=$idcama ORDER BY fecha_asignacion desc LIMIT 1");
+        //WHERE id_cama=$idcama ORDER BY fecha_asignacion desc LIMIT 1");
         if ($query->num_rows() > 0) {
             return $query->result_array();
         } else {
@@ -206,11 +206,71 @@ class Cama_model extends CI_Model {
         }
     }
 
-    function listarCamas($idpiso){
+    function listarCamas($idpiso) {
         $query = $this->db->query("SELECT c.id_cama as id_cama, numero_cama,c.estado FROM cama c
                                     JOIN sala s ON c.id_sala=s.id_sala
                                     JOIN piso p ON s.id_piso=p.id_piso
                                     Where p.id_piso=$idpiso AND c.estado = 1 order by c.id_cama asc");
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+
+    function cargarDetalleCama($idCama) {
+        $query = $this->db->query("SELECT * FROM cama c, piso p, bloque b, sala s WHERE b.id_bloque = c.id_bloque and s.id_sala = c.id_sala and s.id_piso = p.id_piso and c.id_cama = $idCama");
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+
+    function estadoCamas() {
+        $query = $this->db->query("SELECT (SELECT COUNT(estado) from cama WHERE estado = 1) as camasLibres, (SELECT COUNT(estado) from cama WHERE estado = 2) as camasOcupadas, COUNT(*) FROM `cama`");
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+
+    function asignacionesFechaActual() {
+        $fechaActual = date("Y-m-d");
+        $query = $this->db->query("SELECT * FROM `asignacion_cama` WHERE fecha_asignacion like '$fechaActual%'");
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+
+    function pacientesCriticos() {
+
+        $fecha = date("Y-m-d");
+        $fecha = date("Y-m-d", strtotime($fecha . "- 14 days"));
+
+        $query = $this->db->query("SELECT * FROM `asignacion_cama` WHERE fecha_asignacion < '$fecha' and estado = 1");
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+
+    function cargarAsignacionesByTipoIngreso($tIngreso) {
+
+        $query = $this->db->query("SELECT * FROM `asignacion_cama` WHERE estado = 1 and tipoingreso = $tIngreso");
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+
+    function actividadDelDia($fecha) {
+        $query = $this->db->query("SELECT * FROM `asignacion_cama` WHERE fecha_asignacion like '2021-08-10%' or fecha_alta like '2021-08-10%' ORDER by fecha_registro DESC");
         if ($query->num_rows() > 0) {
             return $query->result_array();
         } else {

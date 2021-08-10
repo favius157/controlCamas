@@ -85,6 +85,7 @@ class Privilegio_model extends CI_Model {
     }
 
     function cargarPermisoByRol($idRol) {
+        
         $query = $this->db->query("select * from privilegios where id_rol = $idRol");
 
         if ($query->num_rows() > 0) {
@@ -93,7 +94,7 @@ class Privilegio_model extends CI_Model {
             return null;
         }
     }
-    
+
     function cargarPermisoByRol2($idRol) {
         $query = $this->db->query("SELECT g.grupo as grupo, m.menu as menu, m.url as url FROM menu m, rol r, privilegios p, grupo g WHERE m.id_grupo = g.id_grupo and p.id_menu = m.id_menu and p.id_rol = r.id_rol and r.id_rol = $idRol ORDER by g.grupo");
 
@@ -107,13 +108,44 @@ class Privilegio_model extends CI_Model {
     function borrarAccesoByRol($idRol) {
         return $this->db->query("delete from privilegios where id_rol = $idRol");
     }
-    
+
     function editarRol($idRol, $rol) {
         return $this->db->query("update rol set rol = '$rol' where id_rol = $idRol");
     }
-    
+
     function borrarRol($idRol) {
         return $this->db->query("update rol set estado = 0 where id_rol = $idRol");
+    }
+
+    function permisoByItem($item, $idUsuario) {
+        $csql = "SELECT * FROM permiso_usuario pu, menu m, usuario u WHERE m.id_menu = pu.idMenu and u.id_usuario = pu.idUsuario and m.url = '$item' and u.id_usuario = $idUsuario";
+        $query = $this->db->query($csql);
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+    
+    function permisoByUsuario($idUsuario) {
+        $csql = "SELECT * FROM permiso_usuario pu, menu m, usuario u WHERE m.id_menu = pu.idMenu and u.id_usuario = pu.idUsuario and u.id_usuario = $idUsuario";
+        $query = $this->db->query($csql);
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+
+    function asignarPermisos($idUsuario, $item) {
+        return $this->db->query("insert into permiso_usuario values($idUsuario, $item, 'crear:false, modificar:false, eliminar: false')");
+    }
+
+    function borrarPermisosByUsuario($idUsuario) {
+        //echo "delete from permiso_usuario where idUsuario = $idUsuario";
+        return $this->db->query("delete from permiso_usuario where idUsuario = $idUsuario");
     }
 
 }

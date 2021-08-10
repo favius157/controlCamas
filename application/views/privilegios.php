@@ -62,25 +62,43 @@
                                 <h3>Roles y permisos</h3>
                             </div>
                             <div class="content">
-                                <div class="table-responsive">
-                                    <table class="table no-border hover" id="tablaPermisos">
-                                        <thead class="no-border">
-                                            <tr>
-                                                <th>Nombre del menu</th>
-                                                <th>Nombre del rol</th>
-                                                <th>Estado</th>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <ul class="list-group">
+                                            <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: green; color: white; font-weight: 600;">
+                                                Lista de roles
+                                                <span class="badge badge-primary badge-pill crear" style="cursor: pointer; background-color: white !important; color: green;" onclick="nuevoRol(false)"><i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Agregar un nuevo rol"></i></span>
+                                            </li>
+                                            <div id="listaRoles">
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    Dapibus ac facilisis in
+                                                    <span class="badge badge-primary badge-pill">2</span>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    Morbi leo risus
+                                                    <span class="badge badge-primary badge-pill">1</span>
+                                                </li>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <table class="table no-border hover" id="tablaPermisos">
+                                            
+                                            <thead class="no-border">
+                                                <tr>
+                                                    <th>Nombre del menu</th>
+                                                    <th>Estado</th>
+                                                    <th>
+                                                        <a class="crear" onclick="nuevoPermiso(false)" data-toggle ="modal" style="color: #AE212A; cursor: pointer;"><i class="fa fa-plus-square"> Nuevo Permiso</i></a>
 
-                                                <th>
-                                                    <a onclick="nuevoRol(false)" style="color: #AE212A; cursor: pointer;"><i class="fa fa-plus-square"> Nuevo Rol</i></a> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <a onclick="nuevoPermiso(false)" data-toggle ="modal" style="color: #AE212A; cursor: pointer;"><i class="fa fa-plus-square"> Nuevo Permiso</i></a>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="no-border-y">
 
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="no-border-y">
-
-                                        </tbody>
-                                    </table>					
+                                            </tbody>
+                                        </table>	
+                                    </div>
                                 </div>
                             </div>
                         </div>				
@@ -171,7 +189,7 @@
             <div class="modal-footer">
 
                 <span id="msgPermiso" class="msgAlertas" style="float: left; color: red; display: none;">Los campos marcados con rojo son obligatorios</span>
-                <button class="btn btn-facebook" onclick="editarPermiso(0,0,true)" id="btnEditarPermiso" style="display: none;">Guardar</button>
+                <button class="btn btn-facebook" onclick="editarPermiso(0, 0, true)" id="btnEditarPermiso" style="display: none;">Guardar</button>
                 <button class="btn btn-primary" onclick="nuevoPermiso(true)" id="btnGuardarPermiso">Guardar</button>
                 <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 

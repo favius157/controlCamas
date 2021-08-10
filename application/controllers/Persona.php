@@ -1,6 +1,7 @@
 <?php
 
 defined('BASEPATH') or exit('No direct script access allowed');
+session_start();
 
 /**
  * Description of Persona
@@ -71,13 +72,12 @@ class Persona extends CI_Controller {
         }
     }
 
-
-    function editarPersona(){
-        echo $this->persona_model->editarPersona($_POST["id"],$_POST["nombres"],$_POST["apellidos"],$_POST["ci"],$_POST["matricula"],$_POST["telefono"],$_POST["cargo"],$_POST["establecimiento"]);
+    function editarPersona() {
+        echo $this->persona_model->editarPersona($_POST["id"], $_POST["nombres"], $_POST["apellidos"], $_POST["ci"], $_POST["matricula"], $_POST["telefono"], $_POST["cargo"], $_POST["establecimiento"]);
     }
 
-    function getPersona(){
-        $persona=$this->persona_model->getPersona($_POST["idpersona"]);
+    function getPersona() {
+        $persona = $this->persona_model->getPersona($_POST["idpersona"]);
         $lista = array();
         if ($persona != null) {
             foreach ($persona as $personas) {
@@ -97,12 +97,12 @@ class Persona extends CI_Controller {
         } else {
             echo "null";
         }
-
     }
 
-    function eliminarPersona(){
+    function eliminarPersona() {
         echo $this->persona_model->eliminarPersona($_POST["id"]);
     }
+
 }
 
 ?>

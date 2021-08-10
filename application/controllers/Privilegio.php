@@ -2,6 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 session_start();
+
 /**
  * Description of Privilegio
  *
@@ -13,7 +14,7 @@ class Privilegio extends CI_Controller {
         parent::__construct();
         $this->load->helper('url');
         $this->load->model('privilegio_model');
-        if(!isset($_SESSION["usuario"])){
+        if (!isset($_SESSION["usuario"])) {
             redirect("login", "refresh");
         }
     }
@@ -120,10 +121,15 @@ class Privilegio extends CI_Controller {
         if ($permisos != null) {
             foreach ($permisos as $permisos) {
                 $datos["id"] = $permisos["id_privilegios"];
+                $datos["menu"] = $this->privilegio_model->cargarMenuById($permisos["id_menu"])[0]["menu"];
+                $datos["rol"] = $this->privilegio_model->cargarRolById($permisos["id_rol"])[0]["rol"];
                 $datos["idMenu"] = $permisos["id_menu"];
                 $datos["idRol"] = $permisos["id_rol"];
                 $datos["menu"] = $this->privilegio_model->cargarMenuById($permisos["id_menu"])[0]["menu"];
                 $datos["rol"] = $this->privilegio_model->cargarRolById($permisos["id_rol"])[0]["rol"];
+                $datos["fechaRegistro"] = $permisos["fecha_registro"];
+                $datos["ip"] = $permisos["ip_registro"];
+                $datos["estado"] = $permisos["estado"];
                 $lista[] = $datos;
             }
 
@@ -155,9 +161,55 @@ class Privilegio extends CI_Controller {
     function editarRol() {
         echo $this->privilegio_model->editarRol($_POST["idRol"], $_POST["nombreRol"]);
     }
-    
+
     function borrarRol() {
         echo $this->privilegio_model->borrarRol($_POST["idRol"]);
+    }
+
+    function permisosByItem() {
+        $permisos = $this->privilegio_model->permisoByItem($_POST["item"], json_decode($_SESSION["usuario"])[0]->id_usuario);
+        if ($permisos != null) {
+            $permisos = explode(",", $permisos[0]["permisos"]);
+            $lista = array();
+            foreach ($permisos as $permisos) {
+                $permiso = explode(":", $permisos);
+                $datos["clave"] = $permiso[0];
+                $datos["valor"] = $permiso[1];
+                $lista[] = $datos;
+            }
+
+            echo json_encode($lista);
+        } else {
+            echo "null";
+        }
+    }
+
+    function permisosByUsuario() {
+        $permisos_usuario = $this->privilegio_model->permisoByUsuario($_POST["usuario"]);
+        $lista = array();
+        if ($permisos_usuario != null) {
+
+            foreach ($permisos_usuario as $permisos_usuario) {
+                $listaPermisos = explode(",", $permisos_usuario["permisos"]);
+                $listaAux = array();
+                for ($i = 0; $i < count($listaPermisos); $i++) {
+                    $thePermiso = explode(":", $listaPermisos[$i]);
+                    $datosPermiso["clave"] = $thePermiso[0];
+                    $datosPermiso["valor"] = $thePermiso[1];
+                    $listaAux[] = $datosPermiso;
+                }
+                $datos["usuario"] = $permisos_usuario["idUsuario"];
+                $datos["idMenu"] = $permisos_usuario["idMenu"];
+                $datos["menu"] = $this->privilegio_model->cargarMenuById($permisos_usuario["idMenu"])[0]["menu"];
+                $datos["permisos"] = json_encode($listaAux);
+
+                $lista[] = $datos;
+            }
+
+            echo json_encode($lista);
+        } else {
+            echo "null";
+        }
     }
 
 }

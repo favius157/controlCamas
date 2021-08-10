@@ -2,6 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 session_start();
+
 /**
  * Description of Persona
  *
@@ -13,8 +14,9 @@ class Usuario extends CI_Controller {
         parent::__construct();
         $this->load->helper('url');
         $this->load->model('usuario_model');
+        $this->load->model('privilegio_model');
         $this->load->model('rol_model');
-        if(!isset($_SESSION["usuario"])){
+        if (!isset($_SESSION["usuario"])) {
             redirect("login", "refresh");
         }
     }
@@ -34,7 +36,7 @@ class Usuario extends CI_Controller {
                 $datos["nombres"] = $usuarios["nombres"];
                 $datos["apellidos"] = $usuarios["apellidos"];
                 $datos["establecimiento"] = $usuarios["establecimiento"];
-                $datos["rol"] =($usuarios["rol"]);
+                $datos["rol"] = ($usuarios["rol"]);
                 $datos["usuario"] = $usuarios["usuario"];
                 $datos["estado"] = $usuarios["estado"];
 
@@ -48,12 +50,16 @@ class Usuario extends CI_Controller {
     }
 
     function nuevoUsuario() {
-        echo $this->usuario_model->nuevoUsuario($_POST["usuario"], sha1(md5($_POST["contrasena"])), $_POST["persona"], $_POST["rol"]);
+        $usuarioInsertado = $this->usuario_model->nuevoUsuario($_POST["usuario"], sha1(md5($_POST["contrasena"])), $_POST["persona"], $_POST["rol"]);
+        $items = $this->privilegio_model->cargarPermisoByRol($_POST["rol"]);
+        foreach ($items as $items) {
+            $this->privilegio_model->asignarPermisos($usuarioInsertado, $items["id_menu"]);
+        }
+        echo 1;
     }
 
-
-    function getUsuario(){
-        $usuario=$this->usuario_model->getUsuario($_POST["idusuario"]);
+    function getUsuario() {
+        $usuario = $this->usuario_model->getUsuario($_POST["idusuario"]);
         $lista = array();
         if ($usuario != null) {
             foreach ($usuario as $usuarios) {
@@ -68,12 +74,22 @@ class Usuario extends CI_Controller {
         } else {
             echo "null";
         }
-
     }
 
-
     function editarRol() {
-        echo $this->usuario_model->editarRol($_POST["id"],$_POST["rol"]);
+        $rolAnterior = json_decode($_SESSION["usuario"])[0]->id_rol;
+        $editarRol = $this->usuario_model->editarRol($_POST["id"], $_POST["rol"]);
+        if ($editarRol == 1) {
+            $borrarPermisos = $this->privilegio_model->borrarPermisosByUsuario(json_decode($_SESSION["usuario"])[0]->id_usuario);
+            if ($borrarPermisos == 1) {
+
+                $items = $this->privilegio_model->cargarPermisoByRol($_POST["rol"]);
+                foreach ($items as $items) {
+                    $this->privilegio_model->asignarPermisos(json_decode($_SESSION["usuario"])[0]->id_usuario, $items["id_menu"]);
+                }
+            }
+        }
+        echo 1;
     }
 
     function editarContrasena() {
@@ -81,8 +97,10 @@ class Usuario extends CI_Controller {
     }
 
     function eliminarUsuario() {
+        $this->privilegio_model->borrarPermisosByUsuario(json_decode($_POST["id"]));
         echo $this->usuario_model->eliminarUsuario($_POST["id"]);
     }
+
 }
 
 ?>

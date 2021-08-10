@@ -1,5 +1,4 @@
-<?php
- ?>
+<?php ?>
 <!DOCTYPE html>
 <html lang="en">
     <?php
@@ -63,6 +62,8 @@
                             </div>
                             <div class="content">
                                 <div class="table-responsive">
+                                    <button class="btn btn-default crear">Nueva persona</button>
+                                    <button class="btn btn-default modificar">Actualizar persona</button>
                                     <table class="table no-border hover" id="tablaPersona">
                                         <thead class="no-border">
                                             <tr>
@@ -74,7 +75,7 @@
                                                 <th>Establecimiento</th>
                                                 <th>Estado</th>
 
-                                                <th><a onclick="nuevaPersona(false)" data-toggle ="modal" data-target ="#myModal" style="color: #AE212A; cursor: pointer;"><i class="fa fa-plus-square"> Nuevo</i></a></th>
+                                                <th><a class="crear" onclick="nuevaPersona(false)" data-toggle ="modal" data-target ="#myModal" style="color: #AE212A; cursor: pointer;"><i class="fa fa-plus-square"> Nuevo</i></a></th>
                                             </tr>
                                         </thead>
                                         <tbody class="no-border-y">
@@ -173,11 +174,11 @@
                 <h4 class="modal-title fa fa-briefcase"style="font-size:15pt; text-align: center;">  ATENCION!</h4>
             </div>   
             <div class="modal-body">
-                 <div class="text-center">
+                <div class="text-center">
                     <div class="i-circle danger"><i class="fa fa-times"></i></div>
                     <h4>Oh god!</h4>
                     <p>Estas seguro que quieres borrar este registro?</p><br>
-                    
+
                 </div>
             </div>
             <div class="modal-footer">

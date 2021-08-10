@@ -45,7 +45,7 @@ class Usuario_model extends CI_Model {
         $ip = $this->input->ip_address();
         if ($this->validarUsuario($usuario) == null) {
             $query = $this->db->query("INSERT usuario (usuario,contrasena,id_persona,id_rol,fecha_registro,ip_registro) VALUES ('$usuario', '$contrasena', $persona, $rol, '$fechaActual', '$ip')");
-            return $query;
+            return $this->db->insert_id();
         } else {
             return "El funcionario ya tiene un usuario registrado.";
         }

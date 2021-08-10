@@ -28,7 +28,7 @@ $(document).ready(function () {
     });
 })
 var idActual = 0;
-var URLActual = "";
+var URLactual = "";
 
 function mostrarEquipamiento() {
         element = document.getElementById("listEquipamiento");

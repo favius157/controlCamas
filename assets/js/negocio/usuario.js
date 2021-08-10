@@ -240,7 +240,7 @@ function editarRol(id,flag) {
                 url: base_url() + "Usuario/editarRol/",
                 beforeSend: function (xhr) {
                 }, success: function (data, textStatus, jqXHR) {
-                    
+                    console.log(data);
                     if (data == 1) {
                         cargarUsuarios();
                         $("#modalEditarRol").modal("hide");
