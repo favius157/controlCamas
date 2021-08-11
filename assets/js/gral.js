@@ -65,3 +65,15 @@ function URLActual() {
     url = url.split("/");
     return url[url.length - 1];
 }
+
+function fechaActual() {
+    var now = new Date();
+    var month = (now.getMonth() + 1);
+    var day = now.getDate();
+    if (month < 10)
+        month = "0" + month;
+    if (day < 10)
+        day = "0" + day;
+    var today = now.getFullYear() + '-' + month + '-' + day;
+    return today;
+}

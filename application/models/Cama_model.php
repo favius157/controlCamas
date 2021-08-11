@@ -228,7 +228,7 @@ class Cama_model extends CI_Model {
     }
 
     function estadoCamas() {
-        $query = $this->db->query("SELECT (SELECT COUNT(estado) from cama WHERE estado = 1) as camasLibres, (SELECT COUNT(estado) from cama WHERE estado = 2) as camasOcupadas, COUNT(*) FROM `cama`");
+        $query = $this->db->query("SELECT (SELECT COUNT(estado) from cama WHERE estado = 1) as camasLibres, (SELECT COUNT(estado) from cama WHERE estado = 2) as camasOcupadas, COUNT(*) as total FROM `cama`");
         if ($query->num_rows() > 0) {
             return $query->result_array();
         } else {
@@ -270,7 +270,28 @@ class Cama_model extends CI_Model {
     }
 
     function actividadDelDia($fecha) {
-        $query = $this->db->query("SELECT * FROM `asignacion_cama` WHERE fecha_asignacion like '2021-08-10%' or fecha_alta like '2021-08-10%' ORDER by fecha_registro DESC");
+        $query = $this->db->query("SELECT * FROM `asignacion_cama` WHERE fecha_asignacion like '$fecha%' or fecha_alta like '$fecha%' ORDER by fecha_registro DESC");
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+
+    function cargarInternacionesByPiso($idPiso, $fecha) {
+        $query = "SELECT ac.matricula as matricula, ac.nombres as nombres, ac.fec_nacimiento as fechaNacimiento, ac.sexo as sexo, s.sala as sala, c.numero_cama as cama, ac.diagnostico as diagnostico FROM asignacion_cama ac, piso p, cama c, sala s WHERE ac.id_cama = c.id_cama and c.id_sala = s.id_sala and s.id_piso = p.id_piso and ac.fecha_alta LIKE '$fecha%' and p.id_piso = $idPiso";
+        $query = $this->db->query($query);
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+
+    function cargarAltasByPiso($idPiso, $fecha) {
+        $query = "SELECT ac.matricula as matricula, ac.nombres as nombres, ac.fec_nacimiento as fechaNacimiento, ac.sexo as sexo, s.sala as sala, c.numero_cama as cama, ac.fecha_asignacion as fechaAsignacion, ac.diagnostico as diagnostico, ta.tipoalta as tipoAlta FROM asignacion_cama ac, piso p, cama c, sala s, tipo_alta ta WHERE ta.id_tipoalta = ac.id_tipoalta AND ac.id_cama = c.id_cama and c.id_sala = s.id_sala and s.id_piso = p.id_piso and ac.estado = 2 and ac.fecha_alta LIKE '$fecha%' and p.id_piso = $idPiso";
+        
+        $query = $this->db->query($query);
         if ($query->num_rows() > 0) {
             return $query->result_array();
         } else {
