@@ -154,14 +154,14 @@ class Cama_model extends CI_Model {
         }
     }
 
-    function asignarCama($matricula, $nombres, $codcns, $fecnacimiento, $edad, $sexo, $diagnostico, $cie10, $equipamiento, $empresa, $patronal, $medico, $especialidad, $diagnosticoenfermeria, $tipoingreso, $idhistorial, $idCama) {
+    function asignarCama($matricula, $nombres, $codcns, $fecnacimiento, $edad, $sexo, $diagnostico, $cie10,$cie10literal, $equipamiento, $empresa, $patronal, $medico, $especialidad, $diagnosticoenfermeria, $tipoingreso, $idhistorial, $idCama) {
 
         $usuarioActual = json_decode($_SESSION["usuario"]);
         $usuarioActual = $usuarioActual[0]->id_usuario;
         $ip = $this->input->ip_address();
         $hoy = date("Y-m-d H:i:s");
         $this->cambiarEstadoCama($idCama, $tipoingreso);
-        $query = $this->db->query("INSERT INTO asignacion_cama (matricula,nombres,codcns,fec_nacimiento,edad,sexo,diagnostico,cie10,equipamiento,empresa,patronal,medico,especialidad,diagnostico_enfermeria,tipoingreso,fecha_asignacion,id_historial,id_cama,id_usuario,fecha_registro,ip_registro) VALUES('$matricula','$nombres','$codcns','$fecnacimiento','$edad',$sexo,'$diagnostico','$cie10','$equipamiento','$empresa','$patronal','$medico','$especialidad','$diagnosticoenfermeria',$tipoingreso,'$hoy','$idhistorial',$idCama,$usuarioActual,'$hoy','$ip')");
+        $query = $this->db->query("INSERT INTO asignacion_cama (matricula,nombres,codcns,fec_nacimiento,edad,sexo,diagnostico,cie10,cie10_literal,equipamiento,empresa,patronal,medico,especialidad,diagnostico_enfermeria,tipoingreso,fecha_asignacion,id_historial,id_cama,id_usuario,fecha_registro,ip_registro) VALUES('$matricula','$nombres','$codcns','$fecnacimiento','$edad',$sexo,'$diagnostico','$cie10','$cie10literal','$equipamiento','$empresa','$patronal','$medico','$especialidad','$diagnosticoenfermeria',$tipoingreso,'$hoy','$idhistorial',$idCama,$usuarioActual,'$hoy','$ip')");
         return $query;
     }
 
@@ -238,7 +238,7 @@ class Cama_model extends CI_Model {
 
     function asignacionesFechaActual() {
         $fechaActual = date("Y-m-d");
-        $query = $this->db->query("SELECT * FROM `asignacion_cama` WHERE fecha_asignacion like '$fechaActual%'");
+        $query = $this->db->query("SELECT id_asignacioncama,CONCAT(cie10,' ',cie10_literal) as cie10,tipoingreso,id_cama FROM `asignacion_cama` WHERE fecha_asignacion like '$fechaActual%'");
         if ($query->num_rows() > 0) {
             return $query->result_array();
         } else {

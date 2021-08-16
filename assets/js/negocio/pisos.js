@@ -15,6 +15,11 @@ $(document).ready(function () {
         //alert();
     })
     
+    /*$("#riesgo").change(function () {
+          $("#listEquipamiento").css("display","block");
+        //alert();
+    })*/
+
     $(".card-body").each(function (i, obj) {
         var id = $(this).attr("id");
         //$(this).append('<ul class="list-inline" style="text-align: center;font-size: 15px; font-weight:bold;"><li class="detalleCama" style="background-color: white;height: 15px;width: 15px;" title="Total de camas" ></li><span id="totalCamas-' + id + '"></span><li class="detalleCama" style="background-color: green;height: 15px;width: 15px;" title="Camas libres"></li><span id="camasLibres-' + id + '"></span><li class="detalleCama" style="background-color: red;height: 15px;width: 15px;" title="Camas Ocupadas"></li><span id="camasOcupadas-' + id + '"></span></ul>');
@@ -30,24 +35,7 @@ $(document).ready(function () {
 var idActual = 0;
 var URLactual = "";
 
-function mostrarEquipamiento() {
-        element = document.getElementById("listEquipamiento");
-        riesgo = document.getElementById("riesgo");
-        
 
-        if (riesgo.checked) {
-            element.style.display='block';
-            $("#normal").attr('disabled','disabled');
-            $("#normal").attr('checked', false);
-            $("#aislado").attr('disabled','disabled');
-            $("#aislado").attr('checked', false);
-        }
-        else {
-            element.style.display='none';
-            $("#normal").removeAttr('disabled');
-            $("#aislado").removeAttr('disabled');
-        }
-    }
 
 function cargarTipoAltas() {
     $.ajax({
@@ -251,6 +239,7 @@ function cargarDetalleByBloque(nombreBloque) {
                     total += parseInt(contenido.cantidad);
                     bloque = nombreBloque.replace(" ", "");
                     bloque = bloque.toLowerCase();
+                    //color de detalle de camas libres, ocupadas,libres,aisladas y riesgo
                     (contenido.estado == 1) ? $("#camasLibres-" + bloque).text(contenido.cantidad) : ((contenido.estado == 2) ? $("#camasOcupadas-" + bloque).text(contenido.cantidad) : $("#camasAisladas-" + bloque).text(contenido.cantidad));
                 })
                 $("#totalCamas-" + bloque).text(total);
@@ -332,6 +321,7 @@ function cargarPaciente(idpaciente) {
                     $("input[name='nombres']").val(arr[0].nombres);
                     $("input[name='matricula']").val(arr[0].nro_registro);
                     $("input[name='cie10']").val(arr[0].cie10);
+                    $("input[name='cie10Literal']").val(arr[0].cie10literal);
                     $("input[name='diagnostico']").val(arr[0].diagnostico);
                     $("input[name='medico']").val(arr[0].medico);
                     $("input[name='especialidad']").val(arr[0].especialidad);
@@ -363,11 +353,33 @@ function cargarPaciente(idpaciente) {
     
 }
 
+function mostrarEquipamiento() {
+        element = document.getElementById("listEquipamiento");
+        riesgo = document.getElementById("riesgo");
+        
+
+        /*if (riesgo.checked) {
+            $("#listEquipamiento").css("display","block");
+            //element.style.display='block';
+            $("#normal").attr('disabled','disabled');
+            $("#normal").attr('checked', false);
+            $("#aislado").attr('disabled','disabled');
+            $("#aislado").attr('checked', false);
+            console.log("marcada");
+        }
+        else {
+            element.style.display='none';
+            $("#normal").removeAttr('disabled');
+            $("#aislado").removeAttr('disabled');
+            console.log("sinmarcar");
+        }*/
+}
+
 function asignarPaciente(id, flag) {
     //console.log(id);
     if (!flag) {
         idActual = id;
-        limpiarAsignarPaciente();
+        //limpiarAsignarPaciente();
         //cargarPersona(id);
         
         $("#modalAsignarPaciente").modal("show");
@@ -399,11 +411,37 @@ function asignarPaciente(id, flag) {
 
                 var arr = [];
 
-                $("input:checkbox[name=check]:checked").each(function(){
-                    arr.push($(this).val());
-                    console.log(arr);
+                 $("input[name='check']").each(function (x){
+                    //arr.push($(this).val());
+                    //console.log(arr);
+                    if ($(this).is(":checked")) {
+                        console.log($("#" + $(this).val()));
+                        if ($("#" + $(this).val()).length >0) {
+                            console.log("valor del input: " + $("#" + $(this).val()).val());
+                            console.log("libr");
+                            arr.push(
+                                    {
+
+                                        equipo: $(this).val(),
+                                        libras: $("#" + $(this).val()).val()
+                                    }
+                            );
+                        } else {
+                            console.log("sadsad");
+                            arr.push(
+                                    {
+                                        equipo: $(this).val(),
+                                        //sn: ""
+                                    }
+                            );
+                        }
+
+                    }
+
+
+
                 });
-                var equipamiento=json_encode(arr);
+                var equipamiento=JSON.stringify(arr);
             }
 
             
@@ -413,6 +451,7 @@ function asignarPaciente(id, flag) {
                 matricula: $("input[name='matricula']").val(),
                 fecnacimiento: $("input[name='fec_nacimiento']").val(),
                 cie10: $("input[name='cie10']").val(),
+                cie10literal: $("input[name='cie10Literal']").val(),
                 diagnostico: $("input[name='diagnostico']").val(),
                 medico: $("input[name='medico']").val(),
                 especialidad: $("input[name='especialidad']").val(),
@@ -426,7 +465,7 @@ function asignarPaciente(id, flag) {
                 tipoingreso: radio,
                 equipamiento:equipamiento
             }
-            console.log(param);
+            //console.log(param);
             $.ajax({
                 data: param,
                 type: 'POST',
@@ -465,6 +504,7 @@ function asignarPaciente(id, flag) {
             })
         }
     }
+    //limpiarAsignarPaciente();
 }
 
 function verPacienteByCama(id) {
@@ -559,6 +599,7 @@ function transferirPaciente(id,flag) {
         idActual = id;
         obtenerPaciente(id);
          $("#modalTransferirPaciente").modal("show");
+         console.log("ahidando");
         
     } else {
         if ($("#cmbAlta").val() != 0) {
@@ -574,7 +615,7 @@ function transferirPaciente(id,flag) {
                 beforeSend: function (xhr) {
                     
                 }, success: function (data, textStatus, jqXHR) {
-                    console.log(data);
+                   // console.log(data);
                     if (data == 1) {
                         location.href = window.location.href;
                         $("#modalAltaPaciente").modal("hide");
@@ -608,10 +649,10 @@ function obtenerPaciente(id) {
         type: 'POST',
         url: base_url() + "Cama/verPacienteByCama/",
         beforeSend: function (xhr) {
-            console.log("aqui");
+            //console.log("aqui");
         },
         success: function (data, textStatus, jqXHR) {
-            console.log(data);
+           // console.log(data);
             if (data != "null") {
                 
                 var arr = JSON.parse(data);

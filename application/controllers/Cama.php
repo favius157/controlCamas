@@ -133,6 +133,7 @@ class Cama extends CI_Controller {
         $datetime2 = new DateTime($fecha2);
         $interval = $datetime1->diff($datetime2);
         return $interval->format('%d');
+        
     }
 
     function cargarDetalleByBloque() {
@@ -185,7 +186,7 @@ class Cama extends CI_Controller {
     function asignarCama() {
         $respuesta = $this->cama_model->validarAlta($_POST['idhistorial']);
         if ($respuesta == null) {
-            echo $this->cama_model->asignarCama($_POST['matricula'], $_POST['nombres'], $_POST['codcns'], $_POST['fecnacimiento'], $_POST['edad'], $_POST['sexo'], $_POST['diagnostico'], $_POST['cie10'], $_POST['equipamiento'],$_POST['empresa'], $_POST['patronal'], $_POST['medico'], $_POST['especialidad'], $_POST['diagnosticoenfermeria'], $_POST['tipoingreso'], $_POST['idhistorial'], $_POST['idCama']);
+            echo $this->cama_model->asignarCama($_POST['matricula'], utf8_decode($_POST['nombres']), $_POST['codcns'], $_POST['fecnacimiento'], $_POST['edad'], $_POST['sexo'], utf8_decode($_POST['diagnostico']), $_POST['cie10'],utf8_decode($_POST['cie10literal']), json_encode($_POST['equipamiento']),utf8_decode($_POST['empresa']), $_POST['patronal'], utf8_decode($_POST['medico']), $_POST['especialidad'], utf8_decode($_POST['diagnosticoenfermeria']), $_POST['tipoingreso'], $_POST['idhistorial'], $_POST['idCama']);
         } else {
             echo json_encode($respuesta);
         }
