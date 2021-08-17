@@ -165,8 +165,21 @@ class Cama_model extends CI_Model {
         return $query;
     }
 
+
+     function pacienteTransferencia($matricula, $nombres, $codcns, $fecnacimiento, $edad, $sexo, $diagnostico, $cie10,$cie10literal, $equipamiento, $empresa, $patronal, $medico, $especialidad, $diagnosticoenfermeria, $tipoingreso, $idhistorial, $cama,$idusuario) {
+
+        //$usuarioActual = json_decode($_SESSION["usuario"]);
+        //$usuarioActual = $usuarioActual[0]->id_usuario;
+        $ip = $this->input->ip_address();
+        $hoy = date("Y-m-d H:i:s");
+        $this->cambiarEstadoCama($cama, $tipoingreso);
+        $query = $this->db->query("INSERT INTO asignacion_cama (matricula,nombres,codcns,fec_nacimiento,edad,sexo,diagnostico,cie10,cie10_literal,equipamiento,empresa,patronal,medico,especialidad,diagnostico_enfermeria,tipoingreso,fecha_asignacion,id_historial,id_cama,id_usuario,fecha_registro,ip_registro) VALUES('$matricula','$nombres','$codcns','$fecnacimiento','$edad',$sexo,'$diagnostico','$cie10','$cie10literal','$equipamiento','$empresa','$patronal','$medico','$especialidad','$diagnosticoenfermeria',$tipoingreso,'$hoy','$idhistorial',$cama,$idusuario,'$hoy','$ip')");
+        return $query;
+    }
+
+
     function verPacienteByCama($idcama) {
-        $query = $this->db->query("SELECT id_historial,ac.nombres as nombres,ac.matricula as matricula,codcns,fec_nacimiento,TIMESTAMPDIFF(YEAR,fec_nacimiento,CURDATE()) AS edad,sexo,patronal,empresa,diagnostico,cie10,medico,especialidad,fecha_asignacion,pi.id_piso as id_piso,concat(p.nombres,' ',p.apellidos) as usuario FROM asignacion_cama ac
+        $query = $this->db->query("SELECT id_historial,ac.nombres as nombres,ac.matricula as matricula,codcns,fec_nacimiento,TIMESTAMPDIFF(YEAR,fec_nacimiento,CURDATE()) AS edad,sexo,patronal,empresa,diagnostico,cie10,cie10_literal,medico,especialidad,fecha_asignacion,pi.id_piso as id_piso,concat(p.nombres,' ',p.apellidos) as usuario FROM asignacion_cama ac
                                    JOIN cama c ON ac.id_cama=c.id_cama
                                    JOIN sala s ON c.id_sala=s.id_sala
                                    JOIN piso pi ON s.id_piso=pi.id_piso

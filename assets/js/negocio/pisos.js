@@ -14,9 +14,27 @@ $(document).ready(function () {
         cargarTipoAltas();
         //alert();
     })
+
+    /*$(".riesgo").change(function () {
+
+        if($(this).is(":checked")){
+             $(".equipamientos").css("display","block");
+             $(".normal").attr('disabled','disabled');
+            $(".normal").attr('checked', false);
+            $(".aislado").attr('disabled','disabled');
+            $(".aislado").attr('checked', false);
+        }
+     
+        //alert();
+    })
     
-    /*$("#riesgo").change(function () {
-          $("#listEquipamiento").css("display","block");
+    $("#riesgo").change(function () {
+         
+        //alert();
+    })
+
+    $("#riesgotransferencia").change(function () {
+          $("#listEquipamientoTransferencia").css("display","block");
         //alert();
     })*/
 
@@ -217,7 +235,7 @@ function colorPaciente(estadocama) {
 }
 
 function cargarDetalleByBloque(nombreBloque) {
-    console.log(URLactual);
+    //console.log(URLactual);
     var param = {
         idPiso: URLactual,
         bloque: nombreBloque
@@ -358,21 +376,45 @@ function mostrarEquipamiento() {
         riesgo = document.getElementById("riesgo");
         
 
-        /*if (riesgo.checked) {
+        if (riesgo.checked) {
             $("#listEquipamiento").css("display","block");
+            //$("#listEquipamientoTransferencia").css("display","block");
             //element.style.display='block';
             $("#normal").attr('disabled','disabled');
             $("#normal").attr('checked', false);
             $("#aislado").attr('disabled','disabled');
             $("#aislado").attr('checked', false);
-            console.log("marcada");
+            
         }
         else {
             element.style.display='none';
             $("#normal").removeAttr('disabled');
             $("#aislado").removeAttr('disabled');
-            console.log("sinmarcar");
-        }*/
+            
+        }
+}
+
+function mostrarEquipamientoTransferencia() {
+        element = document.getElementById("listEquipamientoTransferencia");
+        riesgo = document.getElementById("riesgotransferencia");
+        
+
+        if (riesgo.checked) {
+           //$("#listEquipamiento").css("display","block");
+            $("#listEquipamientoTransferencia").css("display","block");
+            //element.style.display='block';
+            $("#normaltransferencia").attr('disabled','disabled');
+            $("#normaltransferencia").attr('checked', false);
+            $("#aisladotransferencia").attr('disabled','disabled');
+            $("#aisladotransferencia").attr('checked', false);
+            
+        }
+        else {
+            element.style.display='none';
+            $("#normaltransferencia").removeAttr('disabled');
+            $("#aisladotransferencia").removeAttr('disabled');
+            
+        }
 }
 
 function asignarPaciente(id, flag) {
@@ -395,6 +437,9 @@ function asignarPaciente(id, flag) {
         if (!bandera) {
             $("#msgAsignar").css("display", "block");
         } else {
+
+            var arr = [];
+
             let nomal = document.getElementById("normal").checked;
             let aislado = document.getElementById("aislado").checked;
             let riesgo = document.getElementById("riesgo").checked;
@@ -409,7 +454,7 @@ function asignarPaciente(id, flag) {
             if (riesgo){
                 radio=4;
 
-                var arr = [];
+                
 
                  $("input[name='check']").each(function (x){
                     //arr.push($(this).val());
@@ -441,9 +486,17 @@ function asignarPaciente(id, flag) {
 
 
                 });
-                var equipamiento=JSON.stringify(arr);
-            }
-
+                
+            }/*else{
+                        console.log("cero");
+                        arr.push(
+                                    {
+                                        
+                                        sn: ""
+                                    }
+                            );
+            }*/
+            var equipamiento=JSON.stringify(arr);
             
             var param = {
                 idCama: idActual,
@@ -472,7 +525,7 @@ function asignarPaciente(id, flag) {
                 url: base_url() + "Cama/asignarCama/",
                 beforeSend: function (xhr) {
                 }, success: function (data, textStatus, jqXHR) {
-                    //console.log(data);
+                    console.log(data);
                     if (data > 0) {
                         swal({
                             icon: "success",
@@ -599,43 +652,126 @@ function transferirPaciente(id,flag) {
         idActual = id;
         obtenerPaciente(id);
          $("#modalTransferirPaciente").modal("show");
-         console.log("ahidando");
         
     } else {
-        if ($("#cmbAlta").val() != 0) {
+         var bandera = true;
+        if($("#camas").val()==0){
+             $("#s2id_camas").css("border","solid 2px red");
+            bandera=false;
+        }
+        if (!bandera) {
+            $("#msgAsignarTrans").css("display", "block");
+        } else {
+
+            var arr = [];
+
+            let nomal = document.getElementById("normaltransferencia").checked;
+            let aislado = document.getElementById("aisladotransferencia").checked;
+            let riesgo = document.getElementById("riesgotransferencia").checked;
+            let radio = 0;
+            if (normal) {
+                radio = 2;
+            }
+            if (aislado) { 
+                radio = 3;
+            }
+            if (riesgo){
+                radio=4;
+
+                
+
+                 $("input[name='checktransferencia']").each(function (x){
+                    //arr.push($(this).val());
+                    //console.log(arr);
+                    if ($(this).is(":checked")) {
+                        //console.log($("#" + $(this).val()));
+                        if ($("#formRiesgo ." + $(this).val()).length >0) {
+                            console.log("valor del input: " + $("#formRiesgo ." + $(this).val()).val());
+                            //console.log("aqui");
+                            arr.push(
+                                    {
+
+                                        equipo: $(this).val(),
+                                        libras: $("#formRiesgo ." + $(this).val()).val()
+                                    }
+                            );
+                        } else {
+                            console.log("no");
+                            arr.push(
+                                    {
+                                        equipo: $(this).val(),
+                                        //sn: ""
+                                    }
+                            );
+                        }
+
+                    }
+                });
+                
+            }
+            var equipamiento=JSON.stringify(arr);
+            
             var param = {
                 idCama: idActual,
-                tipoAlta: $("#cmbAlta").val()
-                        //estado:1
+                nombres: $("input[name='nombrestransferencia']").val(),
+                matricula: $("input[name='matriculatransferencia']").val(),
+                fecnacimiento: $("input[name='fecnacimientotransferencia']").val(),
+                cie10: $("input[name='cie10transferencia']").val(),
+                cie10literal: $("input[name='cie10Literaltransferencia']").val(),
+                diagnostico: $("input[name='diagnosticotransferencia']").val(),
+                medico: $("input[name='medicotransferencia']").val(),
+                especialidad: $("input[name='especialidadtransferencia']").val(),
+                idhistorial: $("input[name='idhistorialtransferencia']").val(),
+                edad: $("input[name='edadtransferencia']").val(),
+                sexo: $("input[name='sexotransferencia']").val(),
+                codcns: $("input[name='codcnstransferencia']").val(),
+                empresa: $("input[name='empresatransferencia']").val(),
+                patronal: $("input[name='patronaltransferencia']").val(),
+                diagnosticoenfermeria: $("input[name='diagnosticoEnfermeriatransferencia']").val(),
+                tipoingreso: radio,
+                equipamiento:equipamiento,
+                cama:$("#camas").val()
             }
+            console.log(param);
             $.ajax({
                 data: param,
                 type: 'POST',
-                url: base_url() + "Cama/liberarCama/",
+                url: base_url() + "Cama/pacienteTransferencia/",
                 beforeSend: function (xhr) {
-                    
                 }, success: function (data, textStatus, jqXHR) {
-                   // console.log(data);
-                    if (data == 1) {
+                    console.log(data);
+                    if (data > 0) {
+                        swal({
+                            icon: "success",
+                            Title: "Transferencia de cama con Exito!!",
+                            dangerMode: true,
+                        })
+                        //alert("Asignación de cama con Exito!!");
                         location.href = window.location.href;
-                        $("#modalAltaPaciente").modal("hide");
+                        $("#modalAsignarPaciente").modal("hide");
+                        
+                        
                     } else {
-                        alert("Ocurrio un problemas al Liberar la cama");
+                        var arr = JSON.parse(data);
+                        $.each(arr, function (index, contenido) {
+                            nombres = contenido.nombres;
+                            matricula = contenido.matricula;
+                            piso = contenido.numero_piso;
+                            cama = contenido.numero_cama;
+                        });
+                        
+                        swal(
+                                "Paciente: " + nombres,
+                                //"Matricula: "+matricula,
+                                "Esta internado en: " + piso + " - Cama: " + cama,
+                                {icon: "warning", dangerMode: true, });
+                        //alert();
                     }
                 }
             })
-        } else {
-            swal({
-                icon: "danger",
-                Title: "Alerta!!",
-                dangerMode: true,
-            })
-            swal(
-                    "Escoje un tipo de alta valida",
-                    {icon: "warning", dangerMode: true, });
         }
     }    
-    limpiarAsignarPaciente();
+    //limpiarAsignarPaciente();
 }
 
 function obtenerPaciente(id) {
@@ -652,28 +788,29 @@ function obtenerPaciente(id) {
             //console.log("aqui");
         },
         success: function (data, textStatus, jqXHR) {
-           // console.log(data);
+           //console.log(data);
             if (data != "null") {
                 
                 var arr = JSON.parse(data);
                 var sexo = "";
                 
                 $.each(arr, function (index, contenido) {
-                    sexo = (contenido.sexo == 1) ? "Mujer" : "Hombre";
-                    //console.log(sexo);
-                    $("input[name='nombres']").val(contenido.nombres);
-                    $("input[name='diagnostico']").val(contenido.diagnostico);
-                    $("input[name='medico']").val(contenido.medico);
-                    $("input[name='especialidad']").val(contenido.especialidad);
-                    $("input[name='idhistorial']").val(contenido.idhistorial);
-                    $("input[name='codcns']").val(contenido.codcns);
-                    $("input[name='matricula']").val(contenido.matricula);
-                    $("input[name='cie10']").val(contenido.cie10);
-                    $("input[name='fecnacimiento']").val(contenido.fecnacimiento);
-                    $("input[name='empresa']").val(contenido.empresa);
-                    $("input[name='patronal']").val(contenido.patronal);
-                    $("#edad").val(contenido.edad);
-                    $("#sexo").val(sexo);
+                    //sexo = (contenido.sexo == 1) ? "Mujer" : "Hombre";
+                    //console.log(contenido.sexo);
+                    $("input[name='nombrestransferencia']").val(contenido.nombres);
+                    $("input[name='diagnosticotransferencia']").val(contenido.diagnostico);
+                    $("input[name='medicotransferencia']").val(contenido.medico);
+                    $("input[name='especialidadtransferencia']").val(contenido.especialidad);
+                    $("input[name='idhistorialtransferencia']").val(contenido.idhistorial);
+                    $("input[name='codcnstransferencia']").val(contenido.codcns);
+                    $("input[name='matriculatransferencia']").val(contenido.matricula);
+                    $("input[name='cie10transferencia']").val(contenido.cie10);
+                    $("input[name='cie10Literaltransferencia']").val(contenido.cie10literal);
+                    $("input[name='fecnacimientotransferencia']").val(contenido.fecnacimiento);
+                    $("input[name='empresatransferencia']").val(contenido.empresa);
+                    $("input[name='patronaltransferencia']").val(contenido.patronal);
+                    $("input[name='edadtransferencia']").val(contenido.edad);
+                    $("input[name='sexotransferencia']").val(contenido.sexo);
                     $("#pisos").val(contenido.idpiso);
                 });
             } else {

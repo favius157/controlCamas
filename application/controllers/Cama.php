@@ -192,6 +192,16 @@ class Cama extends CI_Controller {
         }
     }
 
+     function pacienteTransferencia() {
+        $idUsuario = json_decode($_SESSION["usuario"])[0]->id_usuario;
+        $transferencia=11;
+        $this->cama_model->liberarCama($_POST["idCama"], $transferencia, $idUsuario);
+        $estado=1;
+        $this->cama_model->cambiarEstadoCama($_POST["idCama"], $estado);
+        
+        echo $this->cama_model->pacienteTransferencia($_POST['matricula'], utf8_decode($_POST['nombres']), $_POST['codcns'], $_POST['fecnacimiento'], $_POST['edad'], $_POST['sexo'], utf8_decode($_POST['diagnostico']), $_POST['cie10'],utf8_decode($_POST['cie10literal']), json_encode($_POST['equipamiento']),utf8_decode($_POST['empresa']), $_POST['patronal'], utf8_decode($_POST['medico']), $_POST['especialidad'], utf8_decode($_POST['diagnosticoenfermeria']), $_POST['tipoingreso'], $_POST['idhistorial'], $_POST['cama'],$idUsuario);
+    }
+
     function verPacienteByCama() {
 
         $verPaciente = $this->cama_model->verPacienteByCama($_POST['idcama']);
@@ -209,6 +219,7 @@ class Cama extends CI_Controller {
                 $datos['empresa'] = $listaPaciente['empresa'];
                 $datos['diagnostico'] = $listaPaciente['diagnostico'];
                 $datos['cie10'] = $listaPaciente['cie10'];
+                $datos['cie10literal'] = $listaPaciente['cie10_literal'];
                 $datos['medico'] = $listaPaciente['medico'];
                 $datos['especialidad'] = $listaPaciente['especialidad'];
                 $datos['fecha'] = $listaPaciente['fecha_asignacion'];
